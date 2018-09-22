@@ -30,13 +30,16 @@ int main(){
 		
 		calculo(num1, num2, num3);	
 		cout << "el numero mayor es: " << num_mayor << "\nel numero medio es: " << num_medio << "\nel numero menor es: " << num_menor << endl;
-		cout << "digite (s) para salir del programa o cualquier otra tecla para permanecer en el: ";
-		cin >> salida_bucle;
+		cout << "digite (s) para salir del programa o cualquier otra tecla para permanecer en el: " << endl;
+		cin >> salida_bucle; 
+		
 		
 		if (salida_bucle == 's' || salida_bucle == 'S')
 			entrada_bucle=false;
-		else
+		else{
 			entrada_bucle=true;
+			system("cls");
+		}
 	}
 	
 system("pause");
@@ -78,6 +81,6 @@ int calculo(int a, int b, int c){
 		}
 	}
 	else
-		cout << "usted ha ingresado valores invalidos!" << endl;
+		cout << "usted ingreso valores invalidos!" << endl;
 }
 
