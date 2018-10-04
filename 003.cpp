@@ -1,4 +1,4 @@
-//mostrar la suma de los num pares e impares entre 50 y 500
+//mostrar la suma de los num pares e impares entre 50 y 500 
 #include <iostream>
 
 using namespace std;
