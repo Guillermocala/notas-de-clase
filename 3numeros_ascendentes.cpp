@@ -28,7 +28,6 @@ int main(){
 		cin >> num2;
 		cout << "ingrese el tercer numero: ";
 		cin >> num3;
-		
 		calculo(num1, num2, num3);
 		cout << "digite (0) para salir del programa\no cualquier otro numero para permanecer en el: ";
 		cin >> salida_bucle;
@@ -44,7 +43,7 @@ system("pause");
 return 0;
 }
 
-int calculo(int a, int b, int c){
+int calculo(int a, int b, int c){	
 	if(num1 > num2 || num1 > num3){
 	cout << "el mayor es: " << num1 << endl;
 		if(num2>num3){
