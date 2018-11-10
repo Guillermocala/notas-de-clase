@@ -1,9 +1,7 @@
 /*elaborar un programa que entre n datos y forme un vector, se sabe que estos datos 
 deben estar ordenados y despues se debe insertar un dato e ingresarlo al vector de forma ordenada*/
 #include <iostream>
-
 using namespace std;
-
 void insertardato(float datos[], float vinsertar, int *n);
 int cantidad, i;
 float valor;
