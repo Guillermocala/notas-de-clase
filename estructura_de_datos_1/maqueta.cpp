@@ -20,7 +20,6 @@ nodoa* InsertaCabeza(nodoa *p,int xinfo);
 nodoa* InsertaCola(nodoa *p,int xinfo);
 nodoa* Buscarllave( nodoa *p, int elem);
 nodoa* Eliminacion(nodoa *p,int elem);
-nodoa* Rotar(nodoa *ptr, int n);
 void Mostrar(nodoa *p);
 
 int menu (void);
@@ -52,14 +51,12 @@ int main(int argc, char*argv[]){
      	system("cls");
      	
        break;
-	case 5:
+	 case 5:
 	 	
        break;
        
-       case 6: system("CLS");
-       			printf ("Ingrese La cantidad de veces a rotar");
-         		scanf ("%d", &i);
-				ptr = Rotar(ptr, i);
+       case 6:
+    
        	break;
        	
        case 0:
@@ -81,7 +78,7 @@ getch();
 int menu (void){
 int opcion;
 system("CLS");
-
+system ("color 3A");
    
 printf ("\n\n");
 printf("\t\t\t²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²\n");
@@ -98,7 +95,7 @@ printf("\t\t\t² 4  ->  Eliminacion             ²\n");
 printf("\t\t\t²                                ²\n");
 printf("\t\t\t² 5  ->  Mostrar Lista           ²\n");
 printf("\t\t\t²                                ²\n"); 
-printf("\t\t\t² 6  ->  Rotar                   ²\n");
+printf("\t\t\t² 6  ->                          ²\n");
 printf("\t\t\t²                                ²\n");
 printf("\t\t\t²                                ²\n");
 printf("\t\t\t² 0  ->  Salir                   ²\n");
@@ -132,20 +129,6 @@ nodoa* InsertaCola (nodoa *ptr,int xinfo){
   
 }
 
-nodoa* Rotar(nodoa *ptr, int n){	
-	for(int i; i < n; i++){
-		j = ptr;
-		while(j -> sig != NULL)
-		{
-			j = j ->sig;
-		}
-		j -> sig = ptr;
-		ptr = ptr -> sig;
-		j = j -> sig;
-		j -> sig = NULL;
-	}
-	return ptr;
-}
 
 void  Mostrar (nodoa *ptr){
       system ("CLS");
