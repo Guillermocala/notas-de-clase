@@ -20,7 +20,7 @@ int menu (void);
 
 int main(int argc, char*argv[])
 {
-   system ("CLS");
+   system ("clear");
    int sw=1, i, j, x, q;
    long opcion;
    do
@@ -28,19 +28,19 @@ int main(int argc, char*argv[])
       switch (menu())
       {
          case 1:
-            system ("CLS");
+            system ("clear");
             printf ("Ingrese La Informacion: ");
             scanf ("%d", &i);
             ptr=InsertaCabeza(ptr,i);
             break;
          case 2:
-            system ("CLS");
+            system ("clear");
             printf ("Ingrese La Informacion: ");
             scanf ("%d", &i);
             ptr=InsertaCola(ptr,i);
             break;
          case 3:
-            system ("CLS");
+            system ("clear");
             if(ptr==NULL)
             {
                printf("La lista se encuentra vacia, por favor llenarla");
@@ -60,10 +60,11 @@ int main(int argc, char*argv[])
                {
                   printf("\n\n No se encontro el elemento");
                }
+            }
             cin.get();
             break;
          case 4:
-            system("cls");
+            system("clear");
             if(ptr==NULL)
             {
                printf("La lista se encuentra vacia, por favor llenarla");
@@ -76,12 +77,12 @@ int main(int argc, char*argv[])
             }
             break;
          case 5:
-            system("cls");
+            system("clear");
             Mostrar(ptr);
             cin.get();
             break;
          case 6:
-            system("cls");
+            system("clear");
             if(ptr==NULL)
             {
                printf("La lista se encuentra vacia, por favor llenarla");
@@ -95,19 +96,19 @@ int main(int argc, char*argv[])
             cin.get();
             break;
          case 7:
-            system("cls");
+            system("clear");
             printf("Ingrese la cantidad a rotar: ");
             scanf("%d", &i);
             ptr = Rotar(ptr, i);
             cin.get();
             break;
          case 0:
-            system ("CLS");
+            system ("clear");
             printf ("Press any key to exit...");
             sw=0;
             break;
          default:
-            system ("CLS");
+            system ("clear");
             printf("opcion no valida...por favor intente nuevamente\n");
             break;
       }
@@ -118,7 +119,7 @@ int main(int argc, char*argv[])
 int menu (void)
 {
    int opcion;
-   system("CLS");
+   system("clear");
    system ("color 0B");
 
    printf ("\n\n");
@@ -203,7 +204,7 @@ nodoa* InsertaCola (nodoa *ptr,int xinfo)
 }
 void  Mostrar (nodoa *ptr)
 {
-   system ("CLS");
+   system ("clear");
    r=ptr;
    printf("PTR");
    while(r!=NULL)
