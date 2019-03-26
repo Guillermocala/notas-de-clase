@@ -1,6 +1,7 @@
 /*
-*Guillermo Cala; 24/ march/ 19
+*Guillermo Cala; 24/ march/ 19; modified: 26/ march/ 19
 *maqueta de listas circulares dobles con operaciones basicas
+*¡ALGORITMO DE ORDENAR DEFECTUOSO. PENDIENTE POR ARREGLAR!
 */
 #include "iostream"
 using namespace std;
@@ -16,6 +17,8 @@ Nodo *insertarCabeza(Nodo *ptr, int xinfo);
 Nodo *insertarCola(Nodo *ptr, int xinfo);
 Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
+Nodo *OrdenarDesc(Nodo *ptr);
+Nodo *OrdenarAsc(Nodo *ptr);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -97,6 +100,40 @@ int main(int argc, char const *argv[])
             }
             break;
          case 6:
+            Nodo *p;
+            p = ptr;
+            if(ptr == NULL)
+            {
+               cout << "la lista esta vacia" << endl;
+               cin.get();
+            }
+            else if(p->sig == ptr && p->ant == ptr)
+            {
+               cout << "la lista solo tiene un elemento" << endl;
+               cin.get();
+            }
+            else
+            {
+               int opt;
+               system("clear");
+               cout << "1- Ordenar Descendente\n2- Ordenar Ascendente" << endl;
+               cout << "Ingrese una opcion: ";
+               cin >> opt;
+               switch(opt)
+               {
+                  case 1:
+                     ptr = OrdenarDesc(ptr);
+                     break;
+                  case 2:
+                     ptr = OrdenarAsc(ptr);
+                     break;
+                  default:
+                     cout << "Valor invalido!" << endl;
+                     cin.get();
+                     break;
+               }
+            }
+            cin.ignore();
             break;
          case 7:
             int ext;
@@ -134,7 +171,7 @@ int menu()
 	printf("\n\t\t\t�                         �");
 	printf("\n\t\t\t�  5) MOSTRAR LISTA       �");
 	printf("\n\t\t\t�                         �");
-	printf("\n\t\t\t�  6)                     �");
+	printf("\n\t\t\t�  6) ORDENAR             �");
 	printf("\n\t\t\t�                         �");
 	printf("\n\t\t\t�  7) SALIR               �");
 	printf("\n\t\t\t�                         �");
@@ -284,5 +321,153 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
       }
       return ptr;
    }
+   return ptr;
+}
+Nodo *OrdenarDesc(Nodo *ptr)
+{
+   Nodo *p, *q, *aux, *aux2;
+   p = ptr;
+   if(ptr->sig->sig == ptr && ptr->ant->ant == ptr)
+   {
+      if(ptr->info < ptr->sig->info)
+      {
+         ptr = ptr->sig; /*ptr->ant = ptr*/
+      }
+   }
+   else
+   {
+      while(p->sig != ptr)
+      {
+         q = ptr;
+         while(q->sig != ptr)
+         {
+            if(q->sig != ptr && q->info < q->sig->info)
+            {
+               /*para los movimientos posicionamos aux2 detras directamente con
+               q->ant sin necesidad de bucle alguno*/
+               aux = q->sig;
+               if(q == ptr)
+               {
+                  aux2 = ptr->ant;
+                  aux->sig->ant = q;
+                  q->sig = aux->sig;
+                  aux->ant = aux2;
+                  aux2->sig = aux;
+                  ptr->ant = aux;
+                  aux->sig = ptr;
+                  ptr = aux;
+               }
+               else
+               {
+                  if(aux->sig != ptr)
+                  {
+                     aux2 = q->ant;
+                     aux->sig->ant = q;
+                     q->sig = aux->sig;
+                     aux2->sig = aux;
+                     aux->ant = aux2;
+                     aux->sig = q;
+                     q->ant = aux;
+                  }
+                  else
+                  {
+                     ptr->ant = q;
+                     q->sig = ptr;
+                     aux2->sig = aux;
+                     aux->ant = aux2;
+                     aux->sig = q;
+                     q->ant = aux;
+                  }
+               }
+               /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
+               principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
+               if(q == p)
+               {
+                  p = aux;
+               }
+            }
+            else
+            {
+               q = q->sig;
+            }
+         }
+         p = p->sig;
+      }
+   }
+   cin.get();
+   return ptr;
+}
+Nodo *OrdenarAsc(Nodo *ptr)
+{
+   Nodo *p, *q, *aux, *aux2;
+   p = ptr;
+   if(ptr->sig->sig == ptr && ptr->ant->ant == ptr)
+   {
+      if(ptr->info > ptr->sig->info)
+      {
+         ptr = ptr->sig; /*ptr->ant = ptr*/
+      }
+   }
+   else
+   {
+      while(p->sig != ptr)
+      {
+         q = ptr;
+         while(q->sig != ptr)
+         {
+            if(q->sig != ptr && q->info > q->sig->info)
+            {
+               /*para los movimientos posicionamos aux2 detras directamente con
+               q->ant sin necesidad de bucle alguno*/
+               aux = q->sig;
+               if(q == ptr)
+               {
+                  aux2 = ptr->ant;
+                  aux->sig->ant = q;
+                  q->sig = aux->sig;
+                  aux->ant = aux2;
+                  aux2->sig = aux;
+                  ptr->ant = aux;
+                  aux->sig = ptr;
+                  ptr = aux;
+               }
+               else
+               {
+                  if(aux->sig != ptr)
+                  {
+                     aux2 = q->ant;
+                     aux->sig->ant = q;
+                     q->sig = aux->sig;
+                     aux2->sig = aux;
+                     aux->ant = aux2;
+                     aux->sig = q;
+                     q->ant = aux;
+                  }
+                  else
+                  {
+                     ptr->ant = q;
+                     q->sig = ptr;
+                     aux2->sig = aux;
+                     aux->ant = aux2;
+                     aux->sig = q;
+                     q->ant = aux;
+                  }
+               }
+               /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
+               principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
+               if(q == p)
+               {
+                  p = aux;
+               }
+            }
+            else
+            {
+               q = q->sig;
+            }
+         }
+         p = p->sig;
+      }
+   }
+   cin.get();
    return ptr;
 }

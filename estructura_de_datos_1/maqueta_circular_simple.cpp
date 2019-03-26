@@ -1,5 +1,5 @@
 /*
-*Guillermo Cala; 24/ march/ 19
+*Guillermo Cala; 24/ march/ 19; modified: 26/ march/ 19
 *maqueta de listas circulares simples con operaciones basicas
 */
 #include "iostream"
@@ -15,6 +15,8 @@ Nodo *insertarCabeza(Nodo *ptr, int xinfo);
 Nodo *insertarCola(Nodo *ptr, int xinfo);
 Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
+Nodo *OrdenarDesc(Nodo *ptr);
+Nodo *OrdenarAsc(Nodo *ptr);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -96,13 +98,47 @@ int main(int argc, char const *argv[])
             }
             break;
          case 6:
+            Nodo *p;
+            p = ptr;
+            if(ptr == NULL)
+            {
+               cout << "la lista esta vacia" << endl;
+               cin.get();
+            }
+            else if(p->sig == ptr)
+            {
+               cout << "la lista solo tiene un elemento" << endl;
+               cin.get();
+            }
+            else
+            {
+               int opt;
+               system("clear");
+               cout << "1- Ordenar Descendente\n2- Ordenar Ascendente" << endl;
+               cout << "Ingrese una opcion: ";
+               cin >> opt;
+               switch(opt)
+               {
+                  case 1:
+                     ptr = OrdenarDesc(ptr);
+                     break;
+                  case 2:
+                     ptr = OrdenarAsc(ptr);
+                     break;
+                  default:
+                     cout << "Valor invalido!" << endl;
+                     cin.get();
+                     break;
+               }
+            }
+            cin.ignore();
             break;
          case 7:
-            int ext;
+            int exit;
             system("clear");
             cout << "\tEsta seguro que desea cerrar el programa?\nPresione 1 para salir, de lo contrario digite cualquier otro numero: ";
-            cin >> ext;
-            if(ext == 1)
+            cin >> exit;
+            if(exit == 1)
             {
                sw = 0;
             }
@@ -133,7 +169,7 @@ int menu()
 	printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t�  5) MOSTRAR LISTA        �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  6)                      �");
+	printf("\n\t\t\t�  6) ORDENAR              �");
 	printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t�  7) SALIR                �");
 	printf("\n\t\t\t�                          �");
@@ -265,25 +301,157 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
    }
    return ptr;
 }
-Nodo *OrdenarAsc(Nodo *ptr)
+Nodo *OrdenarDesc(Nodo *ptr)
 {
    Nodo *p, *q, *aux, *aux2;
-   if(ptr == NULL)
+   /*para cuando hay solamente dos elementos, los bucles verifican mas de 2
+   asi que si hay solo 2 reubicamos ptr y ya*/
+   if(ptr->sig->sig == ptr)
    {
-      cout << "la lista esta vacia" << endl;
-   }
-   else if(p == ptr && p->sig == ptr)
-   {
-      cout << "la lista solo tiene un elemento" << endl;
+      if(ptr->info < ptr->sig->info)
+      {
+         ptr = ptr->sig;
+      }
    }
    else
    {
-      aux = ptr;
-      while(aux->sig != ptr)
+      p = ptr;
+      while(p->sig != ptr)
       {
-         /* code */
+         q = ptr;
+         while(q->sig != ptr)
+         {
+            if(q->sig != ptr && q->info < q->sig->info)
+            {
+               aux = q->sig;
+               if(q == ptr)
+               {
+                  /*siempre posicionamos un aux detras de q para poder operar*/
+                  aux2 = ptr;
+                  while(aux2->sig != q)
+                  {
+                     aux2 = aux2->sig;
+                  }
+                  q->sig = aux->sig;
+                  aux->sig = q;
+                  aux2->sig = aux;
+                  ptr = aux;
+               }
+               else
+               {
+                  if(aux->sig != ptr)
+                  {
+                     aux2 = ptr;
+                     while(aux2->sig != q)
+                     {
+                        aux2 = aux2->sig;
+                     }
+                     q->sig = aux->sig;
+                     aux->sig = q;
+                     aux2->sig = aux;
+                  }
+                  else
+                  {
+                     aux2 = ptr;
+                     while(aux2->sig != q)
+                     {
+                        aux2 = aux2->sig;
+                     }
+                     q->sig = ptr;
+                     aux->sig = q;
+                     aux2->sig = aux;
+                  }
+               }
+               /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
+               principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
+               if(q == p)
+               {
+                  p = aux;
+               }
+            }
+            else
+            {
+               q = q->sig;
+            }
+         }
+         p = p->sig;
       }
    }
-
+   cin.get();
+   return ptr;
+}
+Nodo *OrdenarAsc(Nodo *ptr)
+{
+   Nodo *p, *q, *aux, *aux2;
+   if(ptr->sig->sig == ptr)
+   {
+      if(ptr->info > ptr->sig->info)
+      {
+         ptr = ptr->sig;
+      }
+   }
+   else
+   {
+      p = ptr;
+      while(p->sig != ptr)
+      {
+         q = ptr;
+         while(q->sig != ptr)
+         {
+            /*lo mismo que OrdenarDesc pero cambiamos el operador logico bool*/
+            if(q->sig != ptr && q->info > q->sig->info)
+            {
+               aux = q->sig;
+               if(q == ptr)
+               {
+                  aux2 = ptr;
+                  while(aux2->sig != q)
+                  {
+                     aux2 = aux2->sig;
+                  }
+                  q->sig = aux->sig;
+                  aux->sig = q;
+                  aux2->sig = aux;
+                  ptr = aux;
+               }
+               else
+               {
+                  if(aux->sig != ptr)
+                  {
+                     aux2 = ptr;
+                     while(aux2->sig != q)
+                     {
+                        aux2 = aux2->sig;
+                     }
+                     q->sig = aux->sig;
+                     aux->sig = q;
+                     aux2->sig = aux;
+                  }
+                  else
+                  {
+                     aux2 = ptr;
+                     while(aux2->sig != q)
+                     {
+                        aux2 = aux2->sig;
+                     }
+                     q->sig = ptr;
+                     aux->sig = q;
+                     aux2->sig = aux;
+                  }
+               }
+               if(q == p)
+               {
+                  p = aux;
+               }
+            }
+            else
+            {
+               q = q->sig;
+            }
+         }
+         p = p->sig;
+      }
+   }
+   cin.get();
    return ptr;
 }
