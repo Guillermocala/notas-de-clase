@@ -1,5 +1,5 @@
 /*
-*Guillermo Cala; 24/ march/ 19; modified: 26/ march/ 19
+*Guillermo Cala; 24/ march/ 19; modified: 26/ march/ 19; mod: 01/ april/ 19
 *maqueta de listas circulares simples con operaciones basicas
 */
 #include "iostream"
@@ -183,69 +183,63 @@ int menu()
 }
 Nodo *insertarCabeza(Nodo *ptr, int xinfo)
 {
-   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
+   Nodo *p, *r;
+   p = (struct Nodo*) malloc (sizeof(Nodo));
    p->info = xinfo;
    if(ptr == NULL)
    {
-      ptr = p;
-      p->sig = p; /*p->sig = ptr;*/
+      r = (struct Nodo*) malloc (sizeof(Nodo));
+      ptr = r;
+      r->sig = p;
+      p->sig = r;
    }
    else
    {
-      Nodo *j = ptr;
-      while(j->sig != ptr)
-      {
-         j = j->sig;
-      }
-      p->sig = ptr;
-      j->sig = p;
-      /*si insertamos por cola ignoramos la sgte linea. ya que se
-      inserta en el mismo lado, pero no se reubica ptr.*/
-      ptr = p;
+      r = ptr;
+      p->sig = r->sig;
+      r->sig = p;
    }
    return ptr;
 }
 Nodo *insertarCola(Nodo *ptr, int xinfo)
 {
-   /*lo mismo que insertar por cabeza, pero sin reposicionar ptr*/
    Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
    p->info = xinfo;
    if(ptr == NULL)
    {
-      ptr = p;
-      p->sig = p; /*p->sig = ptr;*/
+      Nodo *r = (struct Nodo*) malloc (sizeof(Nodo));
+      ptr = r;
+      r->sig = p; /*p->sig = ptr;*/
+      p->sig = r;
    }
    else
    {
-      Nodo *j = ptr;
+      Nodo *j = ptr->sig;
       while(j->sig != ptr)
       {
          j = j->sig;
       }
-      p->sig = ptr;
       j->sig = p;
+      p->sig = ptr;
    }
    return ptr;
 }
 void Mostrar(Nodo *ptr)
 {
-   Nodo *r = ptr;
+   Nodo *r = ptr->sig;
    cout << "PTR -> ";
-   while(r->sig != ptr)
+   while(r != ptr)
    {
       cout << "[" << r->info << "] -> ";
       r = r->sig;
    }
-   /*como no se alcanza a imprimir el ultimo se coloca una escritura
-   por fuera del ciclo, ya que el apuntador esta posicionado en el nodo*/
-   cout << "[" << r->info << "] -> ";
    cout << "NULL ";
    cin.ignore();
 }
 Nodo *Buscar(Nodo *ptr, int elem)
 {
-   Nodo *r = ptr;
-   while(r->sig != ptr)
+   Nodo *r = ptr->sig;
+   while(r != ptr)
    {
       if(r->info == elem)
       {
@@ -256,15 +250,7 @@ Nodo *Buscar(Nodo *ptr, int elem)
          r = r->sig;
       }
    }
-   /*se verifica de nuevo porque el bucle no toma el ultimo*/
-   if(r->info == elem)
-   {
-      return r;
-   }
-   else
-   {
-      return NULL;
-   }
+   return NULL;
 }
 Nodo *EliminarNodo(Nodo *ptr, int elem)
 {
@@ -277,9 +263,10 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
    }
    else
    {
-      if(q == ptr && q->sig == ptr)
+      if(ptr->sig == q && q->sig == ptr)
       {
          free(q);
+         free(ptr);
          ptr = NULL;
       }
       else
@@ -291,10 +278,6 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
             j = j->sig;
          }
          j->sig = q->sig;
-         if(q == ptr)
-         {
-            ptr = q->sig;
-         }
          free(q);
       }
       return ptr;
@@ -304,30 +287,28 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
 Nodo *OrdenarDesc(Nodo *ptr)
 {
    Nodo *p, *q, *aux, *aux2;
-   /*para cuando hay solamente dos elementos, los bucles verifican mas de 2
-   asi que si hay solo 2 reubicamos ptr y ya*/
-   if(ptr->sig->sig == ptr)
+   p = ptr->sig;
+   while(p != ptr)
    {
-      if(ptr->info < ptr->sig->info)
+      q = ptr->sig;
+      while(q != ptr)
       {
-         ptr = ptr->sig;
-      }
-   }
-   else
-   {
-      p = ptr;
-      while(p->sig != ptr)
-      {
-         q = ptr;
-         while(q->sig != ptr)
+         /*para que no se produzca un inifity loop tenemos que dejar a q en
+         ptr->ant con q->sig != ptr*/
+         if(q->sig != ptr && q->info < q->sig->info)
          {
-            if(q->sig != ptr && q->info < q->sig->info)
+            aux = q->sig;
+            if(q == ptr->sig)
             {
-               aux = q->sig;
-               if(q == ptr)
+               q->sig = aux->sig;
+               aux->sig = q;
+               ptr->sig = aux;
+            }
+            else
+            {
+               if(aux->sig != ptr)
                {
-                  /*siempre posicionamos un aux detras de q para poder operar*/
-                  aux2 = ptr;
+                  aux2 = ptr->sig;
                   while(aux2->sig != q)
                   {
                      aux2 = aux2->sig;
@@ -335,47 +316,32 @@ Nodo *OrdenarDesc(Nodo *ptr)
                   q->sig = aux->sig;
                   aux->sig = q;
                   aux2->sig = aux;
-                  ptr = aux;
                }
                else
                {
-                  if(aux->sig != ptr)
+                  aux2 = ptr->sig;
+                  while(aux2->sig != q)
                   {
-                     aux2 = ptr;
-                     while(aux2->sig != q)
-                     {
-                        aux2 = aux2->sig;
-                     }
-                     q->sig = aux->sig;
-                     aux->sig = q;
-                     aux2->sig = aux;
+                     aux2 = aux2->sig;
                   }
-                  else
-                  {
-                     aux2 = ptr;
-                     while(aux2->sig != q)
-                     {
-                        aux2 = aux2->sig;
-                     }
-                     q->sig = ptr;
-                     aux->sig = q;
-                     aux2->sig = aux;
-                  }
-               }
-               /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
-               principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
-               if(q == p)
-               {
-                  p = aux;
+                  aux2->sig = aux;
+                  q->sig = ptr;
+                  aux->sig = q;
                }
             }
-            else
+            /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
+            principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
+            if(q == p)
             {
-               q = q->sig;
+               p = aux;
             }
          }
-         p = p->sig;
+         else
+         {
+            q = q->sig;
+         }
       }
+      p = p->sig;
    }
    cin.get();
    return ptr;
@@ -383,28 +349,26 @@ Nodo *OrdenarDesc(Nodo *ptr)
 Nodo *OrdenarAsc(Nodo *ptr)
 {
    Nodo *p, *q, *aux, *aux2;
-   if(ptr->sig->sig == ptr)
+   p = ptr->sig;
+   while(p != ptr)
    {
-      if(ptr->info > ptr->sig->info)
+      q = ptr->sig;
+      while(q != ptr)
       {
-         ptr = ptr->sig;
-      }
-   }
-   else
-   {
-      p = ptr;
-      while(p->sig != ptr)
-      {
-         q = ptr;
-         while(q->sig != ptr)
+         if(q->sig != ptr && q->info > q->sig->info)
          {
-            /*lo mismo que OrdenarDesc pero cambiamos el operador logico bool*/
-            if(q->sig != ptr && q->info > q->sig->info)
+            aux = q->sig;
+            if(q == ptr->sig)
             {
-               aux = q->sig;
-               if(q == ptr)
+               q->sig = aux->sig;
+               aux->sig = q;
+               ptr->sig = aux;
+            }
+            else
+            {
+               if(aux->sig != ptr)
                {
-                  aux2 = ptr;
+                  aux2 = ptr->sig;
                   while(aux2->sig != q)
                   {
                      aux2 = aux2->sig;
@@ -412,45 +376,32 @@ Nodo *OrdenarAsc(Nodo *ptr)
                   q->sig = aux->sig;
                   aux->sig = q;
                   aux2->sig = aux;
-                  ptr = aux;
                }
                else
                {
-                  if(aux->sig != ptr)
+                  aux2 = ptr->sig;
+                  while(aux2->sig != q)
                   {
-                     aux2 = ptr;
-                     while(aux2->sig != q)
-                     {
-                        aux2 = aux2->sig;
-                     }
-                     q->sig = aux->sig;
-                     aux->sig = q;
-                     aux2->sig = aux;
+                     aux2 = aux2->sig;
                   }
-                  else
-                  {
-                     aux2 = ptr;
-                     while(aux2->sig != q)
-                     {
-                        aux2 = aux2->sig;
-                     }
-                     q->sig = ptr;
-                     aux->sig = q;
-                     aux2->sig = aux;
-                  }
-               }
-               if(q == p)
-               {
-                  p = aux;
+                  aux2->sig = aux;
+                  q->sig = ptr;
+                  aux->sig = q;
                }
             }
-            else
+            /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
+            principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
+            if(q == p)
             {
-               q = q->sig;
+               p = aux;
             }
          }
-         p = p->sig;
+         else
+         {
+            q = q->sig;
+         }
       }
+      p = p->sig;
    }
    cin.get();
    return ptr;

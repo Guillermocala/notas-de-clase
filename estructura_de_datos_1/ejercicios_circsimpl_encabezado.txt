@@ -1,0 +1,12 @@
+EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES CON ENCABEZADO
+1- Dada una lista circular, realizar un algoritmo que ordene la lista circular.
+2- Realizar un algoritmo que inserte un nodo con informacion ELEM despues de la n-sima ocurrencia
+   de un dato dentro de la lista circular llamado xinfo.
+3- Dadas 3 listas circulares enlazadas y ordenadas. cree una lista circular con los nodos que aparecen en al menos dos de las 3 listas.
+4- Un grupo de personas de pie forman un circulo y dado un N contar hasta el n-esimo nodo y eliminarlo hasta
+   dejar una sola persona de pie(problema de josephus).
+5- Considera la variacion del problema de josephus. Un grupo de personas de pie forman un circulo y cada uno elige un entero
+   positivo. Se selecciona uno de los nombres y un entero positivo N. Empezando con la persona cuyo nombre se elige
+   cuenta al rededor del circulo en sentido dextrogico y eliminan la n-esima persona despues, se elige
+   el entero de esta persona a eliminar a la sgte persona a eliminar.
+6- Escribe un programa para almacenar en una lista doblemente enlazada, el centesimo numero de la serie fibonacci.

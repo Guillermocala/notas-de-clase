@@ -371,3 +371,43 @@ nodoa* ascendente(nodoa *p, int elem)
    }
    return ptr;
 };
+void ordenar(nodoa *ptr)
+{
+   p = ptr;
+   if(ptr==NULL)
+   {
+      cout << "la lista esta vacia" << endl;
+   }
+   else if(p->sig == NULL && p->ant == NULL)
+   {
+      cout << "la lista solo tiene un elemento" << endl;
+   }
+   else
+   {
+      while(p->sig != NULL)
+      {
+         if(p->info <= p->sig->info)
+         {
+            k = p->sig;
+            p->sig = k->sig;
+            k->ant = p->ant;
+            k->sig = p;
+            p->ant = k;
+            while(k != NULL)
+            {
+               if(k->ant->info <= k->info)
+               {
+                  p = k->ant;
+                  k->ant = p->ant;
+                  p->sig = k->sig;
+                  k->sig = p;
+                  p->ant = k;
+               }
+               k = k->ant;
+            }
+         }
+         p = p->sig;
+      }
+   }
+   cin.get();
+}

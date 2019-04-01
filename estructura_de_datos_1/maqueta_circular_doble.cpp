@@ -1,7 +1,6 @@
 /*
 *Guillermo Cala; 24/ march/ 19; modified: 26/ march/ 19
 *maqueta de listas circulares dobles con operaciones basicas
-*¡ALGORITMO DE ORDENAR DEFECTUOSO. PENDIENTE POR ARREGLAR!
 */
 #include "iostream"
 using namespace std;
@@ -244,21 +243,22 @@ void Mostrar(Nodo *ptr)
          cout << "PTR -> ";
          while(r->sig != ptr)
          {
-            cout << r->info << " -> ";
+            cout << "[" << r->info << "] -> ";
             r = r->sig;
          }
-         cout << r->info << " -> ";
+         cout << "[" << r->info << "] -> ";
          cout << "NULL ";
          cin.ignore();
          break;
       case 2:
+         r = ptr->ant;
          cout << "PTR -> ";
-         while(r->ant != ptr)
+         while(r->ant != ptr->ant)
          {
-            cout << r->info << " -> ";
+            cout << "[" << r->info << "] -> ";
             r = r->ant;
          }
-         cout << r->info << " -> ";
+         cout << "[" << r->info << "] -> ";
          cout << "NULL ";
          cin.ignore();
          break;
@@ -351,10 +351,10 @@ Nodo *OrdenarDesc(Nodo *ptr)
                   aux2 = ptr->ant;
                   aux->sig->ant = q;
                   q->sig = aux->sig;
-                  aux->ant = aux2;
-                  aux2->sig = aux;
-                  ptr->ant = aux;
                   aux->sig = ptr;
+                  ptr->ant = aux;
+                  aux2->sig = aux;
+                  aux->ant = aux2;
                   ptr = aux;
                }
                else
@@ -364,13 +364,14 @@ Nodo *OrdenarDesc(Nodo *ptr)
                      aux2 = q->ant;
                      aux->sig->ant = q;
                      q->sig = aux->sig;
-                     aux2->sig = aux;
-                     aux->ant = aux2;
                      aux->sig = q;
                      q->ant = aux;
+                     aux2->sig = aux;
+                     aux->ant = aux2;
                   }
                   else
                   {
+                     aux2 = q->ant;
                      ptr->ant = q;
                      q->sig = ptr;
                      aux2->sig = aux;
@@ -425,10 +426,10 @@ Nodo *OrdenarAsc(Nodo *ptr)
                   aux2 = ptr->ant;
                   aux->sig->ant = q;
                   q->sig = aux->sig;
-                  aux->ant = aux2;
-                  aux2->sig = aux;
-                  ptr->ant = aux;
                   aux->sig = ptr;
+                  ptr->ant = aux;
+                  aux2->sig = aux;
+                  aux->ant = aux2;
                   ptr = aux;
                }
                else
@@ -438,13 +439,14 @@ Nodo *OrdenarAsc(Nodo *ptr)
                      aux2 = q->ant;
                      aux->sig->ant = q;
                      q->sig = aux->sig;
-                     aux2->sig = aux;
-                     aux->ant = aux2;
                      aux->sig = q;
                      q->ant = aux;
+                     aux2->sig = aux;
+                     aux->ant = aux2;
                   }
                   else
                   {
+                     aux2 = q->ant;
                      ptr->ant = q;
                      q->sig = ptr;
                      aux2->sig = aux;

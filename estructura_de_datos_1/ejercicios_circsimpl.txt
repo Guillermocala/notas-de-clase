@@ -1,0 +1,16 @@
+EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES
+1- Dada una lista circular simple hacer un algoritmo que elimine los nodos cuya informacion sea impar.
+2- Dada una lista circular simple ordenada ascendentemente hacer un algoritmo que inserte un nodo con la informacion ELEM y la lista siga quedando ordenada.
+3- Dada dos listas PTR1 y PTR2 hacer un algoritmo que una la lista 2 con la lista 1 teniendo encuenta lo sgte:
+   a- Si el numero de nodos de la lista 1 es mayor al numero de nodos de la lista 2 se inserta la lista 2 al final de la lista 1.
+   b- Si el numero de nodos de la lista 1 es menor al numero de nodos de la lista 2 se inserta la lista 1 al final de la lista 2.
+   c- Si el numero de nodos de la lista 1 es igual al numero de nodos de la lista 2 se envia un mensaje al usuario diciendo que no se puede insertar.
+4- Dada una lista circular simple hacer un algoritmo que saque la parte entera del promedio de los elementos de la lista y luego elimine los nodos cuya
+   informacion sea menor a la parte entera del promedio.
+5- Dada una lista simple y un nodo hacer un algoritmo que elimine el nodo de la posicion N, repita este procedimiento hasta que quede un solo
+   nodo(problema de josephus) contando siempre el n-esimo nodo.
+6- Dada dos listas circulares simples PTR1 y PTR2 hacer las sgtes operaciones:
+   a- Union: Los elementos de PTR1 y PTR2 pasan a PTR3 sin repetirse.
+   b- Intercepcion: Los elementos de PTR1 que esten en PTR2 pasan a PTR3.
+   c- Diferencia PTR1-PTR2: Los elementos de PTR1 que no se encuentren en PTR2 pasan a PTR3.
+7- Dada una lista circular simple hacer un algoritmo que busque un elemento ELEM e intercambie el nodo donde se encuentra ELEM con el primero.
