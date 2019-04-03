@@ -14,3 +14,93 @@ EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES
    b- Intercepcion: Los elementos de PTR1 que esten en PTR2 pasan a PTR3.
    c- Diferencia PTR1-PTR2: Los elementos de PTR1 que no se encuentren en PTR2 pasan a PTR3.
 7- Dada una lista circular simple hacer un algoritmo que busque un elemento ELEM e intercambie el nodo donde se encuentra ELEM con el primero.
+
+   DESARROLLO
+1---------------------------------------------------------------------------------
+en el main:
+case 8:
+   int opt, dato2;
+   system("clear");
+   cout << "Se intercambiara el nodo del dato ingresado con el primero nodo" << endl;
+   cout << "Ingrese 1 para continuar u otro numero para ir al menu anterior: ";
+   cin >> opt;
+   if(opt == 1)
+   {
+      cout << "Ingrese el dato a buscar: ";
+      cin >> dato2;
+      ptr = intercambio(ptr, dato2);
+   }
+   else
+   {
+      /*unexpected function*/
+   }
+   break;
+en la funcion:
+Nodo *intercambio(Nodo *ptr, int elem)
+{
+   Nodo *q = Buscar(ptr, elem);
+   if(q == NULL)
+   {
+      cout << "No se encontro el elemento" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr->sig == ptr)
+   {
+      cout << "solo hay un elemento en la lista" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(q == ptr)
+   {
+      cout << "el elemento ya esta en el primer nodo" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      Nodo *aux, *aux2;
+      /*para cuando solo hay dos elem en la lista*/
+      if(ptr->sig->sig == ptr && q->sig == ptr)
+      {
+         ptr = ptr->sig;
+      }
+      else if(q->sig == ptr)
+      {
+         aux = ptr;
+         while(aux->sig != q)
+         {
+            aux = aux->sig;
+         }
+         q->sig = ptr->sig;
+         aux->sig = ptr;
+         ptr->sig = q;
+         ptr = q;
+      }
+      else
+      {
+         /*se posicionan dos aux antes de cada parte, luego se crean mini listas SIMPLES
+         y despues se mueven los aux para terminar de conectar la lista como si fuese una sola*/
+         aux = ptr;
+         while(aux->sig != ptr)
+         {
+            aux = aux->sig;
+         }
+         aux2 = ptr;
+         while(aux2->sig != q)
+         {
+            aux2 = aux2->sig;
+         }
+         aux2->sig = ptr;
+         aux->sig = q;
+         aux2 = ptr->sig;
+         aux = q->sig;
+         q->sig = aux2;
+         ptr->sig = aux;
+         ptr = q;
+      }
+   }
+   return ptr;
+}
+
+2---------------------------------------------------------------------------------

@@ -17,6 +17,7 @@ Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
+Nodo *insertarAsc(Nodo *ptr, int elem);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -143,6 +144,10 @@ int main(int argc, char const *argv[])
                sw = 0;
             }
             break;
+         case 8:
+            system("clear");
+
+            break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;
             cin.ignore();
@@ -173,6 +178,8 @@ int menu()
 	printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t�  7) SALIR                �");
 	printf("\n\t\t\t�                          �");
+   printf("\n\t\t\t�  8) EJERCICIO            �");
+   printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�    ELIJA UNA OPCION      �");
 	printf("\n\t\t\t����������������������������");
@@ -454,4 +461,78 @@ Nodo *OrdenarAsc(Nodo *ptr)
    }
    cin.get();
    return ptr;
+}
+Nodo *insertarAsc(Nodo *ptr, int xinfo)
+{
+   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
+   p->info = xinfo;
+   Nodo *q = ptr, *aux, *aux2;
+   while(q->sig != ptr)
+   {
+      if(p->info < q->info)
+      {
+         if(q == ptr)
+         {
+            /*siempre posicionamos un aux detras de q para poder operar*/
+            aux2 = ptr;
+            while(aux2->sig != q)
+            {
+               aux2 = aux2->sig;
+            }
+            q->sig = aux->sig;
+            aux->sig = q;
+            aux2->sig = aux;
+            ptr = aux;
+         }
+         else
+         {
+            if(aux->sig != ptr)
+            {
+               aux2 = ptr;
+               while(aux2->sig != q)
+               {
+                  aux2 = aux2->sig;
+               }
+               q->sig = aux->sig;
+               aux->sig = q;
+               aux2->sig = aux;
+            }
+            else
+            {
+               aux2 = ptr;
+               while(aux2->sig != q)
+               {
+                  aux2 = aux2->sig;
+               }
+               q->sig = ptr;
+               aux->sig = q;
+               aux2->sig = aux;
+            }
+         }
+      }
+      else
+      {
+         q = q->sig;
+      }
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   return 0;
 }
