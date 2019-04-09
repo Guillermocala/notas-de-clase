@@ -9,33 +9,73 @@ struct Nodo
    int info;
    Nodo *sig;
 };
-Nodo *ptr = NULL;
+Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL, *temp = NULL;
 int menu();
-Nodo *insertarCabeza(Nodo *ptr, int xinfo);
-Nodo *insertarCola(Nodo *ptr, int xinfo);
+Nodo *InsertarCabeza(Nodo *ptr, int xinfo);
+Nodo *InsertarCola(Nodo *ptr, int xinfo);
 Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
-Nodo *insertarAsc(Nodo *ptr, int elem);
+Nodo *OpListas(Nodo *ptr, Nodo *ptr2);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
-   int sw = 1, info;
+   int sw = 1, info, opt;
    do{
       switch(menu())
       {
          case 1:
             system("clear");
-            cout << "Ingrese el dato: ";
-            cin >> info;
-            ptr = insertarCabeza(ptr, info);
+            cout << "En que lista desea trabajar?: ";
+            cin >> opt;
+            switch(opt)
+            {
+               case 1:
+                  cout << "Ingrese el dato: ";
+                  cin >> info;
+                  ptr = InsertarCabeza(ptr, info);
+                  break;
+               case 2:
+                  cout << "Ingrese el dato: ";
+                  cin >> info;
+                  ptr2 = InsertarCabeza(ptr2, info);
+                  break;
+               case 3:
+                  cout << "Ingrese el dato: ";
+                  cin >> info;
+                  ptr2 = InsertarCabeza(ptr2, info);
+                  break;
+               default:
+                  cout << "Valor invalido..." << endl;
+                  break;
+            }
             break;
          case 2:
             system("clear");
-            cout << "Ingrese el dato: ";
-            cin >> info;
-            ptr = insertarCola(ptr, info);
+            cout << "En que lista desea trabajar?: ";
+            cin >> opt;
+            switch(opt)
+            {
+               case 1:
+                  cout << "Ingrese el dato: ";
+                  cin >> info;
+                  ptr = InsertarCola(ptr, info);
+                  break;
+               case 2:
+                  cout << "Ingrese el dato: ";
+                  cin >> info;
+                  ptr2 = InsertarCola(ptr2, info);
+                  break;
+               case 3:
+                  cout << "Ingrese el dato: ";
+                  cin >> info;
+                  ptr2 = InsertarCola(ptr2, info);
+                  break;
+               default:
+                  cout << "Valor invalido..." << endl;
+                  break;
+            }
             break;
          case 3:
             int llave;
@@ -86,16 +126,52 @@ int main(int argc, char const *argv[])
             system("clear");
             /*esta verificacion es para evitar un inifity loop, puede suceder
             cuando se intenta imprimir y la lista esta vacia */
-            if(ptr == NULL)
+            cout << "En que lista desea trabajar?: ";
+            cin >> opt;
+            switch(opt)
             {
-               cout << "lista vacia" << endl;
-               cin.ignore();
-               cin.get();
-            }
-            else
-            {
-               Mostrar(ptr);
-               cin.get();
+               case 1:
+                  if(ptr == NULL)
+                  {
+                     cout << "lista vacia" << endl;
+                     cin.ignore();
+                     cin.get();
+                  }
+                  else
+                  {
+                     Mostrar(ptr);
+                     cin.get();
+                  }
+                  break;
+               case 2:
+                  if(ptr2 == NULL)
+                  {
+                     cout << "lista vacia" << endl;
+                     cin.ignore();
+                     cin.get();
+                  }
+                  else
+                  {
+                     Mostrar(ptr2);
+                     cin.get();
+                  }
+                  break;
+               case 3:
+                  if(ptr3 == NULL)
+                  {
+                     cout << "lista vacia" << endl;
+                     cin.ignore();
+                     cin.get();
+                  }
+                  else
+                  {
+                     Mostrar(ptr3);
+                     cin.get();
+                  }
+                  break;
+               default:
+                  cout << "Valor invalido..." << endl;
+                  break;
             }
             break;
          case 6:
@@ -146,7 +222,26 @@ int main(int argc, char const *argv[])
             break;
          case 8:
             system("clear");
-
+            int elem;
+            if(ptr == NULL || ptr2 == NULL)
+            {
+               if(ptr == NULL)
+               {
+                  cout << "Lista 1 vacia..." << endl;
+                  cin.ignore();
+                  cin.get();
+               }
+               else
+               {
+                  cout << "Lista 2 vacia..." << endl;
+                  cin.ignore();
+                  cin.get();
+               }
+            }
+            else
+            {
+               ptr3 = OpListas(ptr, ptr2);
+            }
             break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;
@@ -162,11 +257,12 @@ int menu()
    system("clear");
    printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�  MENU LISTA CIRC SIMPLES �");
+   printf("\n\t\t\t�    3 LISTAS A MANEJAR    �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  1) INSERTAR CABEZA      �");
+	printf("\n\t\t\t�  1) Insertar CABEZA      �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  2) INSERTAR COLA        �");
+	printf("\n\t\t\t�  2) Insertar COLA        �");
 	printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t�  3) BUSCAR LLAVE         �");
 	printf("\n\t\t\t�                          �");
@@ -181,14 +277,12 @@ int menu()
    printf("\n\t\t\t�  8) EJERCICIO            �");
    printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t����������������������������");
-	printf("\n\t\t\t�    ELIJA UNA OPCION      �");
-	printf("\n\t\t\t����������������������������");
    int opt;
    cout << "\nIngrese una opcion: ";
    cin >> opt;
    return opt;
 }
-Nodo *insertarCabeza(Nodo *ptr, int xinfo)
+Nodo *InsertarCabeza(Nodo *ptr, int xinfo)
 {
    Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
    p->info = xinfo;
@@ -212,9 +306,9 @@ Nodo *insertarCabeza(Nodo *ptr, int xinfo)
    }
    return ptr;
 }
-Nodo *insertarCola(Nodo *ptr, int xinfo)
+Nodo *InsertarCola(Nodo *ptr, int xinfo)
 {
-   /*lo mismo que insertar por cabeza, pero sin reposicionar ptr*/
+   /*lo mismo que Insertar por cabeza, pero sin reposicionar ptr*/
    Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
    p->info = xinfo;
    if(ptr == NULL)
@@ -462,77 +556,50 @@ Nodo *OrdenarAsc(Nodo *ptr)
    cin.get();
    return ptr;
 }
-Nodo *insertarAsc(Nodo *ptr, int xinfo)
+Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
 {
-   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
-   p->info = xinfo;
-   Nodo *q = ptr, *aux, *aux2;
-   while(q->sig != ptr)
+   int opt;
+   cout << "1- Union(elementos de ptr1 y ptr2 pasan a ptr3 sin ocurrencias)\n2- Intercepcion(elem de ptr1 que esten en ptr2 pasan a ptr3)\n3- Diferencia(elem de ptr1 que no se encuentren en ptr2 pasan a ptr3)" << endl;
+   cout << "Ingrese una opcion: ";
+   cin >> opt;
+   switch(opt)
    {
-      if(p->info < q->info)
-      {
-         if(q == ptr)
-         {
-            /*siempre posicionamos un aux detras de q para poder operar*/
-            aux2 = ptr;
-            while(aux2->sig != q)
-            {
-               aux2 = aux2->sig;
-            }
-            q->sig = aux->sig;
-            aux->sig = q;
-            aux2->sig = aux;
-            ptr = aux;
-         }
-         else
-         {
-            if(aux->sig != ptr)
-            {
-               aux2 = ptr;
-               while(aux2->sig != q)
-               {
-                  aux2 = aux2->sig;
-               }
-               q->sig = aux->sig;
-               aux->sig = q;
-               aux2->sig = aux;
-            }
-            else
-            {
-               aux2 = ptr;
-               while(aux2->sig != q)
-               {
-                  aux2 = aux2->sig;
-               }
-               q->sig = ptr;
-               aux->sig = q;
-               aux2->sig = aux;
-            }
-         }
-      }
-      else
-      {
-         q = q->sig;
-      }
+      case 1:
+
+         break;
+      case 2:
+         break;
+      case 3:
+         break;
+      default:
+         cout << "Ha ingresado un valor invalido..." << endl;
+         cin.ignore();
+         cin.get();
+         break;
    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   return 0;
 }
+/*Nodo *Verificar(void)
+{
+   int opt;
+   cout << "En que lista va a operar?: ";
+   cin >> opt;
+   switch (opt)
+   {
+      case 1:
+         return ptr;
+         break;
+      case 2:
+         return ptr2;
+         break;
+      case 3:
+         return ptr3;
+         break;
+      default:
+         cout << "Valor invalido..." << endl;
+         cin.ignore();
+         cin.get();
+         break;
+   }
+}
+*/
