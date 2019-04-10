@@ -18,6 +18,7 @@ Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
 Nodo *InsertarAsc(Nodo *ptr, int xinfo);
+Nodo *intercambio(Nodo *ptr, int elem);
 Nodo *OpListas(Nodo *ptr, Nodo *ptr2);
 Nodo *Union(Nodo *ptr, Nodo *ptr2);
 Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2);
@@ -30,7 +31,7 @@ int main(int argc, char const *argv[])
       switch(menu())
       {
          case 1:
-            system("clear");
+            system("cls");
             cout << "En que lista desea trabajar?: ";
             cin >> opt;
             switch(opt)
@@ -56,7 +57,7 @@ int main(int argc, char const *argv[])
             }
             break;
          case 2:
-            system("clear");
+            system("cls");
             cout << "En que lista desea trabajar?: ";
             cin >> opt;
             switch(opt)
@@ -86,38 +87,34 @@ int main(int argc, char const *argv[])
             if(ptr == NULL)
             {
                cout << "lista vacia" << endl;
-               cin.ignore();
-               cin.get();
+               system("pause");
             }
             else
             {
                Nodo *q;
-               system("clear");
+               system("cls");
                cout << "Ingrese el elemento a buscar: ";
                cin >> llave;
                q = Buscar(ptr, llave);
                if(q != NULL)
                {
                   cout << "Elemento encontrado" << endl;
-                  cin.ignore();
-                  cin.get();
+                  system("pause");
                }
                else
                {
                   cout << "Elemento no encontrado" << endl;
-                  cin.ignore();
-                  cin.get();
+                  system("pause");
                }
             }
             break;
          case 4:
-            system("clear");
+            system("cls");
             int dato;
             if(ptr == NULL)
             {
                cout << "Lista vacia" << endl;
-               cin.ignore();
-               cin.get();
+               system("pause");
             }
             else
             {
@@ -127,7 +124,7 @@ int main(int argc, char const *argv[])
             }
             break;
          case 5:
-            system("clear");
+            system("cls");
             /*esta verificacion es para evitar un inifity loop, puede suceder
             cuando se intenta imprimir y la lista esta vacia */
             cout << "En que lista desea trabajar?: ";
@@ -138,39 +135,33 @@ int main(int argc, char const *argv[])
                   if(ptr == NULL)
                   {
                      cout << "lista vacia" << endl;
-                     cin.ignore();
-                     cin.get();
+                     system("pause");
                   }
                   else
                   {
                      Mostrar(ptr);
-                     cin.get();
                   }
                   break;
                case 2:
                   if(ptr2 == NULL)
                   {
                      cout << "lista vacia" << endl;
-                     cin.ignore();
-                     cin.get();
+                     system("pause");
                   }
                   else
                   {
                      Mostrar(ptr2);
-                     cin.get();
                   }
                   break;
                case 3:
                   if(ptr3 == NULL)
                   {
                      cout << "lista vacia" << endl;
-                     cin.ignore();
-                     cin.get();
+                     system("pause");
                   }
                   else
                   {
                      Mostrar(ptr3);
-                     cin.get();
                   }
                   break;
                default:
@@ -184,17 +175,15 @@ int main(int argc, char const *argv[])
             if(ptr == NULL)
             {
                cout << "la lista esta vacia" << endl;
-               cin.get();
             }
             else if(p->sig == ptr)
             {
                cout << "la lista solo tiene un elemento" << endl;
-               cin.get();
             }
             else
             {
                int opt;
-               system("clear");
+               system("cls");
                cout << "1- Ordenar Descendente\n2- Ordenar Ascendente" << endl;
                cout << "Ingrese una opcion: ";
                cin >> opt;
@@ -208,15 +197,14 @@ int main(int argc, char const *argv[])
                      break;
                   default:
                      cout << "Valor invalido!" << endl;
-                     cin.get();
                      break;
                }
             }
-            cin.ignore();
+            system("pause");
             break;
          case 7:
             int exit;
-            system("clear");
+            system("cls");
             cout << "\tEsta seguro que desea cerrar el programa?\nPresione 1 para salir, de lo contrario digite cualquier otro numero: ";
             cin >> exit;
             if(exit == 1)
@@ -226,31 +214,44 @@ int main(int argc, char const *argv[])
             break;
          case 8:
             system("clear");
-            int elem;
-            if(ptr == NULL || ptr2 == NULL)
+            cout << "Se intercambiara el nodo del dato ingresado con el primero nodo" << endl;
+            cout << "Ingrese 1 para continuar u otro numero para ir al menu anterior: ";
+            cin >> opt;
+            if(opt == 1)
             {
-               if(ptr == NULL)
+               if(ptr->sig == ptr || ptr == NULL)
                {
-                  cout << "Lista 1 vacia..." << endl;
+                  cout << "No se puede operar(lista vacia o con un elemento)" << endl;
                   cin.ignore();
                   cin.get();
                }
                else
                {
-                  cout << "Lista 2 vacia..." << endl;
-                  cin.ignore();
-                  cin.get();
+                  cout << "Ingrese el dato a buscar: ";
+                  cin >> dato;
+                  Nodo *q = Buscar(ptr, dato);
+                  if(q == NULL)
+                  {
+                     cout << "No se encontro el elemento" << endl;
+                     cin.ignore();
+                     cin.get();
+                  }
+                  else if(q == ptr)
+                  {
+                     cout << "el elemento ya esta en el primer nodo" << endl;
+                     cin.ignore();
+                     cin.get();
+                  }
+                  else
+                  {
+                     ptr = intercambio(ptr, dato);
+                  }
                }
             }
             else
             {
-               OpListas(ptr, ptr2);
+               /*unexpected function*/
             }
-            break;
-         default:
-            cout << "Ha ingresado un valor invalido..." << endl;
-            cin.ignore();
-            cin.get();
             break;
       }
    }while(sw);
@@ -258,29 +259,29 @@ int main(int argc, char const *argv[])
 }
 int menu()
 {
-   system("clear");
-   printf("\n\t\t\t����������������������������");
-	printf("\n\t\t\t�  MENU LISTA CIRC SIMPLES �");
-   printf("\n\t\t\t�    3 LISTAS A MANEJAR    �");
-	printf("\n\t\t\t����������������������������");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  1) Insertar CABEZA      �");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  2) Insertar COLA        �");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  3) BUSCAR LLAVE         �");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  4) ELIMINAR NODO        �");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  5) MOSTRAR LISTA        �");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  6) ORDENAR              �");
-	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  7) SALIR                �");
-	printf("\n\t\t\t�                          �");
-   printf("\n\t\t\t�  8) EJERCICIO            �");
-   printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t����������������������������");
+   system("cls");
+   printf("\n\t\t\t0000000000000000000000000000");
+	printf("\n\t\t\t0  MENU LISTA CIRC SIMPLES 0");
+   printf("\n\t\t\t0    3 LISTAS A MANEJAR    0");
+	printf("\n\t\t\t0000000000000000000000000000");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  1) Insertar CABEZA      0");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  2) Insertar COLA        0");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  3) BUSCAR LLAVE         0");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  4) ELIMINAR NODO        0");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  5) MOSTRAR LISTA        0");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  6) ORDENAR              0");
+	printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0  7) SALIR                0");
+	printf("\n\t\t\t0                          0");
+   printf("\n\t\t\t0  8) EJERCICIO            0");
+   printf("\n\t\t\t0                          0");
+	printf("\n\t\t\t0000000000000000000000000000");
    int opt;
    cout << "\nIngrese una opcion: ";
    cin >> opt;
@@ -345,7 +346,7 @@ void Mostrar(Nodo *ptr)
    por fuera del ciclo, ya que el apuntador esta posicionado en el nodo*/
    cout << "[" << r->info << "] -> ";
    cout << "NULL ";
-   cin.ignore();
+   system("pause");
 }
 Nodo *Buscar(Nodo *ptr, int elem)
 {
@@ -386,8 +387,7 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
    if(q == NULL)
    {
       cout << "Elemento no encontrado " << endl;
-      cin.ignore();
-      cin.get();
+      system("pause");
    }
    else
    {
@@ -491,7 +491,6 @@ Nodo *OrdenarDesc(Nodo *ptr)
          p = p->sig;
       }
    }
-   cin.get();
    return ptr;
 }
 Nodo *OrdenarAsc(Nodo *ptr)
@@ -566,7 +565,6 @@ Nodo *OrdenarAsc(Nodo *ptr)
          p = p->sig;
       }
    }
-   cin.get();
    return ptr;
 }
 
@@ -645,8 +643,7 @@ Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
          break;
       default:
          cout << "Ha ingresado un valor invalido..." << endl;
-         cin.ignore();
-         cin.get();
+         system("pause");
          break;
    }
 }
@@ -727,51 +724,98 @@ Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2)
 }
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
 {
-  Nodo *aux = ptr, *aux2 = ptr2, *q;
-  while(aux->sig != ptr)
-  {
-     aux2 = ptr2;
-     while(aux2->sig != ptr2)
-     {
-        if(aux2->info == aux->info)
-        {
-           q = Buscar(ptr3, aux2->info);
-           if (q != NULL)
-           {
-              ptr3 = InsertarAsc(ptr3, aux2->info);
-           }
-        }
-        aux2 = aux2->sig;
-     }
-     if(aux2->info == aux->info)
-     {
-        q = Buscar(ptr3, aux2->info);
-        if (q != NULL)
-        {
-           ptr3 = InsertarAsc(ptr3, aux2->info);
-        }
-     }
-     aux = aux->sig;
-  }
-  aux2 = ptr2;
-  while(aux2->sig != ptr2)
-  {
-     if(aux2->info == aux->info)
-     {
-        q = Buscar(ptr3, aux2->info);
-        if (q != NULL)
-        {
-           ptr3 = InsertarAsc(ptr3, aux2->info);
-        }
-     }
-     aux2 = aux2->sig;
-  }
-  if(aux2->info == aux->info)
-  {
-     q = Buscar(ptr3, aux2->info);
-     if (q != NULL)
-     {
-        ptr3 = InsertarAsc(ptr3, aux2->info);
-     }
-  }
+   int cont = 0;
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   while(aux->sig != ptr)
+   {
+      aux2 = ptr2;
+      cont = 0;
+      while(aux2->sig != ptr2)
+      {
+         if(aux->info == aux2->info)
+         {
+            cont++;
+         }
+         aux2 = aux2->sig;
+      }
+      if(aux->info == aux2->info)
+      {
+         cont++;
+      }
+      if(cont == 0)
+      {
+         q = Buscar(ptr3, aux->info);
+         if(q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux->info);
+         }
+      }
+      aux = aux->sig;
+   }
+   aux2 = ptr2;
+   cont = 0;
+   while(aux2->sig != ptr2)
+   {
+      if(aux->info == aux2->info)
+      {
+         cont++;
+      }
+      aux2 = aux2->sig;
+   }
+   if(aux->info == aux2->info)
+   {
+      cont++;
+   }
+   if(cont == 0)
+   {
+      q = Buscar(ptr3, aux->info);
+      if(q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux->info);
+      }
+   }
+}
+Nodo *intercambio(Nodo *ptr, int elem)
+{
+   Nodo *q = Buscar(ptr, elem), *aux, *aux2;
+   /*para cuando solo hay dos elem en la lista*/
+   if(ptr->sig->sig == ptr && q->sig == ptr)
+   {
+      ptr = ptr->sig;
+   }
+   else if(q->sig == ptr)
+   {
+      aux = ptr;
+      while(aux->sig != q)
+      {
+         aux = aux->sig;
+      }
+      q->sig = ptr->sig;
+      aux->sig = ptr;
+      ptr->sig = q;
+      ptr = q;
+   }
+   else
+   {
+      /*se posicionan dos aux antes de cada parte, luego se crean mini listas SIMPLES
+      y despues se mueven los aux para terminar de conectar la lista como si fuese una sola*/
+      aux = ptr;
+      while(aux->sig != ptr)
+      {
+         aux = aux->sig;
+      }
+      aux2 = ptr;
+      while(aux2->sig != q)
+      {
+         aux2 = aux2->sig;
+      }
+      aux2->sig = ptr;
+      aux->sig = q;
+      aux2 = ptr->sig;
+      aux = q->sig;
+      q->sig = aux2;
+      ptr->sig = aux;
+      ptr = q;
+   }
+   return ptr;
 }
