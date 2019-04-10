@@ -65,6 +65,9 @@ case 8:
    ptr = InsertarAsc(ptr, dato);
    break;
 en la funcion:
+/*esta funcion solo funciona cuando hay por lo menos un nodo en la lista
+*si se quiere hacer para que tome valores desde ptr == null se cambia
+*lista vacia por: ptr = p; p->sig = ptr */
 Nodo *InsertarAsc(Nodo *ptr, int xinfo)
 {
    Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));

@@ -17,7 +17,10 @@ Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
+Nodo *InsertarAsc(Nodo *ptr, int xinfo);
 Nodo *OpListas(Nodo *ptr, Nodo *ptr2);
+Nodo *Union(Nodo *ptr, Nodo *ptr2);
+Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -44,7 +47,7 @@ int main(int argc, char const *argv[])
                case 3:
                   cout << "Ingrese el dato: ";
                   cin >> info;
-                  ptr2 = InsertarCabeza(ptr2, info);
+                  ptr3 = InsertarCabeza(ptr3, info);
                   break;
                default:
                   cout << "Valor invalido..." << endl;
@@ -70,7 +73,7 @@ int main(int argc, char const *argv[])
                case 3:
                   cout << "Ingrese el dato: ";
                   cin >> info;
-                  ptr2 = InsertarCola(ptr2, info);
+                  ptr3 = InsertarCola(ptr3, info);
                   break;
                default:
                   cout << "Valor invalido..." << endl;
@@ -240,7 +243,7 @@ int main(int argc, char const *argv[])
             }
             else
             {
-               ptr3 = OpListas(ptr, ptr2);
+               OpListas(ptr, ptr2);
             }
             break;
          default:
@@ -346,25 +349,34 @@ void Mostrar(Nodo *ptr)
 Nodo *Buscar(Nodo *ptr, int elem)
 {
    Nodo *r = ptr;
-   while(r->sig != ptr)
+   /*esta verificacion de lista vacia es para usar la funcion
+   por fuera de una verificacion externa*/
+   if(r == NULL)
    {
+      return NULL;
+   }
+   else
+   {
+      while(r->sig != ptr)
+      {
+         if(r->info == elem)
+         {
+            return r;
+         }
+         else
+         {
+            r = r->sig;
+         }
+      }
+      /*se verifica de nuevo porque el bucle no toma el ultimo*/
       if(r->info == elem)
       {
          return r;
       }
       else
       {
-         r = r->sig;
+         return NULL;
       }
-   }
-   /*se verifica de nuevo porque el bucle no toma el ultimo*/
-   if(r->info == elem)
-   {
-      return r;
-   }
-   else
-   {
-      return NULL;
    }
 }
 Nodo *EliminarNodo(Nodo *ptr, int elem)
@@ -556,6 +568,63 @@ Nodo *OrdenarAsc(Nodo *ptr)
    cin.get();
    return ptr;
 }
+
+Nodo *InsertarAsc(Nodo *ptr, int xinfo)
+{
+   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
+   p->info = xinfo;
+   Nodo *aux = ptr, *aux2;
+   if(ptr == NULL)
+   {
+      ptr = p;
+      p->sig = ptr;
+   }
+   else
+   {
+      while(aux->sig != ptr && xinfo > aux->info)
+      {
+         aux = aux->sig;
+      }
+      if(aux == ptr)
+      {
+         if(xinfo < aux->info)
+         {
+            aux2 = ptr;
+            while(aux2->sig != aux)
+            {
+               aux2 = aux2->sig;
+            }
+            p->sig = ptr;
+            aux2->sig = p;
+            ptr = p;
+         }
+         else
+         {
+            p->sig = aux->sig;
+            aux->sig = p;
+         }
+      }
+      else
+      {
+         if(xinfo > aux->info)
+         {
+            aux->sig = p;
+            p->sig = ptr;
+         }
+         else
+         {
+            aux2 = ptr;
+            while(aux2->sig != aux)
+            {
+               aux2 = aux2->sig;
+            }
+            aux2->sig = p;
+            p->sig = aux;
+         }
+      }
+   }
+   return ptr;
+}
 Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
 {
    int opt;
@@ -565,9 +634,10 @@ Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
    switch(opt)
    {
       case 1:
-
+         Union(ptr, ptr2);
          break;
       case 2:
+         Intercepcion(ptr, ptr2);
          break;
       case 3:
          break;
@@ -577,29 +647,87 @@ Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
          cin.get();
          break;
    }
-
 }
-/*Nodo *Verificar(void)
+Nodo *Union(Nodo *ptr, Nodo *ptr2)
 {
-   int opt;
-   cout << "En que lista va a operar?: ";
-   cin >> opt;
-   switch (opt)
+   /*los elem de ptr1 y ptr2 pasan a ptr3 sin ocurrencias*/
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   while(aux->sig != ptr)
    {
-      case 1:
-         return ptr;
-         break;
-      case 2:
-         return ptr2;
-         break;
-      case 3:
-         return ptr3;
-         break;
-      default:
-         cout << "Valor invalido..." << endl;
-         cin.ignore();
-         cin.get();
-         break;
+      ptr3 = InsertarAsc(ptr3, aux->info);
+      aux = aux->sig;
+   }
+   ptr3 = InsertarAsc(ptr3, aux->info);
+   while(aux2->sig != ptr2)
+   {
+      q = Buscar(ptr, aux2->info);
+      if (q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux2->info);
+      }
+      aux2 = aux2->sig;
+   }
+   q = Buscar(ptr, aux2->info);
+   if (q == NULL)
+   {
+      ptr3 = InsertarAsc(ptr3, aux2->info);
    }
 }
-*/
+Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2)
+{
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   while(aux->sig != ptr)
+   {
+      aux2 = ptr2;
+      while(aux2->sig != ptr2)
+      {
+         if(aux2->info == aux->info)
+         {
+            q = Buscar(ptr3, aux2->info);
+            if (q == NULL)
+            {
+               ptr3 = InsertarAsc(ptr3, aux2->info);
+            }
+         }
+         aux2 = aux2->sig;
+      }
+      if(aux2->info == aux->info)
+      {
+         q = Buscar(ptr3, aux2->info);
+         if (q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux2->info);
+         }
+      }
+      aux = aux->sig;
+   }
+   aux2 = ptr2;
+   while(aux2->sig != ptr2)
+   {
+      if(aux2->info == aux->info)
+      {
+         q = Buscar(ptr3, aux2->info);
+         if (q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux2->info);
+         }
+      }
+      aux2 = aux2->sig;
+   }
+   if(aux2->info == aux->info)
+   {
+      q = Buscar(ptr3, aux2->info);
+      if (q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux2->info);
+      }
+   }
+}
+Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
+{
+
+
+
+
+
+}
