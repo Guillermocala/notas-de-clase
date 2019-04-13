@@ -40,6 +40,11 @@ Nodo *ElimImpares(Nodo *ptr)
    {
       if(aux->info %2 != 0)
       {
+<<<<<<< HEAD
+=======
+      /*realizamos una copia de el elemento para pasarlo a la funcion, pero
+      tambien podemos pasarle a la funcion aux->info*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
          elem = aux->info;
          ptr = EliminarNodo(ptr, elem);
          aux = aux->sig;
@@ -49,6 +54,11 @@ Nodo *ElimImpares(Nodo *ptr)
          aux = aux->sig;
       }
    }
+<<<<<<< HEAD
+=======
+   /*como no toma el ultimo elemento hacemos la comprobacion una vez mas por fuera
+   del ciclo*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
    if(aux->info %2 != 0)
    {
       elem = aux->info;
@@ -57,6 +67,11 @@ Nodo *ElimImpares(Nodo *ptr)
    return ptr;
 }
 2---------------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+/*dado a que el enunciado nos estipula que debe haber una lista previamente ordenada
+el algoritmo trabajara cuando hay por lo menos un elemento*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
 en el main:
 case 8:
    system("clear");
@@ -81,12 +96,20 @@ Nodo *InsertarAsc(Nodo *ptr, int xinfo)
    else
    {
       Nodo *aux = ptr, *aux2;
+<<<<<<< HEAD
+=======
+      /*posicionamos aux en el nodo anterior al de mayor info que el ingresado*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
       while(aux->sig != ptr && xinfo > aux->info)
       {
          aux = aux->sig;
       }
       if(aux == ptr)
       {
+<<<<<<< HEAD
+=======
+         /*esta verificacion nos salva si hemos de posicionar antes o despues del nodo*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
          if(xinfo < aux->info)
          {
             aux2 = ptr;
@@ -146,11 +169,19 @@ case 8:
    }
    else
    {
+<<<<<<< HEAD
       UnirListas(ptr, ptr2);
    }
    break;
 en la funcion:
 Nodo *UnirListas(Nodo *ptr, Nodo *ptr2)
+=======
+      Insercion(ptr, ptr2);
+   }
+   break;
+en la funcion:
+Nodo *Insercion(Nodo *ptr, Nodo *ptr2)
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
 {
    Nodo *aux = ptr, *aux2 = ptr2;
    int cont1 = 1, cont2 = 1;
@@ -166,17 +197,30 @@ Nodo *UnirListas(Nodo *ptr, Nodo *ptr2)
    }
    if(cont1 > cont2)
    {
+<<<<<<< HEAD
+=======
+      /*se inserta lista 2 al final de lista 1*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
       aux->sig = ptr2;
       aux2->sig = ptr;
    }
    else if(cont1 < cont2)
    {
+<<<<<<< HEAD
+=======
+      /*se inserta lista 1 al final de lista 2*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
       aux2->sig = ptr;
       aux->sig = ptr2;
    }
    else
    {
+<<<<<<< HEAD
       cout << "No se puede efectuar la union..." << endl;
+=======
+      /*si las listas son de igual tamano no se puede realizar la insercion*/
+      cout << "No se puede efectuar la insercion..." << endl;
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
       cin.ignore();
       cin.get();
    }
@@ -200,11 +244,20 @@ Nodo *PromedioElim(Nodo *ptr)
    }
    sum += aux->info;
    prom = sum/num;
+<<<<<<< HEAD
+=======
+   /*hasta aqui se ha realizado el promedio, luego evaluamos los elementos de la
+   lista con el promedio y eliminamos si son menores*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
    aux = ptr;
    while(aux->sig != ptr)
    {
       if(aux->info < prom)
       {
+<<<<<<< HEAD
+=======
+         /*podemos pasarle a eliminar aux->info*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
          elem = aux->info;
          ptr = EliminarNodo(ptr, elem);
          aux = aux->sig;
@@ -214,6 +267,10 @@ Nodo *PromedioElim(Nodo *ptr)
          aux = aux->sig;
       }
    }
+<<<<<<< HEAD
+=======
+   /*como no toma el ultimo volvemos a realizar la evaluacion*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
    if(aux->info < prom)
    {
       elem = aux->info;
@@ -252,6 +309,12 @@ Nodo *Josephus(Nodo *ptr, int elem)
    {
       while(ptr->sig != ptr)
       {
+<<<<<<< HEAD
+=======
+         /*realizamos una copia del valor de nodo antes de eliminarlo y luego, nos
+         movemos ese num de veces dentro de la lista y eliminamos ese nodo, realizamos
+         copia de su valor y repetimos el proceso hasta que quede un solo nodo*/
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
          num = aux->info;
          ptr = EliminarNodo(ptr, num);
          for(int i = 1; i < num; i++)
@@ -263,6 +326,7 @@ Nodo *Josephus(Nodo *ptr, int elem)
    }
    return ptr;
 }
+<<<<<<< HEAD
 7---------------------------------------------------------------------------------
 en el main:
 case 8:
@@ -349,3 +413,287 @@ Nodo *intercambio(Nodo *ptr, int elem)
    }
    return ptr;
 }
+=======
+6---------------------------------------------------------------------------------
+en el main:
+case 8:
+   system("cls");
+   if(ptr == NULL || ptr2 == NULL)
+   {
+      if(ptr == NULL)
+      {
+         cout << "Lista 1 vacia..." << endl;
+         system("pause");
+      }
+      else
+      {
+         cout << "Lista 2 vacia..." << endl;
+         system("pause");
+
+      }
+   }
+   else
+   {
+      OpListas(ptr, ptr2);
+   }
+   break;
+en la funcion OPERACION LISTAS:
+/*como se trata de operaciones en torno a una 3ra lista podemos usar todo como procedimientos*/
+Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
+{
+   int opt;
+   cout << "1- Union(elementos de ptr1 y ptr2 pasan a ptr3 sin ocurrencias)\n2- Intercepcion(elem de ptr1 que esten en ptr2 pasan a ptr3)\n3- Diferencia(elem de ptr1 que no se encuentren en ptr2 pasan a ptr3)" << endl;
+   cout << "Ingrese una opcion: ";
+   cin >> opt;
+   switch(opt)
+   {
+      case 1:
+         Union(ptr, ptr2);
+         break;
+      case 2:
+         Intercepcion(ptr, ptr2);
+         break;
+      case 3:
+         Diferencia(ptr, ptr2);
+         break;
+      default:
+         cout << "Ha ingresado un valor invalido..." << endl;
+         system("pause");
+         break;
+   }
+}
+en el procedimiento UNION:
+Nodo *Union(Nodo *ptr, Nodo *ptr2)
+{
+   /*los elem de ptr1 y ptr2 pasan a ptr3 sin ocurrencias*/
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   /*ingresamos la lista 1 en la lista 2*/
+   while(aux->sig != ptr)
+   {
+      ptr3 = InsertarAsc(ptr3, aux->info);
+      aux = aux->sig;
+   }
+   ptr3 = InsertarAsc(ptr3, aux->info);
+   /*evaluamos que los elementos de lista 2 no esten en lista 1 e ingresamos*/
+   while(aux2->sig != ptr2)
+   {
+      q = Buscar(ptr, aux2->info);
+      if (q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux2->info);
+      }
+      aux2 = aux2->sig;
+   }
+   q = Buscar(ptr, aux2->info);
+   if (q == NULL)
+   {
+      ptr3 = InsertarAsc(ptr3, aux2->info);
+   }
+}
+en el procedimiento INTERCEPCION:
+/*este procedimiento tambien se traduce como INTERSECION de conjuntos y/o listas*/
+Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2)
+{
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   while(aux->sig != ptr)
+   {
+      aux2 = ptr2;
+      while(aux2->sig != ptr2)
+      {
+         /*si el elemento esta en ambas listas(lista 1, lista 2) se inserta en la lista3*/
+         if(aux2->info == aux->info)
+         {
+            q = Buscar(ptr3, aux2->info);
+            if (q == NULL)
+            {
+               ptr3 = InsertarAsc(ptr3, aux2->info);
+            }
+         }
+         aux2 = aux2->sig;
+      }
+      if(aux2->info == aux->info)
+      {
+         q = Buscar(ptr3, aux2->info);
+         if (q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux2->info);
+         }
+      }
+      aux = aux->sig;
+   }
+   /*como aux esta en el ultimo nodo y termina el bucle debemos recorrerlo por fuera
+   dado que el ciclo termina y hacer obviamente la correspondiente evaluacion*/
+   aux2 = ptr2;
+   while(aux2->sig != ptr2)
+   {
+      if(aux2->info == aux->info)
+      {
+         q = Buscar(ptr3, aux2->info);
+         if (q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux2->info);
+         }
+      }
+      aux2 = aux2->sig;
+   }
+   if(aux2->info == aux->info)
+   {
+      q = Buscar(ptr3, aux2->info);
+      if (q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux2->info);
+      }
+   }
+}
+en el procedimiento DIFERENCIA:
+Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
+{
+   /*usamos un contador(cont), aunque tambien se puede usar un switch(sw), aunque
+   con el contador podemos llevar un control de cuantas veces se repiten los elementos
+   en ambas listas*/
+   int cont = 0;
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   while(aux->sig != ptr)
+   {
+      aux2 = ptr2;
+      cont = 0;
+      while(aux2->sig != ptr2)
+      {
+         if(aux->info == aux2->info)
+         {
+            cont++;
+         }
+         aux2 = aux2->sig;
+      }
+      if(aux->info == aux2->info)
+      {
+         cont++;
+      }
+      /*la insercion de datos se dara cuando no hayan repetidos, es decir, cont == 0*/
+      if(cont == 0)
+      {
+         q = Buscar(ptr3, aux->info);
+         if(q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux->info);
+         }
+      }
+      aux = aux->sig;
+   }
+   /*al igual que en intercepcion el ultimo elemento de la primera lista debe ser evaluado
+   por fuera del bucle*/
+   aux2 = ptr2;
+   cont = 0;
+   while(aux2->sig != ptr2)
+   {
+      if(aux->info == aux2->info)
+      {
+         cont++;
+      }
+      aux2 = aux2->sig;
+   }
+   if(aux->info == aux2->info)
+   {
+      cont++;
+   }
+   if(cont == 0)
+   {
+      q = Buscar(ptr3, aux->info);
+      if(q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux->info);
+      }
+   }
+}
+7---------------------------------------------------------------------------------
+en el main:
+case 8:
+   /*de preferencia se toman los casos en el main para limitar a la funcion o procedimiento
+   a ser un conjunto de operaciones dedicadas*/
+   system("clear");
+   cout << "Se intercambiara el nodo del dato ingresado con el primero nodo" << endl;
+   cout << "Ingrese 1 para continuar u otro numero para ir al menu anterior: ";
+   cin >> opt;
+   if(opt == 1)
+   {
+      if(ptr->sig == ptr || ptr == NULL)
+      {
+         cout << "No se puede operar(lista vacia o con un elemento)" << endl;
+         cin.ignore();
+         cin.get();
+      }
+      else
+      {
+         cout << "Ingrese el dato a buscar: ";
+         cin >> dato;
+         Nodo *q = Buscar(ptr, dato);
+         if(q == NULL)
+         {
+            cout << "No se encontro el elemento" << endl;
+            cin.ignore();
+            cin.get();
+         }
+         else if(q == ptr)
+         {
+            cout << "el elemento ya esta en el primer nodo" << endl;
+            cin.ignore();
+            cin.get();
+         }
+         else
+         {
+            ptr = intercambio(ptr, dato);
+         }
+      }
+   }
+   else
+   {
+      /*unexpected function*/
+   }
+   break;
+en la funcion:
+Nodo *intercambio(Nodo *ptr, int elem)
+{
+   Nodo *q = Buscar(ptr, elem), *aux, *aux2;
+   /*para cuando solo hay dos elem en la lista*/
+   if(ptr->sig->sig == ptr && q->sig == ptr)
+   {
+      ptr = ptr->sig;
+   }
+   else if(q->sig == ptr)
+   {
+      aux = ptr;
+      while(aux->sig != q)
+      {
+         aux = aux->sig;
+      }
+      q->sig = ptr->sig;
+      aux->sig = ptr;
+      ptr->sig = q;
+      ptr = q;
+   }
+   else
+   {
+      /*se posicionan dos aux antes de cada parte, luego se crean MINI LISTAS SIMPLES
+      y despues se mueven los aux para terminar de conectar las lista como si fuesen una sola*/
+      aux = ptr;
+      while(aux->sig != ptr)
+      {
+         aux = aux->sig;
+      }
+      aux2 = ptr;
+      while(aux2->sig != q)
+      {
+         aux2 = aux2->sig;
+      }
+      aux2->sig = ptr;
+      aux->sig = q;
+      aux2 = ptr->sig;
+      aux = q->sig;
+      q->sig = aux2;
+      ptr->sig = aux;
+      ptr = q;
+   }
+   return ptr;
+}
+FINAL--------------------------------------------------------------------------
+>>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
