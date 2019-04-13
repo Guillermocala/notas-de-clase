@@ -1,0 +1,15 @@
+1-dada una lista doblemente enlazada, hacer un algoritmo que retorne verdadero si contiene exactamente los mismos enteros, 
+falso en caso contrario.
+2-dada dos listas que representan un numero cada una, hacer el algoritmo que haga la resta.
+3-dada una lista doblemente enlazada, hacer un algoritmo que cree la lista ordenada en forma descendente cuando se este creando.
+4-dada una lista doble que contiene elementos repetidos, haga un algoritmo que deje una sola ocurrencia del elemento y los repetidos los
+pase a una lista 2 moviendo apuntadores.
+5-dada dos listas dobles donde cada una representa un polinomio con una var base y un exponente como informacion, hacer el algoritmo
+que permita multiplicar los dos polinomios.
+6-dada una lista doble hacer un algoritmo que intercambie los elementos 1 con n/2 - 1, 2 con n/2 - 2 y los elementos n/2 + 1 con n,
+n/2 + 2 con n-1...(n/2 hace referencia al punto medio de la lista, en donde se va a apoyar el cambio de nodos).
+7-dada una lista doble hacer un algoritmo que lea un numero hexadecimal y lo convierta a entero.
+8-dada una lista doble con elementos desorganizados hacer un algoritmo que la deje en forma ordenada descendente.
+9-dada una lista doble hacer un algoritmo que deje los numeros impares del lado izq y los pares del lado derecho moviendo apuntadores.
+10-dada dos listas ptr1 y ptr2 dobles, hacer un algoritmo que diga si la lista ptr1 esta contenida en ptr2
+(lista 2 debe estar contenida en lista 1 y ser consecutiva desde el pto inicial).

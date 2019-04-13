@@ -1,0 +1,47 @@
+	EJERCICIOS LISTAS SIMPLES
+1- Dada una lista, formar la lista resultante de eliminar el nodo que sigue al nodo apuntado por p.
+2- Dada una lista, devuelve el numero de elementos de la lista.
+3- Destruye la lista retornando toda la memoria ocupada.
+4- Haga un algoritmo que cree la lista organizada ascendentemente.
+5- Implemente una funcion que dada una lista enlazada ptr, devuelva otra lista ptr1 con solamente
+los nodos que almacenan un dato mayor que el promedio.
+6-Hacer una funcion que retorna la posicion de la aparicion media del valor ELEM, la cual existe que
+existen tantas ocurrencias del elemento antes que el(incluyendolo, si hay un numero par de apariciones)
+que despues de el. por ej, para la lista de valores enteros <1,4,2,5,2,6,2,1,6,2,6>, la posicion
+de la aparicion media del valor 2 es 5, la posicion de la aparicion media del valor 6 es 9, y
+la del valor 5 es 4. si no ocurre retorna 0.
+7- Hacer una funcion que deje en lista una sola ocurrencia de cada uno de los elementos presentes. garantizando que
+sea la aparicion media del elemento la que permaneza. por ej, despues de podar la lista de valores enteros <1,4,2,5,2,6,2,1,6,2,6>
+se obtiene la lista <1,4,5,2,6>
+8- Hacer una funcion que retorne la posicion de la i-esima ocurrencia del elem de la lista. Si hay menos de
+i ocurrencias, retorna el valor de 0.
+9- Haces una funcion que deje en lista todos los elementos de lista menores que elem, y en lista2 los mayores a dicho
+elemento. Suponga que las listas list1 y list2 llegan inicializadas y vacias a la rutina.
+10- La mediana de una lista se define como el elemento de dicha secuencia tal que la mitad de los elementos son menores
+que el y la otra mitad mayores o iguales. suponiendo que la lista list no es vacia, no ordenada y sin elementos repetidos, esta
+funcion calcula su mediana.
+11- Hacer una funcion que retorna la lista de ceros y unos correspondientes a la representacion binaria del entero positivo num.
+Por ej, si num = 215, binario = <11010111>.
+12- Hacer unafuncion que diga si una lista de caracteres es palindroma(igual leerla de izq a der que de der a izq). por ej,
+son palindromo <ANITALAVALATINA> esta funcion indica si la lista list es palindromo.
+13- Hacer una funcion que diga si la lista list1 y list2 son semejantes: son semejantes si tienen la misma info en diferente orden.
+14- Hacer una funcion que diga que retorna el elemento de la lista list cuyo valor es maximo, suponiendo la existencia
+de una relacion de orden < definida entre los elementos de la lista. La lista list no es vacia.
+15- Hacer una funcion que diga si todos los elementos de la lista aparecen igual numero de veces.
+16- Hacer una funcion que informe si la lista list1 es mayor que la lista list2, utilizando el sgte criterio para decidir
+si una lista es mayor que otra: Sea list1 = <a1, a2, ..., an> y list2 = <b1, b2, ..., bm> se dice que list1 es mayor que list2
+si: 1. ((ai=b) 1 <= i <= m) y (n > m)
+	 2. ej <= n, j <= m (ai = bi 1 <= i <= j)  y (aj >bj)
+17- Hacer una funcion que diga si la lista 2 esta contenida en la lista 1.
+18- Inserta la list2 en la list1 de manera que el primer elemento de list2 quede en la posicion de la list1.
+19- Hacer una funcion que elimine de la lista todos los elementos correspondientes entre la posicion p1 y la posicion p2 inclusive.
+20- Elimina todas las ocurrencias de la list2 en la list1.
+21- Hacer un procedimiento que ordene ascendentemente la lista ya creada.
+22- list es una lista de digitos. intLista es el entero que se puede crear a partir de esa lista. por ej, si list = <4,2,1,4>, intLista = 4214.
+23- Elimina de la lista list1 todos los elementos que aparecen en la lista list2.
+24- Void sumarLista(lista list1, lista list2)
+	list1 y list2 son listas de digitos que representan un numero entero. Esta rutina suma list1 y list2. por ej, si
+	list1 = <4,2,1,4> y list2 = <3,4>, despues de la llamada a la funcion el valor de list1 es <4,2,4,8>.
+25- Void restarLista(lista list1, lista list2)
+	list1 y list2 son listas de digitos que representan un numero entero. Esta rutina suma list1 y list2. por ej, si
+	list1 = <4,2,1,4> y list2 = <3,4>, despues de la llamada a la funcion el valor de list1 es <4,1,8,0>.

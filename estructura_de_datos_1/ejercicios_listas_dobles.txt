@@ -1,15 +1,29 @@
-1-dada una lista doblemente enlazada, hacer un algoritmo que retorne verdadero si contiene exactamente los mismos enteros, 
-falso en caso contrario.
-2-dada dos listas que representan un numero cada una, hacer el algoritmo que haga la resta.
-3-dada una lista doblemente enlazada, hacer un algoritmo que cree la lista ordenada en forma descendente cuando se este creando.
-4-dada una lista doble que contiene elementos repetidos, haga un algoritmo que deje una sola ocurrencia del elemento y los repetidos los
-pase a una lista 2 moviendo apuntadores.
-5-dada dos listas dobles donde cada una representa un polinomio con una var base y un exponente como informacion, hacer el algoritmo
-que permita multiplicar los dos polinomios.
-6-dada una lista doble hacer un algoritmo que intercambie los elementos 1 con n/2 - 1, 2 con n/2 - 2 y los elementos n/2 + 1 con n,
-n/2 + 2 con n-1...(n/2 hace referencia al punto medio de la lista, en donde se va a apoyar el cambio de nodos).
-7-dada una lista doble hacer un algoritmo que lea un numero hexadecimal y lo convierta a entero.
-8-dada una lista doble con elementos desorganizados hacer un algoritmo que la deje en forma ordenada descendente.
-9-dada una lista doble hacer un algoritmo que deje los numeros impares del lado izq y los pares del lado derecho moviendo apuntadores.
-10-dada dos listas ptr1 y ptr2 dobles, hacer un algoritmo que diga si la lista ptr1 esta contenida en ptr2
-(lista 2 debe estar contenida en lista 1 y ser consecutiva desde el pto inicial).
+   EJERCICIOS DE LISTAS DOBLES
+1- Un polinomio se representa mediante 2 variables(base y exponente) en donde cada nodo representa un termino de la
+lista, realice las sgtes funciones:
+   a- Sumar dos polinomios.
+   b- Multiplicar dos polinomios.
+   c- Tomar la derivada normal de cada uno de los polinomios.
+   d- Integrar el polinomio.
+   e- Imprimir la representacion del polinomio.
+2- Dada dos listas doblemente enlazadas las cuales representan un numero y en donde cada nodo es un digito que compone
+el numero, hacer un algoritmo que sume las dos listas y las deje en una tercera lista.
+3- Desarrolle un metodo que elimine los elementos duplicados en una lista doble ordenada.
+4- Desarrolle un metodo que elimine los elementos duplicados en una lista doble desordenada.
+5- Dada una lista doble desordenada de n-1 elementos comprendidos entre 1 y n, disene un algorimo que no contenga
+ciclos anidados, es decir, una sola pasada, que determine el elemento faltante.
+6- Considere dos listas de enteros doblemente enlazadas ordenadas, circulares, denominadas L1 y L2 respectivamente
+que retorne true si contiene exactamente los mismos enteros, false en caso contrario.
+7- Suponga dos listas enlazadas A y B. Considere la operacion de fusion cuyo resultado sera una sola lista cuyos
+primeros elementos corresponden a la lista A seguida por los elementos de la lista B.
+8- Escriba un algoritmo que mueva el menor elemento de una lista a la primera posicion.
+9- Dado un elemento ELEM hacer un algoritmo que elimine el nodo anterior a la posicion elem.
+10- Dada una lista ordenada ascendentemente hacer un algoritmo que halle el entero promedio de los datos y luego
+divida la lista de la sgte manera:
+   -Los menores al promedio se quedaran en la list1.
+   -Los mayores o iguales se pasaran a una lista list2.
+11- Dada dos listas organizadas ascendentemente ptr1 y ptr2 hacer un algoritmo que cree una sola lista organizada en ptr1.
+12- Dada una lista doblemente enlazada hacer un algoritmo que elimine la informacion cuyo valor sea primo.
+13- Haga un algoritmo que cree la lista doblemente enlazada ordenada ascendentemente al momento de su creacion.
+14- Dado un string de caracteres haga un programa que calcule el numero que vocal es la que mas se repite usando
+listas dobles, pruebe en c++.
