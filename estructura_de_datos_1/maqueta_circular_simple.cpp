@@ -9,7 +9,7 @@ struct Nodo
    int info;
    Nodo *sig;
 };
-Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL, *temp = NULL;
+Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL;
 int menu();
 Nodo *InsertarCabeza(Nodo *ptr, int xinfo);
 Nodo *InsertarCola(Nodo *ptr, int xinfo);
@@ -21,10 +21,7 @@ Nodo *InsertarAsc(Nodo *ptr, int xinfo);
 Nodo *OpListas(Nodo *ptr, Nodo *ptr2);
 Nodo *Union(Nodo *ptr, Nodo *ptr2);
 Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2);
-<<<<<<< HEAD
-=======
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2);
->>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -644,10 +641,7 @@ Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
          Intercepcion(ptr, ptr2);
          break;
       case 3:
-<<<<<<< HEAD
-=======
          Diferencia(ptr, ptr2);
->>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
          break;
       default:
          cout << "Ha ingresado un valor invalido..." << endl;
@@ -733,13 +727,6 @@ Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2)
 }
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
 {
-<<<<<<< HEAD
-
-
-
-
-
-=======
   Nodo *aux = ptr, *aux2 = ptr2, *q;
   while(aux->sig != ptr)
   {
@@ -787,5 +774,4 @@ Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
         ptr3 = InsertarAsc(ptr3, aux2->info);
      }
   }
->>>>>>> 70e79980be098aeacaab67607063399b97fa0f25
 }
