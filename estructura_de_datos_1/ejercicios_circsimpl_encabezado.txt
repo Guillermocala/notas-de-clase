@@ -10,3 +10,114 @@ EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES CON ENCABEZADO
    cuenta al rededor del circulo en sentido dextrogico y eliminan la n-esima persona despues, se elige
    el entero de esta persona a eliminar a la sgte persona a eliminar.
 6- Escribe un programa para almacenar en una lista doblemente enlazada, el centesimo numero de la serie fibonacci.
+
+DESARROLLO
+1----------------------------------------------------------------------------------
+case 6:
+   Nodo *p;
+   p = ptr;
+   if(ptr == NULL)
+   {
+      cout << "la lista esta vacia" << endl;
+      cin.get();
+   }
+   else if(p->sig == ptr)
+   {
+      cout << "la lista solo tiene un elemento" << endl;
+      cin.get();
+   }
+   else
+   {
+      int opt;
+      system("clear");
+      if(ptr == NULL)
+      {
+         cout << "Lista vacia" <<endl;
+      }
+      else
+      {
+         cout << "1- Ordenar Descendente\n2- Ordenar Ascendente" << endl;
+         cout << "Ingrese una opcion: ";
+         cin >> opt;
+         switch(opt)
+         {
+            case 1:
+            ptr = OrdenarDesc(ptr);
+            break;
+            case 2:
+            ptr = OrdenarAsc(ptr);
+            break;
+            default:
+            cout << "Valor invalido!" << endl;
+            cin.get();
+            break;
+         }
+      }
+   }
+   cin.ignore();
+   break;
+en la funcion:
+/*para hacer ordenar ascendente solo cambiamos el < por > en el primer if de
+*los ciclos anidados*/
+Nodo *OrdenarDesc(Nodo *ptr)
+{
+   Nodo *p, *q, *aux, *aux2;
+   p = ptr->sig;
+   while(p != ptr)
+   {
+      q = ptr->sig;
+      while(q != ptr)
+      {
+         /*para que no se produzca un inifity loop tenemos que dejar a q en
+         ptr->ant con q->sig != ptr*/
+         if(q->sig != ptr && q->info < q->sig->info)
+         {
+            aux = q->sig;
+            if(q == ptr->sig)
+            {
+               q->sig = aux->sig;
+               aux->sig = q;
+               ptr->sig = aux;
+            }
+            else
+            {
+               if(aux->sig != ptr)
+               {
+                  aux2 = ptr->sig;
+                  while(aux2->sig != q)
+                  {
+                     aux2 = aux2->sig;
+                  }
+                  q->sig = aux->sig;
+                  aux->sig = q;
+                  aux2->sig = aux;
+               }
+               else
+               {
+                  aux2 = ptr->sig;
+                  while(aux2->sig != q)
+                  {
+                     aux2 = aux2->sig;
+                  }
+                  aux2->sig = aux;
+                  q->sig = ptr;
+                  aux->sig = q;
+               }
+            }
+            /*en el caso de que rotemos un nodo y este tenga referenciado el bucle de recorrido
+            principal, debemos regresar este a su posicion anterior para no afectar el funcionamiento de la funcion*/
+            if(q == p)
+            {
+               p = aux;
+            }
+         }
+         else
+         {
+            q = q->sig;
+         }
+      }
+      p = p->sig;
+   }
+   cin.get();
+   return ptr;
+}

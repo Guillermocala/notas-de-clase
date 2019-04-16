@@ -17,6 +17,7 @@ Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
+Nodo *InserOcurrencia(Nodo *ptr);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -114,21 +115,28 @@ int main(int argc, char const *argv[])
             {
                int opt;
                system("clear");
-               cout << "1- Ordenar Descendente\n2- Ordenar Ascendente" << endl;
-               cout << "Ingrese una opcion: ";
-               cin >> opt;
-               switch(opt)
+               if(ptr == NULL)
                {
-                  case 1:
+                  cout << "Lista vacia" <<endl;
+               }
+               else
+               {
+                  cout << "1- Ordenar Descendente\n2- Ordenar Ascendente" << endl;
+                  cout << "Ingrese una opcion: ";
+                  cin >> opt;
+                  switch(opt)
+                  {
+                     case 1:
                      ptr = OrdenarDesc(ptr);
                      break;
-                  case 2:
+                     case 2:
                      ptr = OrdenarAsc(ptr);
                      break;
-                  default:
+                     default:
                      cout << "Valor invalido!" << endl;
                      cin.get();
                      break;
+                  }
                }
             }
             cin.ignore();
@@ -142,6 +150,10 @@ int main(int argc, char const *argv[])
             {
                sw = 0;
             }
+            break;
+         case 8:
+            system("clear");
+            InserOcurrencia(ptr);
             break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;
@@ -173,6 +185,8 @@ int menu()
 	printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t�  7) SALIR                �");
 	printf("\n\t\t\t�                          �");
+   printf("\n\t\t\t�  8- EJERCICIO            �");
+   printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�    ELIJA UNA OPCION      �");
 	printf("\n\t\t\t����������������������������");
@@ -405,4 +419,55 @@ Nodo *OrdenarAsc(Nodo *ptr)
    }
    cin.get();
    return ptr;
+}
+Nodo *InserOcurrencia(Nodo *ptr)
+{
+   int cont, info, ocu, info2;
+   Nodo *aux, *aux2;
+   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
+   aux = ptr->sig;
+   while(aux != ptr)
+   {
+      info = aux->info;
+      aux2 = ptr->sig;
+      cont = 0;
+      while(aux2 != ptr)
+      {
+         if(info == aux2->info)
+         {
+            cont++;
+         }
+         aux2 = aux2->sig;
+      }
+      if(cont > 1)
+      {
+         cout << "el elemento repetido es: " << info << " repetido " << cont << " veces."<< endl;
+         break;
+      }
+      aux = aux->sig;
+   }
+   cout << "Despues de que ocurrencia desea ingresar el dato?: ";
+   cin >> ocu;
+   if(ocu >= 1 && ocu <= cont)
+   {
+      cout << "Ingrese el dato del nodo: ";
+      cin >> info2;
+      p->info = info2;
+      for(int i = 1; i < ocu; i++)
+      {
+         if(aux->info != info)
+         {
+            i--;
+         }
+         aux = aux->sig;
+      };
+      p->sig = aux->sig;
+      aux->sig = p;
+   }
+   else
+   {
+      cout << "Ha ingresado un numero incorrecto" << endl;
+      cin.ignore();
+      cin.get();
+   }
 }
