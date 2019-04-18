@@ -14,14 +14,12 @@ EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES CON ENCABEZADO
 DESARROLLO
 1----------------------------------------------------------------------------------
 case 6:
-   Nodo *p;
-   p = ptr;
    if(ptr == NULL)
    {
       cout << "la lista esta vacia" << endl;
       cin.get();
    }
-   else if(p->sig == ptr)
+   else if(ptr->sig->sig == ptr)
    {
       cout << "la lista solo tiene un elemento" << endl;
       cin.get();
@@ -121,3 +119,4 @@ Nodo *OrdenarDesc(Nodo *ptr)
    cin.get();
    return ptr;
 }
+2----------------------------------------------------------------------------------

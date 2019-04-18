@@ -448,19 +448,28 @@ Nodo *InserOcurrencia(Nodo *ptr)
    }
    cout << "Despues de que ocurrencia desea ingresar el dato?: ";
    cin >> ocu;
-   if(ocu >= 1 && ocu <= cont)
+   if(ocu == 1)
    {
       cout << "Ingrese el dato del nodo: ";
       cin >> info2;
       p->info = info2;
-      for(int i = 1; i < ocu; i++)
+      p->sig = aux->sig;
+      aux->sig = p;
+   }
+   else if(ocu >= 2 && ocu <= cont)
+   {
+      cout << "Ingrese el dato del nodo: ";
+      cin >> info2;
+      p->info = info2;
+      while(ocu <= cont)
       {
-         if(aux->info != info)
-         {
-            i--;
-         }
          aux = aux->sig;
-      };
+         while(aux->info != info)
+         {
+            aux = aux->sig;
+         }
+         ocu++;
+      }
       p->sig = aux->sig;
       aux->sig = p;
    }
