@@ -13,6 +13,7 @@ EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES CON ENCABEZADO
 
 DESARROLLO
 1----------------------------------------------------------------------------------
+-----en el main:
 case 6:
    if(ptr == NULL)
    {
@@ -54,7 +55,7 @@ case 6:
    }
    cin.ignore();
    break;
-en la funcion:
+-----en la funcion:
 /*para hacer ordenar ascendente solo cambiamos el < por > en el primer if de
 *los ciclos anidados*/
 Nodo *OrdenarDesc(Nodo *ptr)
@@ -120,3 +121,94 @@ Nodo *OrdenarDesc(Nodo *ptr)
    return ptr;
 }
 2----------------------------------------------------------------------------------
+en el main:
+case 8:
+   system("clear");
+   if(ptr == NULL)
+   {
+      cout << "La lista esta vacia." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr->sig->sig == ptr)
+   {
+      cout << "La lista solo tiene un elemento." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      InserOcurrencia(ptr);
+   }
+   break;
+-----en la funcion:
+Nodo *InserOcurrencia(Nodo *ptr)
+{
+   /*uso variables independientes para tener mejor manejo de la informacion y evitar ambiguedades*/
+   int cont, cont2, info, ocu, info2;
+   Nodo *aux, *aux2;
+   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
+   aux = ptr->sig;
+   /*solo esta disenado para cuando hay un solo elemento con ocurrencias*/
+   while(aux != ptr)
+   {
+      info = aux->info;
+      aux2 = ptr->sig;
+      cont = 0;
+      while(aux2 != ptr)
+      {
+         if(info == aux2->info)
+         {
+            cont++;
+         }
+         aux2 = aux2->sig;
+      }
+      if(cont > 1)
+      {
+         cout << "el elemento repetido es: " << info << " repetido " << cont << " veces."<< endl;
+         break;
+      }
+      aux = aux->sig;
+   }
+   if(cont == 1)
+   {
+      cout << "No hay ocurrencias en la lista." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      cout << "Despues de que ocurrencia desea ingresar el dato?: ";
+      cin >> ocu;
+      if(ocu >= 1 && ocu <= cont)
+      {
+         cont2 = ocu;
+         cout << "Ingrese el dato del nodo: ";
+         cin >> info2;
+         p->info = info2;
+         /*recorro la lista y disminuyo cont2 hasta 0 para indicar que la ocurrencia
+         ha sido ubicada y procedemos a insertar*/
+         while(aux->sig != ptr)
+         {
+            if(aux->info == info)
+            {
+               cont2--;
+            }
+            if(cont2 == 0)
+            {
+               break;
+            }
+            aux = aux->sig;
+         }
+         p->sig = aux->sig;
+         aux->sig = p;
+      }
+      else
+      {
+         cout << "Ha ingresado un numero incorrecto" << endl;
+         cin.ignore();
+         cin.get();
+      }
+   }
+}
+3----------------------------------------------------------------------------------
