@@ -169,57 +169,41 @@ int main(int argc, char const *argv[])
             break;
          case 5:
             system("clear");
-            cout << "En que lista desea trabajar?: ";
-            cin >> opt;
-            switch(opt)
+            /*esta verificacion es para evitar un inifity loop, puede suceder
+            cuando se intenta imprimir y la lista esta vacia*/
+            if(ptr == NULL)
             {
-               case 1:
-                  /*esta verificacion es para evitar un inifity loop, puede suceder
-                  cuando se intenta imprimir y la lista esta vacia*/
-                  if(ptr == NULL)
-                  {
-                     cout << "lista vacia" << endl;
-                     cin.ignore();
-                     cin.get();
-                  }
-                  else
-                  {
-                     Mostrar(ptr);
-                     cin.get();
-                  }
-                  break;
-               case 2:
-                  if(ptr2 == NULL)
-                  {
-                     cout << "lista vacia" << endl;
-                     cin.ignore();
-                     cin.get();
-                  }
-                  else
-                  {
-                     Mostrar(ptr2);
-                     cin.get();
-                  }
-                  break;
-               case 3:
-                  if(ptr3 == NULL)
-                  {
-                     cout << "lista vacia" << endl;
-                     cin.ignore();
-                     cin.get();
-                  }
-                  else
-                  {
-                     Mostrar(ptr3);
-                     cin.get();
-                  }
-                  break;
-               default:
-                  cout << "Valor incorrecto." << endl;
-                  cin.ignore();
-                  cin.get();
-                  break;
+               cout << "lista 1 vacia" << endl;
             }
+            else
+            {
+               Mostrar(ptr);
+            }
+            if(ptr2 == NULL)
+            {
+               cout << "lista 2 vacia" << endl;
+            }
+            else
+            {
+               Mostrar(ptr2);
+            }
+            if(ptr3 == NULL)
+            {
+               cout << "lista 3 vacia" << endl;
+            }
+            else
+            {
+               Mostrar(ptr3);
+            }if(ptr4 == NULL)
+            {
+               cout << "lista 4 vacia" << endl;
+            }
+            else
+            {
+               Mostrar(ptr4);
+            }
+            cin.ignore();
+            cin.get();
             break;
          case 6:
             if(ptr == NULL)
@@ -389,18 +373,17 @@ void Mostrar(Nodo *ptr)
       cout << "[" << r->info << "] -> ";
       r = r->sig;
    }
-   cout << "NULL ";
-   cin.ignore();
+   cout << "NULL " << "\n\n";
 }
 Nodo *Buscar(Nodo *ptr, int elem)
 {
-   Nodo *r = ptr->sig;
    if(ptr == NULL)
    {
       return NULL;
    }
    else
    {
+      Nodo *r = ptr->sig;
       while(r != ptr)
       {
          if(r->info == elem)
@@ -449,51 +432,50 @@ Nodo *EliminarNodo(Nodo *ptr, int elem)
 }
 Nodo *InsertarAsc(Nodo *ptr, int xinfo)
 {
-   Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
+   Nodo *p, *r;
+   p = (struct Nodo*) malloc (sizeof(Nodo));
    p->info = xinfo;
    if(ptr == NULL)
    {
-      ptr = p;
-      p->sig = ptr;
+      r = (struct Nodo*) malloc (sizeof(Nodo));
+      ptr = r;
+      r->sig = p;
+      p->sig = r;
    }
    else
    {
-      Nodo *aux = ptr, *aux2;
-      /*posicionamos aux en el nodo anterior al de mayor info que el ingresado*/
+      Nodo *aux = ptr->sig, *aux2;
+      /*posicionamos aux en el nodo anterior al de mayor info que el ingresado
+      y debemos validar que sea aux ->sig != ptr; sino entonces aux quedara en
+      ptr y no funcionara el algoritmo*/
       while(aux->sig != ptr && xinfo > aux->info)
       {
          aux = aux->sig;
       }
-      if(aux == ptr)
+      if(aux == ptr->sig)
       {
          /*esta verificacion nos salva si hemos de posicionar antes o despues del nodo*/
-         if(xinfo < aux->info)
-         {
-            aux2 = ptr;
-            while(aux2->sig != aux)
-            {
-               aux2 = aux2->sig;
-            }
-            p->sig = ptr;
-            aux2->sig = p;
-            ptr = p;
-         }
-         else
+         if(xinfo > aux->info)
          {
             p->sig = aux->sig;
             aux->sig = p;
+         }
+         else
+         {
+            ptr->sig = p;
+            p->sig = aux;
          }
       }
       else
       {
          if(xinfo > aux->info)
          {
+            p->sig = aux->sig;
             aux->sig = p;
-            p->sig = ptr;
          }
          else
          {
-            aux2 = ptr;
+            aux2 = ptr->sig;
             while(aux2->sig != aux)
             {
                aux2 = aux2->sig;
@@ -629,7 +611,11 @@ Nodo *OrdenarAsc(Nodo *ptr)
 }
 Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3)
 {
-   Nodo *q, *aux = ptr->sig, *aux2 = ptr2->sig, *aux3 = ptr3->sig, *aux4 = ptr4;
+   /*al ser 3 listas solo necesitamos hacer 2 recorridos: el de la primera lista con las
+   2 sgtes y la ultima lista con las 2 primeras y asi evitamos evaluar la lista 2*/
+   Nodo *q, *aux, *aux2, *aux3;
+   /*con esta seccion comparamos la lista 1 con la lista 2 y 3*/
+   aux = ptr->sig;
    while(aux != ptr)
    {
       aux2 = ptr2->sig;
@@ -652,4 +638,31 @@ Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3)
       }
       aux = aux->sig;
    }
+   /*con esta seccion comparamos la lista 3 con la lista 2 y 1*/
+   aux3 = ptr3->sig;
+   while(aux3 != ptr3)
+   {
+      aux2 = ptr2->sig;
+      while(aux2 != ptr2)
+      {
+         aux = ptr->sig;
+         while(aux != ptr)
+         {
+            if(aux3->info == aux2->info || aux3->info == aux->info)
+            {
+               q = Buscar(ptr4, aux3->info);
+               if(q == NULL)
+               {
+                  ptr4 = InsertarAsc(ptr4, aux3->info);
+               }
+            }
+            aux = aux->sig;
+         }
+         aux2 = aux2->sig;
+      }
+      aux3 = aux3->sig;
+   }
+   cout << "Insercion completa en la lista 4." << endl;
+   cin.ignore();
+   cin.get();
 }

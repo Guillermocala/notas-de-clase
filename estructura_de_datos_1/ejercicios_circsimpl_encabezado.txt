@@ -212,3 +212,87 @@ Nodo *InserOcurrencia(Nodo *ptr)
    }
 }
 3----------------------------------------------------------------------------------
+-----en el main:
+case 8:
+   system("clear");
+   if(ptr == NULL)
+   {
+      cout << "La lista 1 esta vacia." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr2 == NULL)
+   {
+      cout << "La lista 2 esta vacia." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr3 == NULL)
+   {
+      cout << "La lista 3 esta vacia." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      DosDeTres(ptr, ptr2, ptr3);
+   }
+   break;
+-----en la funcion:
+Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3)
+{
+   /*al ser 3 listas solo necesitamos hacer 2 recorridos: el de la primera lista con las
+   2 sgtes y la ultima lista con las 2 primeras y asi evitamos evaluar la lista 2*/
+   Nodo *q, *aux, *aux2, *aux3;
+   /*con esta seccion comparamos la lista 1 con la lista 2 y 3*/
+   aux = ptr->sig;
+   while(aux != ptr)
+   {
+      aux2 = ptr2->sig;
+      while(aux2 != ptr2)
+      {
+         aux3 = ptr3->sig;
+         while(aux3 != ptr3)
+         {
+            if(aux->info == aux2->info || aux->info == aux3->info)
+            {
+               q = Buscar(ptr4, aux->info);
+               if(q == NULL)
+               {
+                  ptr4 = InsertarAsc(ptr4, aux->info);
+               }
+            }
+            aux3 = aux3->sig;
+         }
+         aux2 = aux2->sig;
+      }
+      aux = aux->sig;
+   }
+   /*con esta seccion comparamos la lista 3 con la lista 2 y 1*/
+   aux3 = ptr3->sig;
+   while(aux3 != ptr3)
+   {
+      aux2 = ptr2->sig;
+      while(aux2 != ptr2)
+      {
+         aux = ptr->sig;
+         while(aux != ptr)
+         {
+            if(aux3->info == aux2->info || aux3->info == aux->info)
+            {
+               q = Buscar(ptr4, aux3->info);
+               if(q == NULL)
+               {
+                  ptr4 = InsertarAsc(ptr4, aux3->info);
+               }
+            }
+            aux = aux->sig;
+         }
+         aux2 = aux2->sig;
+      }
+      aux3 = aux3->sig;
+   }
+   cout << "Insercion completa en la lista 4." << endl;
+   cin.ignore();
+   cin.get();
+}
