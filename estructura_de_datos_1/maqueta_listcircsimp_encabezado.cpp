@@ -7,14 +7,13 @@
 using namespace std;
 struct Nodo
 {
-   string nombre;
-   int info;
+   long long int info;
    Nodo *sig;
 };
-Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL, *ptr4 = NULL, *ptr5 = NULL;
+Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL, *ptr4 = NULL;
 int menu();
 Nodo *insertarCabeza(Nodo *ptr, int xinfo);
-Nodo *insertarCola(Nodo *ptr, int xinfo);
+Nodo *insertarCola(Nodo *ptr, long long int xinfo);
 Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *InsertarAsc(Nodo *ptr, int xinfo);
@@ -23,12 +22,9 @@ Nodo *OrdenarAsc(Nodo *ptr);
 void Mostrar(Nodo *ptr);
 Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3);
 Nodo *Josephus(Nodo *ptr,int info);
-Nodo *InserConNombre(Nodo *ptr, string nombre, int elem);
-Nodo *BuscarConNombre(Nodo *ptr, string nombre);
-Nodo *JosephusByName(Nodo *ptr,string info);
+Nodo *Fibonacci(Nodo *ptr, int tope);
 int main()
 {
-   string name;
    int number;
    int sw = 1, info, opt;
    do{
@@ -168,12 +164,9 @@ int main()
             break;
          case 5:
             system("clear");
-            Mostrar(ptr5);
-            cin.ignore();
-            cin.get();
             /*esta verificacion es para evitar un inifity loop, puede suceder
             cuando se intenta imprimir y la lista esta vacia*/
-            /*if(ptr == NULL)
+            if(ptr == NULL)
             {
                cout << "lista 1 vacia" << endl;
             }
@@ -205,7 +198,7 @@ int main()
                Mostrar(ptr4);
             }
             cin.ignore();
-            cin.get();*/
+            cin.get();
             break;
          case 6:
             if(ptr == NULL)
@@ -258,28 +251,12 @@ int main()
             }
             break;
          case 8:
+            int limit;
             system("clear");
-            cin.ignore();
-            cout << "Ingrese el nombre: ";
-            getline(cin, name);
-            cout << "Ingrese el numero: ";
-            cin >> number;
-            ptr5 = InserConNombre(ptr5, name, number);
-            break;
-         case 9:
-            system("clear");
-            if(ptr5 == NULL)
-            {
-               cout << "Lista vacia" << endl;
-               cin.get();
-            }
-            else
-            {
-               cin.ignore();
-               cout << "Ingrese el nombre de la persona a eliminar: ";
-               getline(cin, name);
-               ptr5 = JosephusByName(ptr5, name);
-            }
+            cout << "Se almacenara en la lista la secuencia fibonacci." << endl;
+            cout << "Ingrese el numero limite: ";
+            cin >> limit;
+            ptr = Fibonacci(ptr, limit);
             break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;
@@ -314,8 +291,6 @@ int menu()
 	printf("\n\t\t\t�                          �");
    printf("\n\t\t\t�  8- EJERCICIO            �");
    printf("\n\t\t\t�                          �");
-   printf("\n\t\t\t�  9- Josephus hard mode   �");
-   printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�    ELIJA UNA OPCION      �");
 	printf("\n\t\t\t����������������������������");
@@ -344,7 +319,7 @@ Nodo *insertarCabeza(Nodo *ptr, int xinfo)
    }
    return ptr;
 }
-Nodo *insertarCola(Nodo *ptr, int xinfo)
+Nodo *insertarCola(Nodo *ptr,long long int xinfo)
 {
    Nodo *p = (struct Nodo*) malloc (sizeof(Nodo));
    p->info = xinfo;
@@ -369,24 +344,16 @@ Nodo *insertarCola(Nodo *ptr, int xinfo)
 }
 void Mostrar(Nodo *ptr)
 {
-   /*
    Nodo *r = ptr->sig;
    cout << "PTR -> ";
+   int i = 1;
    while(r != ptr)
    {
-      cout << "[" << r->info << "] -> ";
+      cout << i <<" [" << r->info << "] -> ";
       r = r->sig;
+      i++;
    }
-   cout << "NULL " << "\n\n";*/
-   Nodo *aux;
-   aux = ptr->sig;
-   cout << "PTR ->" << endl;
-   while(aux != ptr)
-   {
-      cout << "Nombre: " << aux->nombre << "\tNumero: " << aux->info << " ->" << endl;
-      aux = aux->sig;
-   }
-   cout << "-> PTR" << endl;
+   cout << "NULL " << "\n\n";
 }
 Nodo *Buscar(Nodo *ptr, int elem)
 {
@@ -711,94 +678,38 @@ Nodo *Josephus(Nodo *ptr,int info)
          }
          for(int i = 0; i < num; i++)
          {
-            aux = aux->sig;
-         }
-         /*al eliminar el apuntador queda detras del nodo eliminado, por lo cual necesitamos
-         reposicionarlo colocandolo en la pos sgte. podemos hacerlo antes o despues del bucle
-         pero siempre DESPUES de la eliminacion*/
-         aux = aux->sig;
-      }
-      cout << "Ahora solo hay un elemento en la lista." << endl;
-      cin.ignore();
-      cin.get();
-   }
-   return ptr;
-}
-Nodo *InserConNombre(Nodo *ptr, string nombre, int elem)
-{
-   Nodo *aux, *aux2;
-   aux = (struct Nodo*) malloc (sizeof(Nodo));
-   aux->nombre = nombre;
-   aux->info = elem;
-   if(ptr == NULL)
-   {
-      aux2 = (struct Nodo*) malloc (sizeof(Nodo));
-      ptr = aux2;
-      aux2->sig = aux;
-      aux->sig = aux2;
-   }
-   else
-   {
-      aux2 = ptr;
-      aux->sig = aux2->sig;
-      aux2->sig = aux;
-   }
-   return ptr;
-}
-Nodo *BuscarConNombre(Nodo *ptr, string nombre)
-{
-   string comp;
-   if(ptr == NULL)
-   {
-      return NULL;
-   }
-   else
-   {
-      Nodo *aux = ptr->sig;
-      while(aux != ptr)
-      {
-         comp = aux->nombre;
-         if(comp.compare(nombre) == 0)
-         {
-            return aux;
-         }
-         aux = aux->sig;
-      }
-      return NULL;
-   }
-}
-Nodo *JosephusByName(Nodo *ptr, string info)
-{
-   Nodo *aux = BuscarConNombre(ptr, info);
-   int num;
-   if(aux == NULL)
-   {
-      cout << "Elemento no se puede eliminar" << endl;
-      cin.ignore();
-      cin.get();
-   }
-   else
-   {
-      while(ptr->sig->sig != ptr)
-      {
-         cout << "entro " << aux->info << endl;
-
-            num = aux->info;
-            cout << "b entro elim" << aux->info << endl;
-            ptr = EliminarNodo(ptr, num);
-
-         for(int i = 0; i < num; i++)
-         {
+            /*si el el recorrido llega a estar en ptr se mueve un nodo de mas para que
+            no altere el flujo del algoritmo*/
             if(aux == ptr)
             {
                aux = aux->sig;
             }
             aux = aux->sig;
          }
-         aux = aux->sig;
       }
       cout << "Ahora solo hay un elemento en la lista." << endl;
+      cin.ignore();
       cin.get();
+   }
+   return ptr;
+}
+Nodo *Fibonacci(Nodo *ptr, int tope)
+{
+   /*el proceso es tener en base el 0 y 1(sumandos para llevar la operacion), luego sumar
+   y reasignar los numeros para no usar mas recursos y en vista que tenemos creados los dos
+   nodos (0 y 1) reducimos en 2 el valor digitado por el usuario*/
+   long long int num1, num2, num3;
+   num1 = 0;
+   num2 = 1;
+   ptr = insertarCola(ptr, num1);
+   ptr = insertarCola(ptr, num2);
+   tope -= 2;
+   for(int i = 0; i < tope; i++)
+   {
+      num3 = num1 + num2;
+      num1 = num2;
+      num2 = num3;
+      ptr = insertarCola(ptr, num3);
    }
    return ptr;
 }

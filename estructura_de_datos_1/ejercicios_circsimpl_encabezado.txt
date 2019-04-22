@@ -338,12 +338,14 @@ Nodo *Josephus(Nodo *ptr,int info)
          }
          for(int i = 0; i < num; i++)
          {
+            /*si el el recorrido llega a estar en ptr se mueve un nodo de mas para que
+            no altere el flujo del algoritmo*/
+            if(aux == ptr)
+            {
+               aux = aux->sig;
+            }
             aux = aux->sig;
          }
-         /*al eliminar el apuntador queda detras del nodo eliminado, por lo cual necesitamos
-         reposicionarlo colocandolo en la pos sgte. podemos hacerlo antes o despues del bucle
-         pero siempre DESPUES de la eliminacion*/
-         aux = aux->sig;
       }
       cout << "Ahora solo hay un elemento en la lista." << endl;
       cin.ignore();
@@ -352,3 +354,164 @@ Nodo *Josephus(Nodo *ptr,int info)
    return ptr;
 }
 5----------------------------------------------------------------------------------
+=====se tienen que modificar algunas funciones para incluir el parametro de nombre
+-----en el main:
+case 8:
+   system("clear");
+   cin.ignore();
+   cout << "Ingrese el nombre: ";
+   getline(cin, name);
+   cout << "Ingrese el numero: ";
+   cin >> number;
+   ptr5 = InserConNombre(ptr5, name, number);
+   break;
+case 9:
+   system("clear");
+   if(ptr5 == NULL)
+   {
+      cout << "Lista vacia" << endl;
+      cin.get();
+   }
+   else
+   {
+      cin.ignore();
+      cout << "Ingrese el nombre de la persona a eliminar: ";
+      getline(cin, name);
+      ptr5 = JosephusByName(ptr5, name);
+   }
+   break;
+-----las funciones para incluir el parametro nombre:
+Nodo *InserConNombre(Nodo *ptr, string nombre, int elem)
+{
+   Nodo *aux, *aux2;
+   aux = (struct Nodo*) malloc (sizeof(Nodo));
+   aux->nombre = nombre;
+   aux->info = elem;
+   if(ptr == NULL)
+   {
+      aux2 = (struct Nodo*) malloc (sizeof(Nodo));
+      ptr = aux2;
+      aux2->sig = aux;
+      aux->sig = aux2;
+   }
+   else
+   {
+      aux2 = ptr;
+      aux->sig = aux2->sig;
+      aux2->sig = aux;
+   }
+   return ptr;
+}
+/*se ocupa la libreria "cstring" o "string.h" para la funcion COMPARE maneja la sgte syntax
+*  if(string1.compare(string2) != 0 "no son iguales")
+*/
+Nodo *BuscarConNombre(Nodo *ptr, string nombre)
+{
+   string comp;
+   if(ptr == NULL)
+   {
+      return NULL;
+   }
+   else
+   {
+      Nodo *aux = ptr->sig;
+      while(aux != ptr)
+      {
+         comp = aux->nombre;
+         if(comp.compare(nombre) == 0)
+         {
+            return aux;
+         }
+         aux = aux->sig;
+      }
+      return NULL;
+   }
+}
+void Mostrar(Nodo *ptr)
+{
+   Nodo *aux;
+   aux = ptr->sig;
+   cout << "PTR ->" << endl;
+   while(aux != ptr)
+   {
+      cout << "Nombre: " << aux->nombre << "\tNumero: " << aux->info << " ->" << endl;
+      aux = aux->sig;
+   }
+   cout << "-> PTR" << endl;
+}
+Nodo *JosephusByName(Nodo *ptr, string info)
+{
+   Nodo *aux = BuscarConNombre(ptr, info);
+   int num;
+   if(aux == NULL)
+   {
+      cout << "Elemento no se puede eliminar" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      while(ptr->sig->sig != ptr)
+      {
+         /*realizar la misma verificacion de siempre si esta en la cabecera moverlo un nodo*/
+         if(aux == ptr)
+         {
+            aux = aux->sig;
+            num = aux->info;
+            ptr = EliminarNodo(ptr, num);
+         }
+         else
+         {
+            num = aux->info;
+            ptr = EliminarNodo(ptr, num);
+         }
+         for(int i = 0; i < num; i++)
+         {
+            /*si el el recorrido llega a estar en ptr se mueve un nodo de mas para que
+            no altere el flujo del algoritmo*/
+            if(aux == ptr)
+            {
+               aux = aux->sig;
+            }
+            aux = aux->sig;
+         }
+      }
+      cout << "Ahora solo hay un elemento en la lista." << endl;
+      cin.get();
+   }
+   return ptr;
+}
+6----------------------------------------------------------------------------------
+=====la maqueta necesita ligeras modificaciones en torno al prototipo de almacenamiento cambiarlo de int a long long int
+=====las funciones y estructura que se vean involucradas en el proceso sufren esta modificacion
+-----en el main:
+case 8:
+   int limit;
+   system("clear");
+   cout << "Se almacenara en la lista la secuencia fibonacci." << endl;
+   cout << "Ingrese el numero limite: ";
+   cin >> limit;
+   ptr = Fibonacci(ptr, limit);
+   break;
+-----en la funcion:
+Nodo *Fibonacci(Nodo *ptr, int tope)
+{
+   /*el proceso es tener en base el 0 y 1(sumandos para llevar la operacion), luego sumar
+   y reasignar los numeros para no usar mas recursos y en vista que tenemos creados los dos
+   nodos (0 y 1) reducimos en 2 el valor digitado por el usuario*/
+   long long int num1, num2, num3;
+   num1 = 0;
+   num2 = 1;
+   ptr = insertarCola(ptr, num1);
+   ptr = insertarCola(ptr, num2);
+   tope -= 2;
+   for(int i = 0; i < tope; i++)
+   {
+      num3 = num1 + num2;
+      num1 = num2;
+      num2 = num3;
+      ptr = insertarCola(ptr, num3);
+   }
+   return ptr;
+}
+FINAL------------------------------------------------------------------------------
