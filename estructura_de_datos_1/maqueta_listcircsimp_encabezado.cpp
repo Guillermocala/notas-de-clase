@@ -3,13 +3,15 @@
 *maqueta de listas circulares simples con operaciones basicas
 */
 #include "iostream"
+#include "cstring"
 using namespace std;
 struct Nodo
 {
+   string nombre;
    int info;
    Nodo *sig;
 };
-Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL, *ptr4 = NULL;
+Nodo *ptr = NULL, *ptr2 = NULL, *ptr3 = NULL, *ptr4 = NULL, *ptr5 = NULL;
 int menu();
 Nodo *insertarCabeza(Nodo *ptr, int xinfo);
 Nodo *insertarCola(Nodo *ptr, int xinfo);
@@ -20,8 +22,14 @@ Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
 void Mostrar(Nodo *ptr);
 Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3);
-int main(int argc, char const *argv[])
+Nodo *Josephus(Nodo *ptr,int info);
+Nodo *InserConNombre(Nodo *ptr, string nombre, int elem);
+Nodo *BuscarConNombre(Nodo *ptr, string nombre);
+Nodo *JosephusByName(Nodo *ptr,string info);
+int main()
 {
+   string name;
+   int number;
    int sw = 1, info, opt;
    do{
       switch(menu())
@@ -83,32 +91,23 @@ int main(int argc, char const *argv[])
             }
             break;
          case 3:
+            system("clear");
             int llave;
-            if(ptr == NULL)
+            Nodo *q;
+            cout << "Ingrese el elemento a buscar: ";
+            cin >> llave;
+            q = Buscar(ptr, llave);
+            if(q != NULL)
             {
-               cout << "lista vacia" << endl;
+               cout << "Elemento encontrado" << endl;
                cin.ignore();
                cin.get();
             }
             else
             {
-               Nodo *q;
-               system("clear");
-               cout << "Ingrese el elemento a buscar: ";
-               cin >> llave;
-               q = Buscar(ptr, llave);
-               if(q != NULL)
-               {
-                  cout << "Elemento encontrado" << endl;
-                  cin.ignore();
-                  cin.get();
-               }
-               else
-               {
-                  cout << "Elemento no encontrado" << endl;
-                  cin.ignore();
-                  cin.get();
-               }
+               cout << "Elemento no encontrado o lista vacia" << endl;
+               cin.ignore();
+               cin.get();
             }
             break;
          case 4:
@@ -169,9 +168,12 @@ int main(int argc, char const *argv[])
             break;
          case 5:
             system("clear");
+            Mostrar(ptr5);
+            cin.ignore();
+            cin.get();
             /*esta verificacion es para evitar un inifity loop, puede suceder
             cuando se intenta imprimir y la lista esta vacia*/
-            if(ptr == NULL)
+            /*if(ptr == NULL)
             {
                cout << "lista 1 vacia" << endl;
             }
@@ -203,7 +205,7 @@ int main(int argc, char const *argv[])
                Mostrar(ptr4);
             }
             cin.ignore();
-            cin.get();
+            cin.get();*/
             break;
          case 6:
             if(ptr == NULL)
@@ -257,27 +259,26 @@ int main(int argc, char const *argv[])
             break;
          case 8:
             system("clear");
-            if(ptr == NULL)
+            cin.ignore();
+            cout << "Ingrese el nombre: ";
+            getline(cin, name);
+            cout << "Ingrese el numero: ";
+            cin >> number;
+            ptr5 = InserConNombre(ptr5, name, number);
+            break;
+         case 9:
+            system("clear");
+            if(ptr5 == NULL)
             {
-               cout << "La lista 1 esta vacia." << endl;
-               cin.ignore();
-               cin.get();
-            }
-            else if(ptr2 == NULL)
-            {
-               cout << "La lista 2 esta vacia." << endl;
-               cin.ignore();
-               cin.get();
-            }
-            else if(ptr3 == NULL)
-            {
-               cout << "La lista 3 esta vacia." << endl;
-               cin.ignore();
+               cout << "Lista vacia" << endl;
                cin.get();
             }
             else
             {
-               DosDeTres(ptr, ptr2, ptr3);
+               cin.ignore();
+               cout << "Ingrese el nombre de la persona a eliminar: ";
+               getline(cin, name);
+               ptr5 = JosephusByName(ptr5, name);
             }
             break;
          default:
@@ -312,6 +313,8 @@ int menu()
 	printf("\n\t\t\t�  7) SALIR                �");
 	printf("\n\t\t\t�                          �");
    printf("\n\t\t\t�  8- EJERCICIO            �");
+   printf("\n\t\t\t�                          �");
+   printf("\n\t\t\t�  9- Josephus hard mode   �");
    printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�    ELIJA UNA OPCION      �");
@@ -366,6 +369,7 @@ Nodo *insertarCola(Nodo *ptr, int xinfo)
 }
 void Mostrar(Nodo *ptr)
 {
+   /*
    Nodo *r = ptr->sig;
    cout << "PTR -> ";
    while(r != ptr)
@@ -373,7 +377,16 @@ void Mostrar(Nodo *ptr)
       cout << "[" << r->info << "] -> ";
       r = r->sig;
    }
-   cout << "NULL " << "\n\n";
+   cout << "NULL " << "\n\n";*/
+   Nodo *aux;
+   aux = ptr->sig;
+   cout << "PTR ->" << endl;
+   while(aux != ptr)
+   {
+      cout << "Nombre: " << aux->nombre << "\tNumero: " << aux->info << " ->" << endl;
+      aux = aux->sig;
+   }
+   cout << "-> PTR" << endl;
 }
 Nodo *Buscar(Nodo *ptr, int elem)
 {
@@ -665,4 +678,127 @@ Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3)
    cout << "Insercion completa en la lista 4." << endl;
    cin.ignore();
    cin.get();
+}
+Nodo *Josephus(Nodo *ptr,int info)
+{
+   Nodo *aux = Buscar(ptr, info);
+   int num;
+   if(aux == NULL)
+   {
+      cout << "Elemento no se puede eliminar" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      while(ptr->sig->sig != ptr)
+      {
+         /*con "num" realizamos una copia del valor de nodo antes de eliminarlo y luego, nos
+         movemos ese num de veces dentro de la lista y eliminamos ese nodo, realizamos
+         copia de su valor y repetimos el proceso hasta que quede un solo nodo*/
+         /*como la lista tiene un encabezado debemos confirmas que al posicionar queda en ptr; ya
+         que como ese nodo no tiene valor debemos mover el apuntador al sgte*/
+         if(aux == ptr)
+         {
+            aux = aux->sig;
+            num = aux->info;
+            ptr = EliminarNodo(ptr, num);
+         }
+         else
+         {
+            num = aux->info;
+            ptr = EliminarNodo(ptr, num);
+         }
+         for(int i = 0; i < num; i++)
+         {
+            aux = aux->sig;
+         }
+         /*al eliminar el apuntador queda detras del nodo eliminado, por lo cual necesitamos
+         reposicionarlo colocandolo en la pos sgte. podemos hacerlo antes o despues del bucle
+         pero siempre DESPUES de la eliminacion*/
+         aux = aux->sig;
+      }
+      cout << "Ahora solo hay un elemento en la lista." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   return ptr;
+}
+Nodo *InserConNombre(Nodo *ptr, string nombre, int elem)
+{
+   Nodo *aux, *aux2;
+   aux = (struct Nodo*) malloc (sizeof(Nodo));
+   aux->nombre = nombre;
+   aux->info = elem;
+   if(ptr == NULL)
+   {
+      aux2 = (struct Nodo*) malloc (sizeof(Nodo));
+      ptr = aux2;
+      aux2->sig = aux;
+      aux->sig = aux2;
+   }
+   else
+   {
+      aux2 = ptr;
+      aux->sig = aux2->sig;
+      aux2->sig = aux;
+   }
+   return ptr;
+}
+Nodo *BuscarConNombre(Nodo *ptr, string nombre)
+{
+   string comp;
+   if(ptr == NULL)
+   {
+      return NULL;
+   }
+   else
+   {
+      Nodo *aux = ptr->sig;
+      while(aux != ptr)
+      {
+         comp = aux->nombre;
+         if(comp.compare(nombre) == 0)
+         {
+            return aux;
+         }
+         aux = aux->sig;
+      }
+      return NULL;
+   }
+}
+Nodo *JosephusByName(Nodo *ptr, string info)
+{
+   Nodo *aux = BuscarConNombre(ptr, info);
+   int num;
+   if(aux == NULL)
+   {
+      cout << "Elemento no se puede eliminar" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      while(ptr->sig->sig != ptr)
+      {
+         cout << "entro " << aux->info << endl;
+
+            num = aux->info;
+            cout << "b entro elim" << aux->info << endl;
+            ptr = EliminarNodo(ptr, num);
+
+         for(int i = 0; i < num; i++)
+         {
+            if(aux == ptr)
+            {
+               aux = aux->sig;
+            }
+            aux = aux->sig;
+         }
+         aux = aux->sig;
+      }
+      cout << "Ahora solo hay un elemento en la lista." << endl;
+      cin.get();
+   }
+   return ptr;
 }

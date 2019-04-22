@@ -22,6 +22,7 @@ Nodo *OpListas(Nodo *ptr, Nodo *ptr2);
 Nodo *Union(Nodo *ptr, Nodo *ptr2);
 Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2);
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2);
+Nodo *Josephus(Nodo *ptr, int elem);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -227,24 +228,15 @@ int main(int argc, char const *argv[])
          case 8:
             system("clear");
             int elem;
-            if(ptr == NULL || ptr2 == NULL)
+            if(ptr == NULL)
             {
-               if(ptr == NULL)
-               {
-                  cout << "Lista 1 vacia..." << endl;
-                  cin.ignore();
-                  cin.get();
-               }
-               else
-               {
-                  cout << "Lista 2 vacia..." << endl;
-                  cin.ignore();
-                  cin.get();
-               }
+               cout << "Lista vacia..." << endl;
             }
             else
             {
-               OpListas(ptr, ptr2);
+               cout << "Ingrese el nodo a eliminar: ";
+               cin >> elem;
+               ptr = Josephus(ptr, elem);
             }
             break;
          default:
@@ -774,4 +766,35 @@ Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
         ptr3 = InsertarAsc(ptr3, aux2->info);
      }
   }
+}
+Nodo *Josephus(Nodo *ptr, int elem)
+{
+   Nodo *aux = Buscar(ptr, elem);
+   int num;
+   if(aux == NULL)
+   {
+      cout << "Elemento no se puede eliminar" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      while(ptr->sig != ptr)
+      {
+         /*realizamos una copia del valor de nodo antes de eliminarlo y luego, nos
+         movemos ese num de veces dentro de la lista y eliminamos ese nodo, realizamos
+         copia de su valor y repetimos el proceso hasta que quede un solo nodo*/
+         num = aux->info;
+         ptr = EliminarNodo(ptr, num);
+         for(int i = 1; i < num; i++)
+         {
+            aux = aux->sig;
+         }
+         aux = aux->sig;
+      }
+      cout << "Solo hay un elemento en la lista." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   return ptr;
 }

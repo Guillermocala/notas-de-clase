@@ -282,8 +282,14 @@ Nodo *Josephus(Nodo *ptr, int elem)
          {
             aux = aux->sig;
          }
+         /*al eliminar el apuntador queda detras del nodo eliminado, por lo cual necesitamos
+         reposicionarlo colocandolo en la pos sgte. podemos hacerlo antes o despues del bucle
+         pero siempre DESPUES de la eliminacion*/
          aux = aux->sig;
       }
+      cout << "Solo hay un elemento en la lista." << endl;
+      cin.ignore();
+      cin.get();
    }
    return ptr;
 }

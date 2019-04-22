@@ -296,3 +296,59 @@ Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3)
    cin.ignore();
    cin.get();
 }
+4----------------------------------------------------------------------------------
+-----en el main:
+case 8:
+   system("clear");
+   int quitar;
+   cout << "Ingrese el elemento a eliminar: ";
+   cin >> quitar;
+   ptr = Josephus(ptr, quitar);
+   break;
+-----en la funcion:
+Nodo *Josephus(Nodo *ptr,int info)
+{
+   Nodo *aux = Buscar(ptr, info);
+   int num;
+   if(aux == NULL)
+   {
+      cout << "Elemento no se puede eliminar" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      while(ptr->sig->sig != ptr)
+      {
+         /*con "num" realizamos una copia del valor de nodo antes de eliminarlo y luego, nos
+         movemos ese num de veces dentro de la lista y eliminamos ese nodo, realizamos
+         copia de su valor y repetimos el proceso hasta que quede un solo nodo*/
+         /*como la lista tiene un encabezado debemos confirmas que al posicionar queda en ptr; ya
+         que como ese nodo no tiene valor debemos mover el apuntador al sgte*/
+         if(aux == ptr)
+         {
+            aux = aux->sig;
+            num = aux->info;
+            ptr = EliminarNodo(ptr, num);
+         }
+         else
+         {
+            num = aux->info;
+            ptr = EliminarNodo(ptr, num);
+         }
+         for(int i = 0; i < num; i++)
+         {
+            aux = aux->sig;
+         }
+         /*al eliminar el apuntador queda detras del nodo eliminado, por lo cual necesitamos
+         reposicionarlo colocandolo en la pos sgte. podemos hacerlo antes o despues del bucle
+         pero siempre DESPUES de la eliminacion*/
+         aux = aux->sig;
+      }
+      cout << "Ahora solo hay un elemento en la lista." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   return ptr;
+}
+5----------------------------------------------------------------------------------
