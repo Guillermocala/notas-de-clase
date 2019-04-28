@@ -23,6 +23,7 @@ void Mostrar(Nodo *ptr);
 Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3);
 Nodo *Josephus(Nodo *ptr,int info);
 Nodo *Fibonacci(Nodo *ptr, int tope);
+Nodo *Diferencia(Nodo *ptr, Nodo *ptr2);
 int main()
 {
    int number;
@@ -253,10 +254,7 @@ int main()
          case 8:
             int limit;
             system("clear");
-            cout << "Se almacenara en la lista la secuencia fibonacci." << endl;
-            cout << "Ingrese el numero limite: ";
-            cin >> limit;
-            ptr = Fibonacci(ptr, limit);
+            Diferencia(ptr, ptr2);
             break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;
@@ -712,4 +710,35 @@ Nodo *Fibonacci(Nodo *ptr, int tope)
       ptr = insertarCola(ptr, num3);
    }
    return ptr;
+}
+Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
+{
+   int cont = 0;
+   Nodo *aux, *aux2, *aux3;
+   aux = ptr->sig;
+   while(aux != ptr)
+   {
+      aux2 = ptr2->sig;
+      cont = 0;
+      while(aux2 != ptr2)
+      {
+         if(aux->info == aux2->info)
+         {
+            cont++;
+         }
+         aux2 = aux2->sig;
+      }
+      if(cont == 0)
+      {
+         aux3 = Buscar(ptr3, aux->info);
+         if(aux3 == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux->info);
+         }
+      }
+      aux = aux->sig;  
+   }
+   cout << "Accion completa" << endl;
+   cin.ignore();
+   cin.get();
 }
