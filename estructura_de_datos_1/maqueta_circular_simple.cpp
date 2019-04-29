@@ -23,6 +23,7 @@ Nodo *Union(Nodo *ptr, Nodo *ptr2);
 Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2);
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2);
 Nodo *Josephus(Nodo *ptr, int elem);
+Nodo *Intersecto(Nodo *ptr, Nodo *ptr2);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -227,16 +228,15 @@ int main(int argc, char const *argv[])
             break;
          case 8:
             system("clear");
-            int elem;
-            if(ptr == NULL)
+            if(ptr == NULL || ptr2 == NULL)
             {
-               cout << "Lista vacia..." << endl;
+               cout << "Lista 1 o 2 vacias..." << endl;
+               cin.ignore();
+               cin.get();   
             }
             else
             {
-               cout << "Ingrese el nodo a eliminar: ";
-               cin >> elem;
-               ptr = Josephus(ptr, elem);
+               Intersecto(ptr, ptr2);
             }
             break;
          default:
@@ -797,4 +797,57 @@ Nodo *Josephus(Nodo *ptr, int elem)
       cin.get();
    }
    return ptr;
+}
+Nodo *Intersecto(Nodo *ptr, Nodo *ptr2)
+{
+   Nodo *aux = ptr, *aux2 = ptr2, *q;
+   while(aux->sig != ptr)
+   {
+      aux2 = ptr2;
+      while(aux2->sig != ptr2)
+      {
+         /*si el elemento esta en ambas listas(lista 1, lista 2) se inserta en la lista3*/
+         if(aux2->info == aux->info)
+         {
+            q = Buscar(ptr3, aux2->info);
+            if (q == NULL)
+            {
+               ptr3 = InsertarAsc(ptr3, aux2->info);
+            }
+         }
+         aux2 = aux2->sig;
+      }
+      if(aux2->info == aux->info)
+      {
+         q = Buscar(ptr3, aux2->info);
+         if (q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux2->info);
+         }
+      }
+      aux = aux->sig;
+   }
+   /*como aux esta en el ultimo nodo y termina el bucle debemos recorrerlo por fuera
+   dado que el ciclo termina y hacer obviamente la correspondiente evaluacion*/
+   aux2 = ptr2;
+   while(aux2->sig != ptr2)
+   {
+      if(aux2->info == aux->info)
+      {
+         q = Buscar(ptr3, aux2->info);
+         if (q == NULL)
+         {
+            ptr3 = InsertarAsc(ptr3, aux2->info);
+         }
+      }
+      aux2 = aux2->sig;
+   }
+   if(aux2->info == aux->info)
+   {
+      q = Buscar(ptr3, aux2->info);
+      if (q == NULL)
+      {
+         ptr3 = InsertarAsc(ptr3, aux2->info);
+      }
+   }
 }
