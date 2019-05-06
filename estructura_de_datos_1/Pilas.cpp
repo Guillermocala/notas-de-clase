@@ -21,6 +21,7 @@ void promedio(lista *tope);
 lista *Elim(lista *tope, int elem);
 lista *ElimRep(lista *tope, int elem);
 void Intercambio(lista *tope);
+void Palindrome(lista *tope);
 
 int main(int argc, char*argv[])
 {
@@ -79,9 +80,7 @@ int main(int argc, char*argv[])
 				system("clear");
 				if(!PilaVacia(Tope))
 				{
-					cout << "Ingrese el valor a eliminar: ";
-					cin >> xinfo;
-					Tope = ElimRep(Tope, xinfo);
+					Palindrome(Tope);
 				}
 				else
 				{
@@ -265,4 +264,38 @@ void Intercambio(lista *tope)
 		topeAux = ElimPila(topeAux);
 	}
 	tope = InsertaPila(tope, last);
+}
+void Palindrome(lista *tope)
+{
+	lista *tope2, *tope3;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	while(!PilaVacia(tope))
+	{
+		tope2 = InsertaPila(tope2, InfoPila(tope));
+		tope3 = InsertaPila(tope3, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		if(InfoPila(tope2) != InfoPila(tope3))
+		{
+			break;
+		}
+		else
+		{
+			tope2 = ElimPila(tope2);
+			tope3 = ElimPila(tope3);
+		}
+	}
+	if(!PilaVacia(tope2))
+	{
+		cout << "La pila NO es palindroma" << endl;
+	}
+	else
+	{
+		cout << "La pila es palindroma" << endl;
+	}
+	cin.ignore();
+	cin.get();
 }
