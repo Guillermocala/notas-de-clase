@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include <string.h>
 #include <iostream>
 using namespace std;
@@ -21,24 +20,25 @@ lista *InicPila(lista *tope);
 void promedio(lista *tope);
 lista *Elim(lista *tope, int elem);
 lista *ElimRep(lista *tope, int elem);
- 
+void Intercambio(lista *tope);
+
 int main(int argc, char*argv[])
 {
-	system("CLS");
+	system("clear");
 	int sw = 1, i, j, xinfo;
 	long opcion;
 	do{
 		switch (menu())
 		{
 			case 1:
-				system("CLS");
+				system("clear");
 				printf("Ingrese un numero...");
-				scanf("%d", &xinfo);    	
+				scanf("%d", &xinfo);
 				Tope = InsertaPila(Tope,xinfo);
 				mostrar(Tope);
 				break;
 			case 2:
-				system("CLS");
+				system("clear");
 				if(PilaVacia(Tope))
 				{
 					printf("La Pila esta Vacia");
@@ -46,45 +46,63 @@ int main(int argc, char*argv[])
 				else
 				{
 					i = InfoPila(Tope);
-					printf("el Valor del Tope es ...[%d]",i); 
+					printf("el Valor del Tope es ...[%d]",i);
 				}
-				getch();
+				cin.ignore();
+				cin.get();
 				break;
 			case 3:
 				Tope = ElimPila(Tope);
 				break;
 			case 4:
-				system("CLS");
+				system("clear");
 				cout << "Ingrese el elemento a eliminar";
 				cin >> xinfo;
 				Tope = ElimRep(Tope, xinfo);
 				/*
 				printf ("Ingrese un numero...");
-				scanf ("%d", &xinfo);    	
+				scanf ("%d", &xinfo);
 				Tope1=InsertaPila(Tope1,xinfo);
 				mostrar(Tope1);
 				// para ejercicios*/
 				break;
 			case 5:
-				promedio(Tope);
+				system("clear");
+				mostrar(Tope);
 				break;
 			case 6:
-				system("CLS");
+				system("clear");
 				printf("Press any key to exit...");
 				sw = 0;
 				break;
+			case 7:
+				system("clear");
+				if(!PilaVacia(Tope))
+				{
+					cout << "Ingrese el valor a eliminar: ";
+					cin >> xinfo;
+					Tope = ElimRep(Tope, xinfo);
+				}
+				else
+				{
+					cout << "Lista vacia" << endl;
+					cin.ignore();
+					cin.get();
+				}
+				break;
 			default:
-				system("CLS");
+				system("clear");
 				printf("opcion no valida...por favor intente nuevamente\n");
-				break;    
+				break;
 		}
 	}while(sw);
-	getch();
+	cin.ignore();
+	cin.get();
 }
 int menu(void)
 {
 	int opcion;
-	system("CLS"); 
+	system("clear");
 	printf("\n\n");
 	printf("\t\t\t����������������������������������\n");
 	printf("\t\t\t�     ESTRUCTURA DE DATOS        �\n");
@@ -98,27 +116,16 @@ int menu(void)
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 4  ->  Eliminar Unica Ocu      �\n");
 	printf("\t\t\t�                                �\n");
-	printf("\t\t\t� 5  ->  Promedio                �\n");
+	printf("\t\t\t� 5  ->  Mostrar                 �\n");
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 6  ->  Salir                   �\n");
 	printf("\t\t\t�                                �\n");
+	printf("\t\t\t� 7  - ejercicio                 �\n");
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t����������������������������������\n");
 	printf("\t\t\t�    Elija una opcion...         �\n");
 	printf("\t\t\t����������������������������������\n");
-	int sw = 1;
-	do{
-		opcion = getch();
-		if (opcion >= 48 && opcion <= 57)
-		{
-			sw = 0;
-		}
-		else
-		{
-			printf("\n se debe ingresar un entero entre 1-9\n");
-		}
-	}while(sw);
-	opcion = opcion - 48;
+	cin >> opcion;
 	return opcion;
 }
 lista *InsertaPila(lista *tope, int info)
@@ -152,7 +159,8 @@ lista *ElimPila(lista *tope)
 	{
 		printf("\n La Pila esta Vacia....\n");
 	}
-	getch(); /* completar con el algoritmo de insertar cabeza */
+	cin.ignore();
+	cin.get(); /* completar con el algoritmo de insertar cabeza */
 }
 bool PilaVacia(lista *tope)
 {
@@ -184,7 +192,8 @@ void mostrar(lista *tope)
 			r = r->sig;
 		}
 	}
-	getch();
+	cin.ignore();
+	cin.get();
 }
 lista *InicPila(lista *tope)
 {
@@ -207,18 +216,19 @@ void promedio(lista *tope)
 	}
 	prom = sum / c;
 	cout << "El promedio es: " << prom << endl;
+	cout << "La sumatoria de los elementos es: " << sum << endl;
 	while(!PilaVacia(tope2))
 	{
 		tope = InsertaPila(tope, InfoPila(tope2));
 		tope2 = ElimPila(tope2);
 	}
-	getch();
+	cin.ignore();
+	cin.get();
 }
 lista *ElimRep(lista *tope, int elem)
 {
 	lista *tope2;
 	tope2 = InicPila(tope2);
-	int prom, c, sum;
 	while(!PilaVacia(tope))
 	{
 		if(InfoPila(tope) != elem)
@@ -233,4 +243,26 @@ lista *ElimRep(lista *tope, int elem)
 		tope2 = ElimPila(tope2);
 	}
 	return tope;
+}
+void Intercambio(lista *tope)
+{
+	int first, last;
+	lista *topeAux;
+	topeAux = InicPila(topeAux);
+	first = InfoPila(tope);
+	tope = ElimPila(tope);
+	while(!PilaVacia(tope))
+	{
+		topeAux = InsertaPila(topeAux, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	last = InfoPila(topeAux);
+	topeAux = ElimPila(topeAux);
+	tope = InsertaPila(tope, first);
+	while(!PilaVacia(topeAux))
+	{
+		tope = InsertaPila(tope, InfoPila(topeAux));
+		topeAux = ElimPila(topeAux);
+	}
+	tope = InsertaPila(tope, last);
 }

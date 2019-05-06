@@ -1,0 +1,18 @@
+EJERCICIOS DE PILAS DEL MODULO DE ESTRUCTURA DE DATOS
+
+1- Dada una pila con elem repetidos hacer un algoritmo que busque un elem en la pila y elimine todas sus ocurrencias.
+2- Dada una pila hacer un algoritmo que halle la sumatoria de sus elem y el promedio sin perder los datos de la pila original.
+3- Dada una pila diga si la pila es palindroma.
+4- Dada una pila hacer un algoritmo que intercambie el primer elem con el ultimo(tope) sin cambiar el resto de sus elementos.
+5- Escriba un algoritmo para determinar si una cadena de caracteres de ingreso esta en la forma X C Y:
+   en donde X es una cadena que consta de las letras "A" y "B" y donde Y es el inverson de X (es decir, si X="ABABBA" entonces
+   Y="ABBABA") asuma que la cadena solo tiene letras y que se encuentran en una pila.
+6- Escriba un algoritmo que muestre si el contenido de una pila tiene los parentesis apareados de la forma (((A))) .
+7- Dada una pila hacer un algoritmo que elimine los elem repetidos de la pila dejando una sola ocurrencia.
+8- Dada dos pilas tope1 y tope2 diga si son iguales.
+9- Realice una funcion Reemplazar que contenga una pila y dos elem NUEVO y VIEJO de tal forma que si el segundo valor (VIEJO)
+   aparece en algun lugar de la pila sea reemplazado por el primero (NUEVO) y diga cuantas veces realiza esta operacion.
+10- Dada una pila hacer un algoritmo que elimine todos los elem mayores a un elemento elem dado.
+11- Realice la implementacion de las operaciones basicas de las pilas usando vectores.
+12- Realice la implementacion de las operaciones basicas de las pilas usando listas simples.
+13- Dado un entero cree una pila con su representacion en binario.
