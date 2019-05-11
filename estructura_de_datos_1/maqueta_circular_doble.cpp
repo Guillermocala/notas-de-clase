@@ -18,6 +18,7 @@ Nodo *Buscar(Nodo *ptr, int elem);
 Nodo *EliminarNodo(Nodo *ptr, int elem);
 Nodo *OrdenarDesc(Nodo *ptr);
 Nodo *OrdenarAsc(Nodo *ptr);
+Nodo *Intercambio(Nodo *ptr);
 void Mostrar(Nodo *ptr);
 int main(int argc, char const *argv[])
 {
@@ -143,6 +144,10 @@ int main(int argc, char const *argv[])
             {
                sw = 0;
             }
+            break;
+         case 8:
+            system("clear");
+            /*unexpected function*/
             break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;

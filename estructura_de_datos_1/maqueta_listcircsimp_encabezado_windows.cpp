@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
             		cin >> info;
             		ptr2 = insertarCabeza(ptr2, info);
             		break;
-            	default: 
+            	default:
             		cout << "valor invalido!" << endl;
             		system("pause");
             		break;
@@ -108,7 +108,7 @@ int main(int argc, char const *argv[])
             	case 1:
             		if(ptr == NULL)
             		{
-               			cout << "lista vacia" << endl;   
+               			cout << "lista vacia" << endl;
                			system("pause");
 		            }
         		    else
@@ -119,15 +119,15 @@ int main(int argc, char const *argv[])
             	case 2:
             		if(ptr2 == NULL)
             		{
-               			cout << "lista vacia" << endl; 
-						 system("pause"); 
+               			cout << "lista vacia" << endl;
+						 system("pause");
 		            }
         		    else
             		{
                			Mostrar(ptr2);
             		}
             		break;
-            	default: 
+            	default:
             		cout << "valor invalido!" << endl;
             		break;
 			}
@@ -497,4 +497,4 @@ Nodo *Quizz(Nodo *ptr, Nodo *ptr2)
 		cout << "listas no semejantes" << endl;
 		system("pause");
 	}
-}	
+}

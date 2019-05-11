@@ -1,0 +1,188 @@
+   PARCIAL SEGUNDO SEGUIMIENTO(90 PTS)
+1- Dada una lista circula con encabezado hacer un algoritmo que elimine un elemento dado y diga cuantos elementos elimino.
+2- Dada una lista circular doble con encabezado hacer un algoritmo que intercambie el primer elem con el ultimo.
+3- Dada una lista circular con encabezado hacer un algoritmo que muestre los elementos que sean mayores a la media.
+
+DESARROLLO======================================================================
+1-------------------------------------------------------------------------------
+-----en el main:
+case 8:
+   system("clear");
+   cout << "Ingrese el elem a eliminar: ";
+   cin >> info;
+   ptr = ElimOcu(ptr, info);
+   break;
+-----en la funcion:
+(este algritmo si va a eliminar un univco elem de una lista se jode :c)
+Nodo *Eliminar(Nodo *ptr, int elem)
+{
+   Nodo *aux = Buscar(ptr, elem), *aux2;
+   if(aux == NULL)
+   {
+      cout << "Elem no se puede eliminar..." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      if(ptr->sig->sig == ptr)
+      {
+         free(aux);
+         free(ptr);
+         ptr = NULL;
+      }
+      else
+      {
+         if(aux == ptr->sig)
+         {
+            ptr->sig = aux->sig;
+            free(aux);
+         }
+         else
+         {
+            aux2 = ptr;
+            while(aux2->sig != aux)
+            {
+               aux2 = aux2->sig;
+            }
+            aux2->sig = aux->sig;
+            free(aux);
+         }
+      }
+      cout << "Elem eliminado" << endl;
+      return ptr;
+   }
+   return ptr;
+}
+Nodo *ElimOcu(Nodo *ptr, int elem)
+{
+   Nodo *aux, *aux2;
+   int cont = 0;
+   aux = Buscar(ptr, elem);
+   if(aux == NULL)
+   {
+      cout << "Elem no se puede eliminar..." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      aux2 = ptr->sig;
+      while(aux2 != ptr)
+      {
+         if(aux2->info == elem)
+         {
+            ptr = Eliminar(ptr, aux2->info);
+         }
+         aux2 = aux2->sig;
+      }
+      cout << "Elem eliminado total" << endl;
+      cin.ignore();
+      cin.get();
+      return ptr;
+   }
+   return ptr;
+}
+
+2-------------------------------------------------------------------------------
+-----En el main:
+case 7:
+   system("clear");
+   if(ptr == NULL)
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr->sig->sig == ptr)
+   {
+      cout << "Lista con un solo elemento" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      ptr = Intercambio(ptr);
+   }
+   break;
+-----En la funcion:
+Nodo *Intercambio(Nodo *ptr)
+{
+   Nodo *aux, *aux2, *aux3;
+   aux = ptr->sig;
+   aux2 = ptr->ant;
+   if(aux->sig == aux2)
+   {
+      ptr->sig = aux2;
+      aux2->ant = ptr;
+      aux->sig = ptr;
+      aux->ant = aux2;
+      aux2->sig = aux;
+      ptr->ant = aux;
+   }
+   else
+   {
+      aux3 = aux2->ant;
+      aux3->sig = aux;
+      aux->ant = aux3;
+      aux2->sig = aux->sig;
+      aux->sig->ant = aux2;
+      aux->sig = ptr;
+      ptr->ant = aux;
+      ptr->sig = aux2;
+      aux2->ant = ptr;
+   }
+   cout << "Intercambio finalizado..." << endl;
+   cin.ignore();
+   cin.get();
+   return ptr;
+}
+3-------------------------------------------------------------------------------
+-----en el main:
+case 8:
+   int limit;
+   system("clear");
+   if(ptr == NULL)
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr->sig->sig == ptr)
+   {
+      cout << "Solo hay un elem en la lista" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      MayorMedia(ptr);
+   }
+   break;
+-----en la funcion:
+Nodo *MayorMedia(Nodo *ptr)
+{
+   int Cant, Suma, Media;
+   Nodo *aux;
+   Cant = 0;
+   Suma = 0;
+   aux = ptr->sig;
+   while(aux != ptr)
+   {
+      Cant++;
+      Suma += aux->info;
+      aux = aux->sig;
+   }
+   Media = Suma/Cant;
+   aux = ptr->sig;
+   while(aux != ptr)
+   {
+      if(aux->info > Media)
+      {
+         cout << aux->info << " es mayor a la media" << endl;
+         cin.ignore();
+         cin.get();
+      }
+      aux = aux->sig;
+   }
+}

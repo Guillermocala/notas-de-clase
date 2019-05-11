@@ -135,6 +135,10 @@ int main(int argc, char const *argv[])
             cin.ignore();
             break;
          case 7:
+            system("clear");
+            /*UNEXPECTED FUNCTION*/
+            break;
+         case 8:
             int exit;
             system("clear");
             cout << "\tEsta seguro que desea cerrar el programa?\nPresione 1 para salir, de lo contrario digite cualquier otro numero: ";
@@ -160,20 +164,22 @@ int menu()
 	printf("\n\t\t\t�  MENU LISTA CIRC DOBLES  �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  1) INSERTAR CABEZA      �");
+	printf("\n\t\t\t�  1- INSERTAR CABEZA      �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  2) INSERTAR COLA        �");
+	printf("\n\t\t\t�  2- INSERTAR COLA        �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  3) BUSCAR LLAVE         �");
+	printf("\n\t\t\t�  3- BUSCAR LLAVE         �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  4) ELIMINAR NODO        �");
+	printf("\n\t\t\t�  4- ELIMINAR NODO        �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  5) MOSTRAR LISTA        �");
+	printf("\n\t\t\t�  5- MOSTRAR LISTA        �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  6) ORDENAR              �");
+	printf("\n\t\t\t�  6- ORDENAR              �");
 	printf("\n\t\t\t�                          �");
-	printf("\n\t\t\t�  7) SALIR                �");
+	printf("\n\t\t\t�  7- EJERCICIO            �");
 	printf("\n\t\t\t�                          �");
+   printf("\n\t\t\t�  8- SALIR                �");
+   printf("\n\t\t\t�                          �");
 	printf("\n\t\t\t����������������������������");
 	printf("\n\t\t\t�    ELIJA UNA OPCION      �");
 	printf("\n\t\t\t����������������������������");

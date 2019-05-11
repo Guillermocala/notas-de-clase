@@ -21,7 +21,7 @@ void promedio(lista *tope);
 lista *Elim(lista *tope, int elem);
 lista *ElimRep(lista *tope, int elem);
 void Intercambio(lista *tope);
-void Palindrome(lista *tope);
+lista *Palindrome(lista *tope);
 
 int main(int argc, char*argv[])
 {
@@ -53,7 +53,16 @@ int main(int argc, char*argv[])
 				cin.get();
 				break;
 			case 3:
-				Tope = ElimPila(Tope);
+				if(!PilaVacia(Tope))
+				{
+					Tope = ElimPila(Tope);
+				}
+				else
+				{
+					cout << "Lista vacia..." << endl;
+					cin.ignore();
+					cin.get();
+				}
 				break;
 			case 4:
 				system("clear");
@@ -80,7 +89,7 @@ int main(int argc, char*argv[])
 				system("clear");
 				if(!PilaVacia(Tope))
 				{
-					Palindrome(Tope);
+					Tope = Palindrome(Tope);
 				}
 				else
 				{
@@ -265,30 +274,33 @@ void Intercambio(lista *tope)
 	}
 	tope = InsertaPila(tope, last);
 }
-void Palindrome(lista *tope)
+lista *Palindrome(lista *tope)
 {
-	lista *tope2, *tope3;
+	lista *tope2, *tope3, *tope4;
 	tope2 = InicPila(tope2);
 	tope3 = InicPila(tope3);
+	tope4 = InicPila(tope4);
 	while(!PilaVacia(tope))
 	{
 		tope2 = InsertaPila(tope2, InfoPila(tope));
 		tope3 = InsertaPila(tope3, InfoPila(tope));
 		tope = ElimPila(tope);
 	}
+	while(!PilaVacia(tope3))
+	{
+		tope = InsertaPila(tope, InfoPila(tope3));
+		tope4 = InsertaPila(tope4, InfoPila(tope3));
+		tope3 = ElimPila(tope3);
+	}
 	while(!PilaVacia(tope2))
 	{
-		if(InfoPila(tope2) != InfoPila(tope3))
+		if(InfoPila(tope2) == InfoPila(tope4))
 		{
-			break;
+			tope4 =  ElimPila(tope4);
 		}
-		else
-		{
-			tope2 = ElimPila(tope2);
-			tope3 = ElimPila(tope3);
-		}
+		tope2 = ElimPila(tope2);
 	}
-	if(!PilaVacia(tope2))
+	if(!PilaVacia(tope4))
 	{
 		cout << "La pila NO es palindroma" << endl;
 	}
@@ -298,4 +310,5 @@ void Palindrome(lista *tope)
 	}
 	cin.ignore();
 	cin.get();
+	return tope;
 }

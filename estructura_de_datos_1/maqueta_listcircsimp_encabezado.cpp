@@ -24,6 +24,9 @@ Nodo *DosDeTres(Nodo *ptr, Nodo *ptr2, Nodo *ptr3);
 Nodo *Josephus(Nodo *ptr,int info);
 Nodo *Fibonacci(Nodo *ptr, int tope);
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2);
+Nodo *MayorMedia(Nodo *ptr);
+Nodo *Eliminar(Nodo *ptr, int elem);
+Nodo *ElimOcu(Nodo *ptr, int elem);
 int main()
 {
    int number;
@@ -252,9 +255,10 @@ int main()
             }
             break;
          case 8:
-            int limit;
             system("clear");
-            Diferencia(ptr, ptr2);
+            cout << "Ingrese el elem a eliminar: ";
+            cin >> info;
+            ptr = ElimOcu(ptr, info);
             break;
          default:
             cout << "Ha ingresado un valor invalido..." << endl;
@@ -368,10 +372,7 @@ Nodo *Buscar(Nodo *ptr, int elem)
          {
             return r;
          }
-         else
-         {
-            r = r->sig;
-         }
+         r = r->sig;
       }
       return NULL;
    }
@@ -722,17 +723,86 @@ Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
       {
          if(aux->info == aux2->info)
          {
-            aux3 = Buscar(prt3, aux->sig);
+            aux3 = Buscar(ptr3, aux->info);
             if(aux3 == NULL)
             {
-               ptr3 = InsertarAsc(ptr3, aux->sig);
+               ptr3 = InsertarAsc(ptr3, aux->info);
             }
          }
          aux2 = aux2->sig;
       }
-      aux = aux->sig;  
+      aux = aux->sig;
    }
    cout << "Accion completa" << endl;
    cin.ignore();
    cin.get();
+}
+Nodo *Eliminar(Nodo *ptr, int elem)
+{
+   Nodo *aux = Buscar(ptr, elem), *aux2;
+   if(aux == NULL)
+   {
+      cout << "Elem no se puede eliminar..." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      if(ptr->sig->sig == ptr)
+      {
+         free(aux);
+         free(ptr);
+         ptr = NULL;
+      }
+      else
+      {
+         if(aux == ptr->sig)
+         {
+            ptr->sig = aux->sig;
+            free(aux);
+         }
+         else
+         {
+            aux2 = ptr;
+            while(aux2->sig != aux)
+            {
+               aux2 = aux2->sig;
+            }
+            aux2->sig = aux->sig;
+            free(aux);
+         }
+      }
+      cout << "Elem eliminado" << endl;
+      return ptr;
+   }
+   return ptr;
+}
+Nodo *ElimOcu(Nodo *ptr, int elem)
+{
+   Nodo *aux, *aux2;
+   int cont = 0;
+   aux = Buscar(ptr, elem);
+   if(aux == NULL)
+   {
+      cout << "Elem no se puede eliminar..." << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      aux2 = ptr->sig;
+      while(aux2 != ptr)
+      {
+         if(aux2->info == elem)
+         {
+            ptr = Eliminar(ptr, aux2->info);
+         }
+         aux2 = aux2->sig;
+      }
+      cout << "Elem eliminado total" << endl;
+      cin.ignore();
+      cin.get();
+      return ptr;
+   }
+   return ptr;
 }
