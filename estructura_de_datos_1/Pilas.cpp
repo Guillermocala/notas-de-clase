@@ -14,14 +14,9 @@ lista *InsertaPila(lista *tope, int xinfo);
 bool PilaVacia(lista *tope);
 lista *ElimPila(lista *tope);
 int  InfoPila(lista * tope);
-int menu (void);
 void mostrar(lista *tope);
 lista *InicPila(lista *tope);
-void promedio(lista *tope);
-lista *Elim(lista *tope, int elem);
-lista *ElimRep(lista *tope, int elem);
-void Intercambio(lista *tope);
-lista *Palindrome(lista *tope);
+int menu (void);
 
 int main(int argc, char*argv[])
 {
@@ -206,109 +201,5 @@ void mostrar(lista *tope)
 lista *InicPila(lista *tope)
 {
 	tope = NULL;
-	return tope;
-}
-void promedio(lista *tope)
-{
-	lista *tope2;
-	tope2 = InicPila(tope2);
-	int prom, c, sum;
-	c = 0;
-	sum = 0;
-	while(!PilaVacia(tope))
-	{
-		c++;
-		sum += InfoPila(tope);
-		tope2 = InsertaPila(tope2, InfoPila(tope));
-		tope = ElimPila(tope);
-	}
-	prom = sum / c;
-	cout << "El promedio es: " << prom << endl;
-	cout << "La sumatoria de los elementos es: " << sum << endl;
-	while(!PilaVacia(tope2))
-	{
-		tope = InsertaPila(tope, InfoPila(tope2));
-		tope2 = ElimPila(tope2);
-	}
-	cin.ignore();
-	cin.get();
-}
-lista *ElimRep(lista *tope, int elem)
-{
-	lista *tope2;
-	tope2 = InicPila(tope2);
-	while(!PilaVacia(tope))
-	{
-		if(InfoPila(tope) != elem)
-		{
-			tope2 = InsertaPila(tope2, InfoPila(tope));
-		}
-		tope = ElimPila(tope);
-	}
-	while(!PilaVacia(tope2))
-	{
-		tope = InsertaPila(tope, InfoPila(tope2));
-		tope2 = ElimPila(tope2);
-	}
-	return tope;
-}
-void Intercambio(lista *tope)
-{
-	int first, last;
-	lista *topeAux;
-	topeAux = InicPila(topeAux);
-	first = InfoPila(tope);
-	tope = ElimPila(tope);
-	while(!PilaVacia(tope))
-	{
-		topeAux = InsertaPila(topeAux, InfoPila(tope));
-		tope = ElimPila(tope);
-	}
-	last = InfoPila(topeAux);
-	topeAux = ElimPila(topeAux);
-	tope = InsertaPila(tope, first);
-	while(!PilaVacia(topeAux))
-	{
-		tope = InsertaPila(tope, InfoPila(topeAux));
-		topeAux = ElimPila(topeAux);
-	}
-	tope = InsertaPila(tope, last);
-}
-lista *Palindrome(lista *tope)
-{
-	lista *tope2, *tope3, *tope4;
-	tope2 = InicPila(tope2);
-	tope3 = InicPila(tope3);
-	tope4 = InicPila(tope4);
-	while(!PilaVacia(tope))
-	{
-		tope2 = InsertaPila(tope2, InfoPila(tope));
-		tope3 = InsertaPila(tope3, InfoPila(tope));
-		tope = ElimPila(tope);
-	}
-	while(!PilaVacia(tope3))
-	{
-		tope = InsertaPila(tope, InfoPila(tope3));
-		tope4 = InsertaPila(tope4, InfoPila(tope3));
-		tope3 = ElimPila(tope3);
-	}
-	while(!PilaVacia(tope2))
-	{
-		if(InfoPila(tope2) == InfoPila(tope4))
-		{
-			tope4 =  ElimPila(tope4);
-		}
-		tope2 = ElimPila(tope2);
-	}
-	if(!PilaVacia(tope4))
-	{
-		cout << "La pila NO es palindroma" << endl;
-	}
-	else
-	{
-		cout << "La pila es palindroma" << endl;
-	}
-	cin.ignore();
-	cin.get();
 	return tope;
 }

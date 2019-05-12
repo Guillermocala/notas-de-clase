@@ -16,3 +16,178 @@ EJERCICIOS DE PILAS DEL MODULO DE ESTRUCTURA DE DATOS
 11- Realice la implementacion de las operaciones basicas de las pilas usando vectores.
 12- Realice la implementacion de las operaciones basicas de las pilas usando listas simples.
 13- Dado un entero cree una pila con su representacion en binario.
+
+DESARROLLO======================================================================
+
+1-------------------------------------------------------------------------------
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      Tope = ElimRep(Tope);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+lista *ElimRep(lista *tope, int elem)
+{
+	lista *tope2;
+	tope2 = InicPila(tope2);
+	while(!PilaVacia(tope))
+	{
+		if(InfoPila(tope) != elem)
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	return tope;
+}
+2-------------------------------------------------------------------------------
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      SumyProm(Tope);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+void SumyProm(lista *tope)
+{
+	lista *tope2;
+	tope2 = InicPila(tope2);
+	int prom, c, sum;
+	c = 0;
+	sum = 0;
+	while(!PilaVacia(tope))
+	{
+		c++;
+		sum += InfoPila(tope);
+		tope2 = InsertaPila(tope2, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	prom = sum / c;
+	cout << "El promedio es: " << prom << endl;
+	cout << "La sumatoria de los elementos es: " << sum << endl;
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	cin.ignore();
+	cin.get();
+}
+3-------------------------------------------------------------------------------
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      Tope = Palindrome(Tope);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+lista *Palindrome(lista *tope)
+{
+	lista *tope2, *tope3, *tope4;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	tope4 = InicPila(tope4);
+	while(!PilaVacia(tope))
+	{
+		tope2 = InsertaPila(tope2, InfoPila(tope));
+		tope3 = InsertaPila(tope3, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope3))
+	{
+		tope = InsertaPila(tope, InfoPila(tope3));
+		tope4 = InsertaPila(tope4, InfoPila(tope3));
+		tope3 = ElimPila(tope3);
+	}
+	while(!PilaVacia(tope2))
+	{
+		if(InfoPila(tope2) == InfoPila(tope4))
+		{
+			tope4 =  ElimPila(tope4);
+		}
+		tope2 = ElimPila(tope2);
+	}
+	if(!PilaVacia(tope4))
+	{
+		cout << "La pila NO es palindroma" << endl;
+	}
+	else
+	{
+		cout << "La pila es palindroma" << endl;
+	}
+	cin.ignore();
+	cin.get();
+	return tope;
+}
+4-------------------------------------------------------------------------------
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      Intercambio(Tope);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+void Intercambio(lista *tope)
+{
+	int first, last;
+	lista *topeAux;
+	topeAux = InicPila(topeAux);
+	first = InfoPila(tope);
+	tope = ElimPila(tope);
+	while(!PilaVacia(tope))
+	{
+		topeAux = InsertaPila(topeAux, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	last = InfoPila(topeAux);
+	topeAux = ElimPila(topeAux);
+	tope = InsertaPila(tope, first);
+	while(!PilaVacia(topeAux))
+	{
+		tope = InsertaPila(tope, InfoPila(topeAux));
+		topeAux = ElimPila(topeAux);
+	}
+	tope = InsertaPila(tope, last);
+}
+5-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
