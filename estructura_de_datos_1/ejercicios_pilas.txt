@@ -318,5 +318,57 @@ bool Parentesis(lista *tope)
 }
 7-------------------------------------------------------------------------------
 -----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      Tope = UnicaOcu(Tope);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+lista *UnicaOcu(lista *tope)
+{
+	int dato;
+	lista *tope2, *tope3;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	while(!PilaVacia(tope))
+	{
+
+		dato = InfoPila(tope);
+		tope = ElimPila(tope);
+		while(!PilaVacia(tope))
+		{
+			if(InfoPila(tope) != dato)
+			{
+				tope2 = InsertaPila(tope2, InfoPila(tope));
+			}
+			tope = ElimPila(tope);
+		}
+		if(!PilaVacia(tope2))
+		{
+			while(!PilaVacia(tope2))
+			{
+				tope = InsertaPila(tope, InfoPila(tope2));
+				tope2 = ElimPila(tope2);
+			}
+		}
+		tope3 = InsertaPila(tope3, dato);
+	}
+	while(!PilaVacia(tope3))
+	{
+		tope = InsertaPila(tope, InfoPila(tope3));
+		tope3 = ElimPila(tope3);
+	}
+	return tope;
+}
+8-------------------------------------------------------------------------------
+-----en el main:
 
 -----en la funcion:

@@ -87,7 +87,7 @@ int main(int argc, char*argv[])
 				system("clear");
 				if(!PilaVacia(Tope))
 				{
-
+					/*UNEXPECTED FUNCTION*/
 				}
 				else
 				{
@@ -224,12 +224,4 @@ lista *InicPila(lista *tope)
 {
 	tope = NULL;
 	return tope;
-}
-lista *Vaciar(lista *tope, lista *tope2)
-{
-	while(!PilaVacia(tope))
-	{
-		tope2 = InsertaPila(tope2, InfoPila(tope));
-		tope = ElimPila(tope);
-	}
 }
