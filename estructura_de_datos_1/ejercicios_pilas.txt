@@ -188,6 +188,135 @@ void Intercambio(lista *tope)
 	tope = InsertaPila(tope, last);
 }
 5-------------------------------------------------------------------------------
+hay que modificar la maqueta para insertar cadenas
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      if(PalindString(InfoPila(Tope)))
+      {
+         cout << "es palindrome" << endl;
+         cin.ignore();
+         cin.get();
+      }
+      else
+      {
+         cout << "no es palindrome" << endl;
+         cin.ignore();
+         cin.get();
+      }
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+bool PalindString(string info)
+{
+	char list1[50], list2[50];
+	int limit;
+	strcpy(list1, info.c_str());
+	strcpy(list2, info.c_str());
+	strrev(list2);
+	limit = strlen(list1);
+	cout << "Cadena normal: " << list1 << endl;
+	cout << "Cadena inversa: " << list2 << endl;
+	for(int i = 0; i < limit; i++)
+	{
+		if(list1[i] != list2[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+6-------------------------------------------------------------------------------
+Este algoritmo NO conserva la pila original
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      if(Parentesis(Tope))
+      {
+         cout << "Parentesis apareados correctamente" << endl;
+      }
+      else
+      {
+         cout << "Parentesis no apareados correctamente" << endl;
+      }
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   break;
+-----en la funcion:
+bool Parentesis(lista *tope)
+{
+	lista *tope2, *tope3, *tope4;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	tope4 = InicPila(tope4);
+	char dato;
+	while(!PilaVacia(tope))
+	{
+		dato = InfoPila(tope);
+      /*si evaluamos con != no funciona y pasa todo a tope3*/
+		if(dato == '(' || dato == ')')
+		{
+			tope3 = InsertaPila(tope3, InfoPila(tope));
+		}
+		else
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		tope = ElimPila(tope);
+	}
+   /*si no hay parentesis*/
+	if(PilaVacia(tope3))
+	{
+		return false;
+	}
+	else
+	{
+		while(!PilaVacia(tope3))
+		{
+			dato = InfoPila(tope3);
+         /*como quedan en orden inverso preguntamos por el contrario*/
+			if(dato == ')')
+			{
+				tope4 = InsertaPila(tope4, dato);
+			}
+			else
+			{
+				if(PilaVacia(tope4))
+				{
+					return false;
+				}
+				else
+				{
+					tope4 = ElimPila(tope4);
+				}
+			}
+			tope3 = ElimPila(tope3);
+		}
+		if(!PilaVacia(tope4))
+		{
+			return false;
+		}
+		return true;
+	}
+}
+7-------------------------------------------------------------------------------
 -----en el main:
 
 -----en la funcion:

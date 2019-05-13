@@ -5,22 +5,25 @@
 using namespace std;
 struct lista
 {
+	char signo;
 	int info;
 	lista *sig;
 };
 
 lista *ptr = NULL, *Tope = NULL, *r, *Tope1 = NULL;
-lista *InsertaPila(lista *tope, int xinfo);
+lista *InsertaPila(lista *tope, char info);
 bool PilaVacia(lista *tope);
 lista *ElimPila(lista *tope);
-int  InfoPila(lista * tope);
+char InfoPila(lista * tope);
 void mostrar(lista *tope);
 lista *InicPila(lista *tope);
+lista *ElimRep(lista *tope, int elem);
 int menu (void);
 
 int main(int argc, char*argv[])
 {
 	system("clear");
+	char x2info, m;
 	int sw = 1, i, j, xinfo;
 	long opcion;
 	do{
@@ -28,10 +31,10 @@ int main(int argc, char*argv[])
 		{
 			case 1:
 				system("clear");
-				printf("Ingrese un numero...");
-				scanf("%d", &xinfo);
-				Tope = InsertaPila(Tope,xinfo);
-				mostrar(Tope);
+				cin.ignore();
+				cout << "Ingrese el caracter: ";
+				cin >> x2info;
+				Tope = InsertaPila(Tope, x2info);
 				break;
 			case 2:
 				system("clear");
@@ -41,8 +44,8 @@ int main(int argc, char*argv[])
 				}
 				else
 				{
-					i = InfoPila(Tope);
-					printf("el Valor del Tope es ...[%d]",i);
+					m = InfoPila(Tope);
+					cout << "el Valor del Tope es:" << m << endl;
 				}
 				cin.ignore();
 				cin.get();
@@ -84,7 +87,7 @@ int main(int argc, char*argv[])
 				system("clear");
 				if(!PilaVacia(Tope))
 				{
-					Tope = Palindrome(Tope);
+
 				}
 				else
 				{
@@ -123,7 +126,7 @@ int menu(void)
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 6  ->  Salir                   �\n");
 	printf("\t\t\t�                                �\n");
-	printf("\t\t\t� 7  - ejercicio                 �\n");
+	printf("\t\t\t� 7  ->  ejercicio               �\n");
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t����������������������������������\n");
 	printf("\t\t\t�    Elija una opcion...         �\n");
@@ -131,10 +134,10 @@ int menu(void)
 	cin >> opcion;
 	return opcion;
 }
-lista *InsertaPila(lista *tope, int info)
+lista *InsertaPila(lista *tope, char info)
 {
-	r = (struct lista*) malloc (sizeof(lista));
-	r->info = info;
+	lista *r = (struct lista*) malloc (sizeof(lista));
+	r->signo = info;
 	/* completar con el algoritmo de insertar cabeza */
 	if(tope == NULL)
 	{
@@ -146,7 +149,7 @@ lista *InsertaPila(lista *tope, int info)
 		r->sig = tope;
 		tope = r;
 	}
-return tope;
+	return tope;
 }
 lista *ElimPila(lista *tope)
 {
@@ -176,9 +179,9 @@ bool PilaVacia(lista *tope)
 		return false;
 	}
 }
-int InfoPila(lista *tope)
+char InfoPila(lista *tope)
 {
-	return tope->info;
+	return tope->signo;
 }
 void mostrar(lista *tope)
 {
@@ -191,15 +194,42 @@ void mostrar(lista *tope)
 	{
 		while(r!=NULL)
 		{
-			printf("[%d]->", r->info);
+			cout << r->signo << " -> " ;
 			r = r->sig;
 		}
 	}
 	cin.ignore();
 	cin.get();
 }
+lista *ElimRep(lista *tope, int elem)
+{
+	lista *tope2;
+	tope2 = InicPila(tope2);
+	while(!PilaVacia(tope))
+	{
+		if(InfoPila(tope) != elem)
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	return tope;
+}
 lista *InicPila(lista *tope)
 {
 	tope = NULL;
 	return tope;
+}
+lista *Vaciar(lista *tope, lista *tope2)
+{
+	while(!PilaVacia(tope))
+	{
+		tope2 = InsertaPila(tope2, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
 }
