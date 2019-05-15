@@ -369,6 +369,144 @@ lista *UnicaOcu(lista *tope)
 	return tope;
 }
 8-------------------------------------------------------------------------------
+Este algoritmo no conserva las pilas originales
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope) || !PilaVacia(Tope1))
+   {
+      if(PilasIguales(Tope, Tope1))
+      {
+         cout << "Pilas iguales" << endl;
+      }
+      else
+      {
+         cout << "Pilas no iguales" << endl;
+      }
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+   }
+   cin.ignore();
+   cin.get();
+   break;
+-----en la funcion:
+bool PilasIguales(lista *tope, lista *tope2)
+{
+	while(!PilaVacia(tope))
+	{
+		if(InfoPila(tope) != InfoPila(tope2))
+		{
+			return false;
+		}
+		tope = ElimPila(tope);
+		tope2 = ElimPila(tope2);
+	}
+	if(!PilaVacia(tope2))
+	{
+		return false;
+	}
+	return true;
+}
+9-------------------------------------------------------------------------------
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      Tope = Reemplazar(Tope);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+   }
+   cin.ignore();
+   cin.get();
+   break;
+-----en la funcion:
+lista *Reemplazar(lista *tope)
+{
+	lista *tope2;
+	int new1, old, cont = 0;
+	tope2 = InicPila(tope2);
+	cout << "Ingrese el valor nuevo: ";
+	cin >> new1;
+	cout << "Ingrese el valor viejo: ";
+	cin >> old;
+	while(!PilaVacia(tope))
+	{
+		if(InfoPila(tope) != old)
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		else
+		{
+			tope2 = InsertaPila(tope2, new1);
+			cont++;
+		}
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	cout << "El valor: " << new1 << " se reemplazo " << cont << " veces" << endl;
+	return tope;
+}
+10-------------------------------------------------------------------------------
+-----en el main:
+case 7:
+   system("clear");
+   if(!PilaVacia(Tope))
+   {
+      cout << "Se eliminaran los elem mayores que dicho elemento" << endl;
+      cout << "Ingrese el elemento: ";
+      cin >> xinfo;
+      Tope = ElimMayor(Tope, xinfo);
+   }
+   else
+   {
+      cout << "Lista vacia" << endl;
+   }
+   cin.ignore();
+   cin.get();
+   break;
+-----en la funcion:
+lista *ElimMayor(lista *tope, int elem)
+{
+	lista *tope2;
+	tope2 = InicPila(tope2);
+	while(!PilaVacia(tope))
+	{
+		if(InfoPila(tope) <= elem)
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	return tope;
+}
+
+11-------------------------------------------------------------------------------
 -----en el main:
 
 -----en la funcion:
+
+12-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+13-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+FINAL===========================================================================

@@ -5,7 +5,6 @@
 using namespace std;
 struct lista
 {
-	char signo;
 	int info;
 	lista *sig;
 };
@@ -18,12 +17,13 @@ char InfoPila(lista * tope);
 void mostrar(lista *tope);
 lista *InicPila(lista *tope);
 lista *ElimRep(lista *tope, int elem);
+lista *Reemplazar(lista *tope);
+lista *ElimMayor(lista *tope, int elem);
 int menu (void);
 
 int main(int argc, char*argv[])
 {
 	system("clear");
-	char x2info, m;
 	int sw = 1, i, j, xinfo;
 	long opcion;
 	do{
@@ -31,24 +31,15 @@ int main(int argc, char*argv[])
 		{
 			case 1:
 				system("clear");
-				cin.ignore();
-				cout << "Ingrese el caracter: ";
-				cin >> x2info;
-				Tope = InsertaPila(Tope, x2info);
+				cout << "Ingrese el dato: ";
+				cin >> xinfo;
+				Tope = InsertaPila(Tope, xinfo);
 				break;
 			case 2:
 				system("clear");
-				if(PilaVacia(Tope))
-				{
-					printf("La Pila esta Vacia");
-				}
-				else
-				{
-					m = InfoPila(Tope);
-					cout << "el Valor del Tope es:" << m << endl;
-				}
-				cin.ignore();
-				cin.get();
+				cout << "Ingrese el dato: ";
+				cin >> xinfo;
+				Tope1 = InsertaPila(Tope1, xinfo);
 				break;
 			case 3:
 				if(!PilaVacia(Tope))
@@ -77,6 +68,8 @@ int main(int argc, char*argv[])
 			case 5:
 				system("clear");
 				mostrar(Tope);
+				cout << endl;
+				mostrar(Tope1);
 				break;
 			case 6:
 				system("clear");
@@ -92,9 +85,9 @@ int main(int argc, char*argv[])
 				else
 				{
 					cout << "Lista vacia" << endl;
-					cin.ignore();
-					cin.get();
 				}
+				cin.ignore();
+				cin.get();
 				break;
 			default:
 				system("clear");
@@ -116,7 +109,7 @@ int menu(void)
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 1  ->  Insertar Pila           �\n");
 	printf("\t\t\t�                                �\n");
-	printf("\t\t\t� 2  ->  Infomacion Tope         �\n");
+	printf("\t\t\t� 2  ->  Insertar Pila 2         �\n");
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 3  ->  Eliminar Tope           �\n");
 	printf("\t\t\t�                                �\n");
@@ -137,7 +130,7 @@ int menu(void)
 lista *InsertaPila(lista *tope, char info)
 {
 	lista *r = (struct lista*) malloc (sizeof(lista));
-	r->signo = info;
+	r->info = info;
 	/* completar con el algoritmo de insertar cabeza */
 	if(tope == NULL)
 	{
@@ -181,7 +174,7 @@ bool PilaVacia(lista *tope)
 }
 char InfoPila(lista *tope)
 {
-	return tope->signo;
+	return tope->info;
 }
 void mostrar(lista *tope)
 {
@@ -194,7 +187,7 @@ void mostrar(lista *tope)
 	{
 		while(r!=NULL)
 		{
-			cout << r->signo << " -> " ;
+			cout << r->info << " -> " ;
 			r = r->sig;
 		}
 	}
