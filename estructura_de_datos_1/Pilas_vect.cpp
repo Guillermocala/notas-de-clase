@@ -3,28 +3,22 @@
 #include <string.h>
 #include <iostream>
 using namespace std;
-struct lista
-{
-	int info;
-	lista *sig;
-};
-lista *ptr = NULL, *Tope = NULL, *r, *Tope1 = NULL;
-lista *InsertaPila(lista *tope, int info);
-bool PilaVacia(lista *tope);
-lista *ElimPila(lista *tope);
-int InfoPila(lista * tope);
-void Mostrar(lista *tope);
-lista *InicPila(lista *tope);
-lista *ElimRep(lista *tope, int elem);
-lista *Reemplazar(lista *tope);
-lista *ElimMayor(lista *tope, int elem);
-lista *Binario(lista *tope, int num);
+int lista[50], lista2[50];
+int Tope = -1, Tope2 = -1;
+int InicPila(int tope);
+int InsertaPila(int tope,int v[], int info);
+int InfoPila(int v[], int tope);
+int ElimPila(int tope);
+bool PilaVacia(int tope);
+void mostrar(int v[], int tope);
+
+
 int menu (void);
 
 int main(int argc, char*argv[])
 {
 	system("clear");
-	int sw = 1, i, j, xinfo;
+	int sw = 1, xinfo;
 	long opcion;
 	do{
 		switch (menu())
@@ -33,13 +27,13 @@ int main(int argc, char*argv[])
 				system("clear");
 				cout << "Ingrese el dato: ";
 				cin >> xinfo;
-				Tope = InsertaPila(Tope, xinfo);
+				Tope = InsertaPila(Tope, lista ,xinfo);
 				break;
 			case 2:
 				system("clear");
 				cout << "Ingrese el dato: ";
 				cin >> xinfo;
-				Tope1 = InsertaPila(Tope1, xinfo);
+				Tope2 = InsertaPila(Tope2, lista2, xinfo);
 				break;
 			case 3:
 				if(!PilaVacia(Tope))
@@ -55,21 +49,19 @@ int main(int argc, char*argv[])
 				break;
 			case 4:
 				system("clear");
-				cout << "Ingrese el elemento a eliminar";
-				cin >> xinfo;
-				Tope = ElimRep(Tope, xinfo);
-				/*
-				printf ("Ingrese un numero...");
-				scanf ("%d", &xinfo);
-				Tope1=InsertaPila(Tope1,xinfo);
-				mostrar(Tope1);
-				// para ejercicios*/
+				int i, j;
+				i = InfoPila(lista, Tope);
+				j = InfoPila(lista2, Tope2);
+				cout << "Tope 1: " << i << endl;
+				cout << "Tope 2: " << j << endl;
+				cin.ignore();
+				cin.get();
 				break;
 			case 5:
 				system("clear");
-				Mostrar(Tope);
+				mostrar(lista, Tope);
 				cout << endl;
-				Mostrar(Tope1);
+				mostrar(lista2, Tope2);
 				break;
 			case 6:
 				system("clear");
@@ -78,7 +70,16 @@ int main(int argc, char*argv[])
 				break;
 			case 7:
 				system("clear");
-				/*UNEXPECTED FUNCTION*/
+				if(!PilaVacia(Tope))
+				{
+					/*UNEXPECTED FUNCTION*/
+				}
+				else
+				{
+					cout << "Lista vacia" << endl;
+				}
+				cin.ignore();
+				cin.get();
 				break;
 			default:
 				system("clear");
@@ -104,7 +105,7 @@ int menu(void)
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 3  ->  Eliminar Tope           �\n");
 	printf("\t\t\t�                                �\n");
-	printf("\t\t\t� 4  ->  Eliminar Unica Ocu      �\n");
+	printf("\t\t\t� 4  ->  Info Pila               �\n");
 	printf("\t\t\t�                                �\n");
 	printf("\t\t\t� 5  ->  Mostrar                 �\n");
 	printf("\t\t\t�                                �\n");
@@ -118,30 +119,26 @@ int menu(void)
 	cin >> opcion;
 	return opcion;
 }
-lista *InsertaPila(lista *tope, int info)
+int InicPila(int tope)
 {
-	lista *r = (struct lista*) malloc (sizeof(lista));
-	r->info = info;
-	/* completar con el algoritmo de insertar cabeza */
-	if(tope == NULL)
-	{
-		tope = r;
-		r->sig = NULL;
-	}
-	else
-	{
-		r->sig = tope;
-		tope = r;
-	}
+   tope = -1;
+   return tope;
+}
+int InsertaPila(int tope,int v[], int info)
+{
+   tope++;
+	v[tope] = info;
 	return tope;
 }
-lista *ElimPila(lista *tope)
+int InfoPila(int v[], int tope)
+{
+   return v[tope];
+}
+int ElimPila(int tope)
 {
 	if(!PilaVacia(tope))
 	{
-		r=tope;
-		tope = tope->sig;
-		free(r);
+		tope--;
 		printf("\n Registro Eliminado con Exito\n");
 		return tope;
 	}
@@ -152,9 +149,9 @@ lista *ElimPila(lista *tope)
 	cin.ignore();
 	cin.get(); /* completar con el algoritmo de insertar cabeza */
 }
-bool PilaVacia(lista *tope)
+bool PilaVacia(int tope)
 {
-	if(tope == NULL)
+	if(tope < 0)
 	{
 		return true;
 	}
@@ -163,29 +160,23 @@ bool PilaVacia(lista *tope)
 		return false;
 	}
 }
-int InfoPila(lista *tope)
+void mostrar(int v[], int tope)
 {
-	return tope->info;
-}
-void Mostrar(lista *tope)
-{
-	r = tope;
-	if(tope == NULL)
+	if(tope < 0)
 	{
 		printf("\n La Pila esta Vacia....\n");
 	}
 	else
 	{
-		while(r!=NULL)
-		{
-			cout << r->info << " -> " ;
-			r = r->sig;
-		}
+		for(int i = 0; i <= tope; i++)
+      {
+         cout << v[i] << " -> " ;
+      }
 	}
 	cin.ignore();
 	cin.get();
 }
-lista *ElimRep(lista *tope, int elem)
+/*lista *ElimRep(lista *tope, int elem)
 {
 	lista *tope2;
 	tope2 = InicPila(tope2);
@@ -204,8 +195,4 @@ lista *ElimRep(lista *tope, int elem)
 	}
 	return tope;
 }
-lista *InicPila(lista *tope)
-{
-	tope = NULL;
-	return tope;
-}
+*/
