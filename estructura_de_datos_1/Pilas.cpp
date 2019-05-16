@@ -19,6 +19,7 @@ lista *ElimRep(lista *tope, int elem);
 lista *Reemplazar(lista *tope);
 lista *ElimMayor(lista *tope, int elem);
 lista *Binario(lista *tope, int num);
+lista *UnicaOcu(lista *tope);
 int menu (void);
 
 int main(int argc, char*argv[])
@@ -77,9 +78,18 @@ int main(int argc, char*argv[])
 				sw = 0;
 				break;
 			case 7:
-				system("clear");
-				/*UNEXPECTED FUNCTION*/
-				break;
+			   system("clear");
+			   if(!PilaVacia(Tope))
+			   {
+			      /*UNEXPECTED FUNCTION*/
+			   }
+			   else
+			   {
+			      cout << "Lista vacia" << endl;
+			   }
+				cin.ignore();
+				cin.get();
+			   break;
 			default:
 				system("clear");
 				printf("opcion no valida...por favor intente nuevamente\n");

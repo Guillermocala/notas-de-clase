@@ -1,0 +1,83 @@
+1- Dada una pila con elementos repetidos hacer un algoritmo que elimine los elementos repetidos, los cuente e inserte la cantidad de elementos eliminados de primero.
+
+lista *UnicaOcu(lista *tope)
+{
+	int dato, cont = 0;
+	lista *tope2, *tope3;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	while(!PilaVacia(tope))
+	{
+
+		dato = InfoPila(tope);
+		tope = ElimPila(tope);
+		while(!PilaVacia(tope))
+		{
+			if(InfoPila(tope) != dato)
+			{
+				tope2 = InsertaPila(tope2, InfoPila(tope));
+			}
+			else
+			{
+				cont++;
+			}
+			tope = ElimPila(tope);
+		}
+		if(!PilaVacia(tope2))
+		{
+			while(!PilaVacia(tope2))
+			{
+				tope = InsertaPila(tope, InfoPila(tope2));
+				tope2 = ElimPila(tope2);
+			}
+		}
+		tope3 = InsertaPila(tope3, dato);
+	}
+	tope = InsertaPila(tope, cont);
+	while(!PilaVacia(tope3))
+	{
+		tope = InsertaPila(tope, InfoPila(tope3));
+		tope3 = ElimPila(tope3);
+	}
+	return tope;
+}
+
+2- Dada una pila con elementos repetidos y dada una posicion Pos hacer un algoritmo que halle el mayor elemn de la pila y lo inserte en la posicion Pos.
+
+lista *quizz(lista* tope, int elem)
+{
+	int mayor, cont = 0;
+	lista *tope2;
+	mayor = InfoPila(tope);
+	while(!PilaVacia(tope))
+	{
+		if(InfoPila(tope) > mayor)
+		{
+			mayor = InfoPila(tope);
+		}
+		tope2 = InsertaPila(tope2, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	cout << "El mayor elem es: " << mayor;
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	while(!PilaVacia(tope))
+	{
+      cont++;
+      if(cont == elem)
+      {
+         tope2 = InsertaPila(tope2, mayor);
+      }
+      tope2 = InsertaPila(tope2, InfoPila(tope));
+      tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	return tope;
+}
