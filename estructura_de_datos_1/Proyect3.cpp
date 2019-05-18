@@ -156,9 +156,8 @@ bool Verificacion(lista *tope)
 			{
 				cont2++;
 			}
-			else
+			else if(dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
 			{
-				cout << 10 << endl;
 				cont2 = 0;
 			}
 			cont = 0;
@@ -167,8 +166,9 @@ bool Verificacion(lista *tope)
       {
 			cont++;
          tope3 = InsertaPila(tope3, InfoPila(tope));
-			if(cont > 0 || cont2 > 0)
+			if(cont > 1 || cont2 > 0)
 			{
+				cout << 2 << endl;
 				ver = false;
 			}
       }
