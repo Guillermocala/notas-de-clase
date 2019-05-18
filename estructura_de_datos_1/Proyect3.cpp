@@ -16,34 +16,54 @@ bool PilaVacia(lista *tope);
 char InfoPila(lista *tope);
 void Mostrar(lista *tope);
 lista *ElimRep(lista *tope, int elem);
+int NumElem(lista *tope);
 lista *InicPila(lista *tope);
 bool Verificacion(lista *tope);
+bool Parentesis(lista *tope);
+lista *Convertir(string dato, lista *tope);
+lista *DestroyStack(lista * tope);
 
 int main(int argc, char const *argv[])
 {
-   int limit;
-   char list1[50];
    string data;
    cout << "\t\tCALCULADORA INFIJA" << endl;
    cout << "Si va a usar numeros de mas de un digito use variables\nIngrese la expresion: ";
    getline(cin, data);
-   strcpy(list1, data.c_str());
-   limit = strlen(list1);
-	for(int i = 0; i < limit; i++)
-	{
-		Tope = InsertaPila(Tope, list1[i]);
-	}
+	Tope = Convertir(data, Tope);
 	if(Verificacion(Tope))
 	{
 		cout << "Esta en infija" << endl;
+		Tope = DestroyStack(Tope);
+		Tope = Convertir(data, Tope);
+		if(Parentesis(Tope))
+		{
+			cout << "Parentesis correctamente" << endl;
+		}
+		else
+		{
+			cout << "Parentesis no correctamente" << endl;
+		}
 	}
 	else
 	{
-		cout << "nanai infija" << endl;
+		cout << "no esta en infija" << endl;
 	}
+	cout << data << endl;
 	cin.ignore();
 	cin.get();
    return 0;
+}
+lista *Convertir(string dato, lista *tope)
+{
+	int limit;
+	char lista1[50];
+	strcpy(lista1, dato.c_str());
+   limit = strlen(lista1);
+	for(int i = 0; i < limit; i++)
+	{
+		tope = InsertaPila(tope, lista1[i]);
+	}
+	return tope;
 }
 lista *InsertaPila(lista *tope, char info)
 {
@@ -70,7 +90,7 @@ lista *ElimPila(lista *tope)
 		r = tope;
 		tope = tope->sig;
 		free(r);
-		printf("\n Registro Eliminado con Exito\n");
+		//printf("\n Registro Eliminado con Exito\n");
 		return tope;
 	}
 	else
@@ -79,6 +99,14 @@ lista *ElimPila(lista *tope)
 	}
 	cin.ignore();
 	cin.get(); /* completar con el algoritmo de insertar cabeza */
+}
+lista *DestroyStack(lista * tope)
+{
+	while(!PilaVacia(tope))
+	{
+		tope = ElimPila(tope);
+	}
+	return tope;
 }
 bool PilaVacia(lista *tope)
 {
@@ -111,8 +139,6 @@ void Mostrar(lista *tope)
 			r = r->sig;
 		}
 	}
-	cin.ignore();
-	cin.get();
 }
 lista *ElimRep(lista *tope, int elem)
 {
@@ -138,44 +164,106 @@ lista *InicPila(lista *tope)
 	tope = NULL;
 	return tope;
 }
+int NumElem(lista *tope)
+{
+	int cont = 0;
+	lista *tope2;
+	tope2 = InicPila(tope2);
+	while(!PilaVacia(tope))
+	{
+		cont++;
+		tope2 = InsertaPila(tope2, InfoPila(tope));
+		tope = ElimPila(tope);
+	}
+	while(!PilaVacia(tope2))
+	{
+		tope = InsertaPila(tope, InfoPila(tope2));
+		tope2 = ElimPila(tope2);
+	}
+	return cont;
+}
 bool Verificacion(lista *tope)
 {
-   lista *tope2, *tope3, *tope4;
+   lista *tope2, *tope3;
 	int cont = 0, cont2 = 0;
 	bool ver = true;
    tope2 = InicPila(tope2);
    tope3 = InicPila(tope3);
-	tope4 = InicPila(tope4);
    while(!PilaVacia(tope))
    {
       char dato = InfoPila(tope);
       if(dato == '(' || dato == ')' || dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
       {
-         tope2 = InsertaPila(tope2, InfoPila(tope));
-			if(dato == ')')
-			{
-				cont2++;
-			}
-			else if(dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
-			{
-				cont2 = 0;
-			}
+			tope2 = InsertaPila(tope2, InfoPila(tope));
 			cont = 0;
       }
       else
       {
 			cont++;
          tope3 = InsertaPila(tope3, InfoPila(tope));
-			if(cont > 1 || cont2 > 0)
+			if(cont > 1)
 			{
-				cout << 2 << endl;
 				ver = false;
 			}
       }
-		tope4 = InsertaPila(tope4, InfoPila(tope));
 		tope = ElimPila(tope);
    }
-	Mostrar(tope2);
-	Mostrar(tope3);
 	return ver;
+}
+bool Parentesis(lista *tope)
+{
+	int cant1, cant2;
+	lista *tope2, *tope3, *tope4;
+	char dato;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	tope4 = InicPila(tope4);
+	while(!PilaVacia(tope))
+	{
+		dato = InfoPila(tope);
+      /*si evaluamos con != no funciona y pasa todo a tope3*/
+		if(dato == '(' || dato == ')')
+		{
+			tope3 = InsertaPila(tope3, InfoPila(tope));
+		}
+		else
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		tope = ElimPila(tope);
+	}
+   /*si no hay parentesis*/
+	if(PilaVacia(tope3))
+	{
+		return false;
+	}
+	else
+	{
+		while(!PilaVacia(tope3))
+		{
+			dato = InfoPila(tope3);
+         /*como quedan en orden inverso preguntamos por el contrario*/
+			if(dato == '(')
+			{
+				tope4 = InsertaPila(tope4, dato);
+			}
+			else
+			{
+				if(PilaVacia(tope4))
+				{
+					return false;
+				}
+				else
+				{
+					tope4 = ElimPila(tope4);
+				}
+			}
+			tope3 = ElimPila(tope3);
+		}
+		if(!PilaVacia(tope4))
+		{
+			return false;
+		}
+		return true;
+	}
 }

@@ -5,14 +5,14 @@
 using namespace std;
 struct lista
 {
-	int info;
+	char info;
 	lista *sig;
 };
 lista *ptr = NULL, *Tope = NULL, *r, *Tope1 = NULL;
 lista *InsertaPila(lista *tope, int info);
 bool PilaVacia(lista *tope);
 lista *ElimPila(lista *tope);
-int InfoPila(lista * tope);
+char InfoPila(lista * tope);
 void Mostrar(lista *tope);
 lista *InicPila(lista *tope);
 lista *ElimRep(lista *tope, int elem);
@@ -20,21 +20,30 @@ lista *Reemplazar(lista *tope);
 lista *ElimMayor(lista *tope, int elem);
 lista *Binario(lista *tope, int num);
 lista *UnicaOcu(lista *tope);
+bool Parentesis(lista *tope);
 int menu (void);
 
 int main(int argc, char*argv[])
 {
 	system("clear");
-	int sw = 1, i, j, xinfo;
+	string a1;
+	char xinfo2[50];
+	int sw = 1, i, j, xinfo, limit;
 	long opcion;
 	do{
 		switch (menu())
 		{
 			case 1:
 				system("clear");
+				cin.ignore();
 				cout << "Ingrese el dato: ";
-				cin >> xinfo;
-				Tope = InsertaPila(Tope, xinfo);
+				getline(cin, a1);
+				strcpy(xinfo2, a1.c_str());
+			   limit = strlen(xinfo2);
+				for(int i = 0; i < limit; i++)
+				{
+					Tope = InsertaPila(Tope, xinfo2[i]);
+				}
 				break;
 			case 2:
 				system("clear");
@@ -81,7 +90,14 @@ int main(int argc, char*argv[])
 			   system("clear");
 			   if(!PilaVacia(Tope))
 			   {
-			      /*UNEXPECTED FUNCTION*/
+					if(Parentesis(Tope))
+			      {
+			         cout << "Parentesis apareados correctamente" << endl;
+			      }
+			      else
+			      {
+			         cout << "Parentesis no apareados correctamente" << endl;
+			      }
 			   }
 			   else
 			   {
@@ -173,7 +189,7 @@ bool PilaVacia(lista *tope)
 		return false;
 	}
 }
-int InfoPila(lista *tope)
+char InfoPila(lista *tope)
 {
 	return tope->info;
 }
@@ -218,4 +234,63 @@ lista *InicPila(lista *tope)
 {
 	tope = NULL;
 	return tope;
+}
+bool Parentesis(lista *tope)
+{
+	lista *tope2, *tope3, *tope4;
+	tope2 = InicPila(tope2);
+	tope3 = InicPila(tope3);
+	tope4 = InicPila(tope4);
+	char dato;
+	while(!PilaVacia(tope))
+	{
+		dato = InfoPila(tope);
+      /*si evaluamos con != no funciona y pasa todo a tope3*/
+		if(dato == '(' || dato == ')')
+		{
+			tope3 = InsertaPila(tope3, InfoPila(tope));
+		}
+		else
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+		}
+		tope = ElimPila(tope);
+	}
+   /*si no hay parentesis*/
+	if(PilaVacia(tope3))
+	{
+		return false;
+	}
+	else
+	{
+		while(!PilaVacia(tope3))
+		{
+			dato = InfoPila(tope3);
+         /*como quedan en orden inverso preguntamos por el contrario*/
+			if(dato == '(')
+			{
+				tope4 = InsertaPila(tope4, dato);
+			}
+			else
+			{
+				if(PilaVacia(tope4))
+				{
+					return false;
+				}
+				else
+				{
+					tope4 = ElimPila(tope4);
+				}
+			}
+			tope3 = ElimPila(tope3);
+		}
+		if(!PilaVacia(tope4))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 }
