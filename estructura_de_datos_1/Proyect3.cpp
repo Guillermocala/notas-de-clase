@@ -17,7 +17,7 @@ char InfoPila(lista *tope);
 void Mostrar(lista *tope);
 lista *ElimRep(lista *tope, int elem);
 lista *InicPila(lista *tope);
-int Resultado(lista *tope);
+bool Verificacion(lista *tope);
 
 int main(int argc, char const *argv[])
 {
@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
    char list1[50];
    string data;
    cout << "\t\tCALCULADORA INFIJA" << endl;
-   cout << "Ingrese la expresion: ";
+   cout << "Si va a usar numeros de mas de un digito use variables\nIngrese la expresion: ";
    getline(cin, data);
    strcpy(list1, data.c_str());
    limit = strlen(list1);
@@ -33,7 +33,16 @@ int main(int argc, char const *argv[])
 	{
 		Tope = InsertaPila(Tope, list1[i]);
 	}
-	Resultado(Tope);
+	if(Verificacion(Tope))
+	{
+		cout << "Esta en infija" << endl;
+	}
+	else
+	{
+		cout << "nanai infija" << endl;
+	}
+	cin.ignore();
+	cin.get();
    return 0;
 }
 lista *InsertaPila(lista *tope, char info)
@@ -129,24 +138,44 @@ lista *InicPila(lista *tope)
 	tope = NULL;
 	return tope;
 }
-int Resultado(lista *pila)
+bool Verificacion(lista *tope)
 {
-   lista *tope, *tope2;
-   tope = InicPila(tope);
+   lista *tope2, *tope3, *tope4;
+	int cont = 0, cont2 = 0;
+	bool ver = true;
    tope2 = InicPila(tope2);
-   while(!PilaVacia(pila))
+   tope3 = InicPila(tope3);
+	tope4 = InicPila(tope4);
+   while(!PilaVacia(tope))
    {
-      char dato = InfoPila(pila);
-      if(dato == '(' || dato == ')' || dato == '*' || dato == '/' || dato == '+' || dato == '-')
+      char dato = InfoPila(tope);
+      if(dato == '(' || dato == ')' || dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
       {
-         tope = InsertaPila(tope, InfoPila(pila));
+         tope2 = InsertaPila(tope2, InfoPila(tope));
+			if(dato == ')')
+			{
+				cont2++;
+			}
+			else
+			{
+				cout << 10 << endl;
+				cont2 = 0;
+			}
+			cont = 0;
       }
       else
       {
-         tope2 = InsertaPila(tope2, InfoPila(pila));
+			cont++;
+         tope3 = InsertaPila(tope3, InfoPila(tope));
+			if(cont > 0 || cont2 > 0)
+			{
+				ver = false;
+			}
       }
-      pila = ElimPila(pila);
+		tope4 = InsertaPila(tope4, InfoPila(tope));
+		tope = ElimPila(tope);
    }
-   Mostrar(tope);
-   Mostrar(tope2);
+	Mostrar(tope2);
+	Mostrar(tope3);
+	return ver;
 }
