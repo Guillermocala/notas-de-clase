@@ -212,7 +212,7 @@ bool Verificacion(lista *tope)
 }
 bool Parentesis(lista *tope)
 {
-	int cant1, cant2;
+	int cant1 = 0, cant2 = 0;
 	lista *tope2, *tope3, *tope4;
 	char dato;
 	tope2 = InicPila(tope2);
@@ -224,6 +224,7 @@ bool Parentesis(lista *tope)
       /*si evaluamos con != no funciona y pasa todo a tope3*/
 		if(dato == '(' || dato == ')')
 		{
+			cant1++;
 			tope3 = InsertaPila(tope3, InfoPila(tope));
 		}
 		else
@@ -239,6 +240,7 @@ bool Parentesis(lista *tope)
 	}
 	else
 	{
+		cant2 = cant1;
 		while(!PilaVacia(tope3))
 		{
 			dato = InfoPila(tope3);
@@ -246,6 +248,7 @@ bool Parentesis(lista *tope)
 			if(dato == '(')
 			{
 				tope4 = InsertaPila(tope4, dato);
+				cant2++;
 			}
 			else
 			{
@@ -256,12 +259,19 @@ bool Parentesis(lista *tope)
 				else
 				{
 					tope4 = ElimPila(tope4);
+					cant2--;
 				}
 			}
 			tope3 = ElimPila(tope3);
+			cant1--;
+		}
+		if(!PilaVacia(tope3))
+		{
+			cout << "ERROR: falta " << cant1  <<" '(' "<< endl;
 		}
 		if(!PilaVacia(tope4))
 		{
+			cout << "ERROR: falta " << cant2  <<" ')' "<< endl;
 			return false;
 		}
 		return true;

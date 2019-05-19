@@ -1,0 +1,218 @@
+   EJERCICIOS DE COLAS DEL MODULO
+1- Un estacionamiento de avionetas de un aerodromo es una linea con la capacidad de hasta 12 avionetas. Las avionetas llegan cuando llega un piloto a recoger
+una avioneta, si esta no esta justamente en el extremo de salida (derecha). Todas las avionetas a su derecha han de ser returadas, sacar la suya y las retiradas
+colocadas de nuevo en el mismo orden relativo en que estaban. La salida de una avioneta supone que las demas son movidas hacia adelante de tal forma que los
+espacions libres del estacionamiento esten en la parte izquierda.
+2- Dada una cola diga si es palindroma.
+3- Hacer un algoritmo que invierta los elem de la cola.
+4- Hacer un algoritmo que elimine los repetidos de una cola.
+5- Dada una cola con elementos pares e impares hacer un algoritmo que separes en dos colas los elem asi:
+   pares en la cola1
+   impares en la cola2
+6- Dada una cola en forma oredenada hacer un algoritmo que inserte un elem en la cola y que quede ordenada.
+7- Dada una cola que guarde los tiempos de impresion de los trabajos en una impresora, hacer un algoritmo que halle el maximo, minimo y el
+promedio de los tiempos de impresion.
+8- Hacer un algoritmo que diga si dos colas son iguales.
+9- Realice las operaciones basicas de colas usando vectores y pruebelas en un programa en c.
+10- Realice las operaciones basicas de colas usando listas simples y pruebelas en un programa en c.
+11- Inserte un elemento elem en una posicion pos dada a partir del primer elemento de la cola.
+DESARROLLO======================================================================
+1-------------------------------------------------------------------------------
+-----en el main:
+case 4:
+   system("clear");
+   cout << "Ingrese el elemento a eliminar: ";
+   cin >> xinfo;
+   Tope = Invert(Tope, xinfo);
+   Mostrar(Tope);
+   break;
+-----en la funcion:
+lista *ElimElem(lista *tope, int elem)
+{
+   lista *tope2;
+   tope2 = InicCola(tope2);
+   while(!ColaVacia(tope))
+   {
+      if(InfoCola(tope) != elem)
+      {
+         tope2 = InsertaCola(tope2, InfoCola(tope));
+      }
+      tope = ElimCola(tope);
+   }
+   return tope2;
+}
+2-------------------------------------------------------------------------------
+-----en el main:
+case 4:
+   system("clear");
+   Tope = Palindrome(Tope);
+   Mostrar(Tope);
+   break;
+-----en la funcion:
+lista *Palindrome(lista *tope)
+{
+   lista *tope2, *tope3, *tope4;
+   tope2 = InicCola(tope2);
+   tope3 = InicCola(tope3);
+   tope4 = InicCola(tope4);
+   while(!ColaVacia(tope))
+   {
+      tope2 = InsertaCola(tope2, InfoCola(tope));
+      tope3 = InsertaInver(tope3, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   while(!ColaVacia(tope2))
+   {
+      tope = InsertaCola(tope, InfoCola(tope2));
+      tope4 = InsertaCola(tope4, InfoCola(tope2));
+      tope2 = ElimCola(tope2);
+   }
+   while(!ColaVacia(tope3))
+   {
+      if(InfoCola(tope3) == InfoCola(tope4))
+      {
+         tope4 = ElimCola(tope4);
+      }
+      tope3 = ElimCola(tope3);
+   }
+   if(!ColaVacia(tope4))
+   {
+      cout << "No palindroma" << endl;
+   }
+   else
+   {
+      cout << "Palindroma" << endl;
+   }
+   return tope;
+}
+lista *InsertaInver(lista *tope, int elem)
+{
+   lista *r = (struct lista*) malloc (sizeof(lista)), *j;
+   r->info = elem;
+   if(tope == NULL)
+   {
+      tope = r;
+      r->sig = NULL;
+   }
+   else
+   {
+      r->sig = tope;
+      tope = r;
+   }
+   return tope;
+}
+3-------------------------------------------------------------------------------
+-----en el main:
+case 4:
+   system("clear");
+   Tope = Invert(Tope);
+   Mostrar(Tope);
+   break;
+-----en la funcion:
+lista *Invert(lista *tope)
+{
+   lista *tope2;
+   tope2 = InicCola(tope2);
+   while(!ColaVacia(tope))
+   {
+      tope2 = InsertaInver(tope2, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   return tope2;
+}
+4-------------------------------------------------------------------------------
+-----en el main:
+case 4:
+   system("clear");
+   Tope = UnicaOcu(Tope);
+   Mostrar(Tope);
+   break;
+-----en la funcion:
+lista *UnicaOcu(lista *tope)
+{
+   int dato;
+   lista *tope2, *tope3;
+   tope2 = InicCola(tope2);
+   tope3 = InicCola(tope3);
+   while(!ColaVacia(tope))
+   {
+      dato = InfoCola(tope);
+      tope = ElimCola(tope);
+      while(!ColaVacia(tope))
+      {
+         if(InfoCola(tope) != dato)
+         {
+            tope2 = InsertaCola(tope2, InfoCola(tope));
+         }
+         tope = ElimCola(tope);
+      }
+      if(!ColaVacia(tope2))
+      {
+         while(!ColaVacia(tope2))
+         {
+            tope = InsertaCola(tope, InfoCola(tope2));
+            tope2 = ElimCola(tope2);
+         }
+      }
+      tope3 = InsertaCola(tope3, dato);
+   }
+   return tope3;
+}
+5-------------------------------------------------------------------------------
+-----en el main:
+case 4:
+   system("clear");
+   Tope = ParImpar(Tope, Tope1, Tope2);
+   Mostrar(Tope);
+   break;
+-----en la funcion:
+lista *ParImpar(lista *tope, lista *&tope1, lista *&tope2)
+{
+   lista *tope3;
+   tope3 = InicCola(tope3);
+   while(!ColaVacia(tope))
+   {
+      if(InfoCola(tope)%2 == 0)
+      {
+         tope1 = InsertaCola(tope1, InfoCola(tope));
+      }
+      else
+      {
+         tope2 = InsertaCola(tope2, InfoCola(tope));
+      }
+      tope3 = InsertaCola(tope3, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   return tope3;
+}
+6-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+7-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+8-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+9-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+10------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+11------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+
+END=============================================================================

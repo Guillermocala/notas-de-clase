@@ -1,86 +1,89 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include <string.h>
 #include "iostream"
-using manespace std;
+using namespace std;
 struct lista
 {
   int info;
   lista *sig;
 };
-lista *ptr = NULL, *Tope = NULL, *r, *Tope1 = NULL;
- 
-lista *InsertaPila(lista *tope, int xinfo);
-bool PilaVacia(lista *tope);
-lista *ElimPila(lista *tope);
-int  InfoPila(lista * tope);
-int menu (void);
-void mostrar(lista *tope);
- 
+lista *ptr = NULL, *Tope = NULL, *Tope1 = NULL, *Tope2 = NULL;
+lista *InicCola(lista *tope);
+lista *InsertaCola(lista *tope, int xinfo);
+lista *ElimCola(lista *tope);
+bool ColaVacia(lista *tope);
+int  InfoCola(lista * tope);
+void Mostrar(lista *tope);
+lista *InsertaInver(lista *tope, int elem);
+int menu();
+
 int main(int argc, char*argv[])
 {
-  system ("CLS");
-  int sw = 1, i, j, xinfo;
-  long opcion;
-  do{
-    switch(menu())
-    {
-      case 1:
-        system("CLS");
-        printf("Ingrese un numero...");
-        scanf("%d", &xinfo);    	
-        Tope = InsertaPila(Tope,xinfo);
-        mostrar(Tope);
-        break;
-      case 2:
-        system("CLS");
-        if(PilaVacia(Tope))
-        {
-          printf("La Pila esta Vacia");
-        }
-        else
-        {
-          i = InfoPila(Tope);
-          printf("el Valor del Tope es ...[%d]",i); 
-        }
-        getch();
-        break;
-      case 3:
-        Tope = ElimPila(Tope);
-        break;
-      case 4:
-        system("CLS");
-        printf("Ingrese un numero...");
-        scanf("%d", &xinfo);    	
-        Tope1 = InsertaPila(Tope1,xinfo);
-        mostrar(Tope1);
-        // para ejercicios
-        break;
-      case 5:
-        // para Ejercicios
-        break;
-      case 6:
-        system("CLS");
-        printf("Press any key to exit...");
-        sw = 0;
-        break;
-      default:
-        system("CLS");
-        printf("opcion no valida...por favor intente nuevamente\n");
-        break;    
-  }
-  }while(sw);
-  getch();
+   system ("clear");
+   int sw = 1, i, j, xinfo;
+   do{
+      switch(menu())
+      {
+         case 1:
+            system("clear");
+            printf("Ingrese un numero...");
+            scanf("%d", &xinfo);
+            Tope = InsertaCola(Tope,xinfo);
+            Mostrar(Tope);
+            break;
+         case 2:
+            system("clear");
+            if(ColaVacia(Tope))
+            {
+               printf("La Pila esta Vacia");
+            }
+            else
+            {
+               i = InfoCola(Tope);
+               printf("el Valor del Tope es ...[%d]",i);
+            }
+            cin.ignore();
+            cin.get();
+            break;
+         case 3:
+            Tope = ElimCola(Tope);
+            break;
+         case 4:
+            system("clear");
+            /*UNEXPECTED FUNCTION*/
+            Mostrar(Tope);
+            break;
+         case 5:
+            system("clear");
+            Mostrar(Tope);
+            cout << endl;
+            Mostrar(Tope1);
+            cout << endl;
+            Mostrar(Tope2);
+            break;
+         case 6:
+            system("clear");
+            printf("Press any key to exit...");
+            sw = 0;
+            break;
+         default:
+            system("clear");
+            printf("opcion no valida...por favor intente nuevamente\n");
+            break;
+      }
+   }
+   while(sw);
+   cin.ignore();
+   cin.get();
 }
 int menu(void)
 {
   int opcion;
-  system("CLS");
-  system("color 3A");
+  system("clear");
   printf("\n\n");
   printf("\t\t\t����������������������������������\n");
-  printf("\t\t\t�     ESTRUCTURA DE DATOS        �\n");
+  printf("\t\t\t�       MAQUETA DE COLAS         �\n");
   printf("\t\t\t����������������������������������\n");
   printf("\t\t\t�                                �\n");
   printf("\t\t\t� 1  ->  Insertar Pila           �\n");
@@ -89,94 +92,107 @@ int menu(void)
   printf("\t\t\t�                                �\n");
   printf("\t\t\t� 3  ->  Eliminar Tope           �\n");
   printf("\t\t\t�                                �\n");
-  printf("\t\t\t� 4  ->                          �\n");
+  printf("\t\t\t� 4  ->  Ejercicio               �\n");
   printf("\t\t\t�                                �\n");
-  printf("\t\t\t� 5  ->                          �\n");
-  printf("\t\t\t�                                �\n"); 
+  printf("\t\t\t� 5  ->  Mostrar                 �\n");
   printf("\t\t\t�                                �\n");
   printf("\t\t\t� 6  ->  Salir                   �\n");
-  printf("\t\t\t�                                �\n");
   printf("\t\t\t�                                �\n");
   printf("\t\t\t����������������������������������\n");
   printf("\t\t\t�    Elija una opcion...         �\n");
   printf("\t\t\t����������������������������������\n");
-  int sw = 1;
-  do{
-    opcion = getch();
-    if(opcion >= 48 && opcion <= 57)
-    {
-      sw = 0;
-    }
-    else
-    {
-      printf("\n se debe ingresar un entero entre 1-9\n");
-    }
-  }while(sw);
-  opcion = opcion - 48;
+  cin >> opcion;
   return opcion;
-}   
-lista *InsertaPila(lista *tope, int info)
-{
-  r = (struct lista*) malloc (sizeof(lista));
-  r->info = info;
-  /* completar con el algoritmo de insertar cabeza */
-  if(tope == NULL)
-  {
-    tope = r;
-    r->sig = NULL;
-  }
-  else
-  {
-    r->sig = tope;
-    tope = r;
-  }
-  return tope;
 }
-lista *ElimPila(lista *tope)
+lista * InicCola(lista *tope)
 {
-  if(!PilaVacia(tope))
-  {
-    r = tope;
-    tope = tope->sig;
-    free(r);
-    printf("\n Registro Eliminado con Exito\n");
-    return tope;
-  }
-  else
-  {
-    printf("\n La Pila esta Vacia....\n");
-  }
-  getch(); /* completar con el algoritmo de insertar cabeza */    
+   tope = NULL;
+   return tope;
 }
-bool PilaVacia(lista *tope)
+int InfoCola(lista *tope)
 {
-  if(tope == NULL)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+   return tope->info;
 }
-int InfoPila(lista *tope)
+lista *InsertaCola(lista *tope, int info)
 {
-  return tope->info;
+   lista *r = (struct lista*) malloc (sizeof(lista)), *j;
+   r->info = info;
+   if(tope == NULL)
+   {
+      tope = r;
+      r->sig = NULL;
+   }
+   else
+   {
+      j = tope;
+      while(j->sig != NULL)
+      {
+         j = j->sig;
+      }
+      j->sig = r;
+      r->sig = NULL;
+   }
+   return tope;
 }
-void mostrar(lista *tope)
+lista *ElimCola(lista *tope)
 {
-  r = tope;
-  if(tope == NULL)
-  {
-    printf("\n La Pila esta Vacia....\n");
-  }
-  else
-  {
-    while(r != NULL)
-    {
-      printf("[%d]->", r->info);
-      r = r->sig;
-    }
-  }
-  getch();
+   if(!ColaVacia(tope))
+   {
+      lista *r = tope;
+      tope = tope->sig;
+      free(r);
+      printf("\n Registro Eliminado con Exito\n");
+      return tope;
+   }
+   else
+   {
+      printf("\n La Pila esta Vacia....\n");
+   }
+   cin.ignore();
+   cin.get();
+}
+bool ColaVacia(lista *tope)
+{
+   if(tope == NULL)
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+void Mostrar(lista *tope)
+{
+   lista *r = tope;
+   if(tope == NULL)
+   {
+      printf("\n La Pila esta Vacia....\n");
+   }
+   else
+   {
+      while(r != NULL)
+      {
+         printf("[%d]->", r->info);
+         r = r->sig;
+      }
+   }
+   cin.ignore();
+   cin.get();
+}
+lista *InsertaInver(lista *tope, int elem)
+{
+   lista *r = (struct lista*) malloc (sizeof(lista)), *j;
+   r->info = elem;
+   if(tope == NULL)
+   {
+      tope = r;
+      r->sig = NULL;
+   }
+   else
+   {
+      r->sig = tope;
+      tope = r;
+   }
+   return tope;
 }
