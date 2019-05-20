@@ -27,7 +27,7 @@ int main(int argc, char*argv[])
 				system("clear");
 				cout << "Ingrese el dato: ";
 				cin >> xinfo;
-				Tope = InsertaPila(Tope, lista ,xinfo);
+				Tope = InsertaPila(Tope, lista, xinfo);
 				break;
 			case 2:
 				system("clear");

@@ -3,26 +3,21 @@
 #include <string.h>
 #include "iostream"
 using namespace std;
-struct lista
-{
-  int info;
-  lista *sig;
-};
-lista *ptr = NULL, *Tope = NULL, *Tope1 = NULL, *Tope2 = NULL;
-lista *InicCola(lista *tope);
-lista *InsertaCola(lista *tope, int xinfo);
-lista *ElimCola(lista *tope);
-bool ColaVacia(lista *tope);
-int  InfoCola(lista * tope);
-void Mostrar(lista *tope);
-lista *InsertaInver(lista *tope, int elem);
-lista *InsertPos(lista *tope, int elem, int pos);
+int lista[50], lista2[50];
+int Tope = -1, Tope2 = -1;
+int InicCola(int tope);
+int InfoCola(int vector[], int tope);
+int InsertaCola(int tope, int vector[], int elem);
+int ElimCola(int vector[], int tope);
+bool ColaVacia(int tope);
+void Mostrar(int vector[], int tope);
+
 int menu();
 
 int main(int argc, char*argv[])
 {
    system ("clear");
-   int sw = 1, i, j, xinfo, xinfo2;
+   int sw = 1, i, j, xinfo;
    do{
       switch(menu())
       {
@@ -30,18 +25,18 @@ int main(int argc, char*argv[])
             system("clear");
             printf("Ingrese un numero...");
             scanf("%d", &xinfo);
-            Tope = InsertaCola(Tope, xinfo);
-            Mostrar(Tope);
+            Tope = InsertaCola(Tope, lista, xinfo);
+            Mostrar(lista, Tope);
             break;
          case 2:
             system("clear");
             printf("Ingrese un numero...");
             scanf("%d", &xinfo);
-            Tope1 = InsertaCola(Tope1, xinfo);
-            Mostrar(Tope1);
+            Tope2 = InsertaCola(Tope2, lista2, xinfo);
+            Mostrar(lista2, Tope2);
             break;
          case 3:
-            Tope = ElimCola(Tope);
+            Tope = ElimCola(lista, Tope);
             break;
          case 4:
             system("clear");
@@ -49,11 +44,9 @@ int main(int argc, char*argv[])
             break;
          case 5:
             system("clear");
-            Mostrar(Tope);
+            Mostrar(lista, Tope);
             cout << endl;
-            Mostrar(Tope1);
-            cout << endl;
-            Mostrar(Tope2);
+            Mostrar(lista2, Tope2);
             break;
          case 6:
             system("clear");
@@ -97,43 +90,30 @@ int menu(void)
   cin >> opcion;
   return opcion;
 }
-lista *InicCola(lista *tope)
+int InicCola(int tope)
 {
-   tope = NULL;
+   tope = -1;
    return tope;
 }
-int InfoCola(lista *tope)
+int InfoCola(int vector[], int tope)
 {
-   return tope->info;
+   return vector[tope];
 }
-lista *InsertaCola(lista *tope, int info)
+int InsertaCola(int tope, int vector[], int elem)
 {
-   lista *r = (struct lista*) malloc (sizeof(lista)), *j;
-   r->info = info;
-   if(tope == NULL)
-   {
-      tope = r;
-      r->sig = NULL;
-   }
-   else
-   {
-      j = tope;
-      while(j->sig != NULL)
-      {
-         j = j->sig;
-      }
-      j->sig = r;
-      r->sig = NULL;
-   }
+   tope++;
+   vector[tope] = elem;
    return tope;
 }
-lista *ElimCola(lista *tope)
+int ElimCola(int vector[], int tope)
 {
    if(!ColaVacia(tope))
    {
-      lista *r = tope;
-      tope = tope->sig;
-      free(r);
+      for(int i = 0; i <= tope; i++)
+      {
+         vector[i] = vector[i+1];
+      }
+      tope--;
       printf("\n Registro Eliminado con Exito\n");
       return tope;
    }
@@ -144,9 +124,9 @@ lista *ElimCola(lista *tope)
    cin.ignore();
    cin.get();
 }
-bool ColaVacia(lista *tope)
+bool ColaVacia(int tope)
 {
-   if(tope == NULL)
+   if(tope < 0)
    {
       return true;
    }
@@ -155,37 +135,19 @@ bool ColaVacia(lista *tope)
       return false;
    }
 }
-void Mostrar(lista *tope)
+void Mostrar(int vector[], int tope)
 {
-   lista *r = tope;
-   if(tope == NULL)
+   if(tope < 0)
    {
       printf("\n La Cola esta Vacia....\n");
    }
    else
    {
-      while(r != NULL)
+      for(int i = 0; i <= tope; i++)
       {
-         printf("[%d]->", r->info);
-         r = r->sig;
+         cout << vector[i] << " -> ";
       }
    }
    cin.ignore();
    cin.get();
 }
-lista *InsertaInver(lista *tope, int elem)
-{
-   lista *r = (struct lista*) malloc (sizeof(lista)), *j;
-   r->info = elem;
-   if(tope == NULL)
-   {
-      tope = r;
-      r->sig = NULL;
-   }
-   else
-   {
-      r->sig = tope;
-      tope = r;
-   }
-   return tope;
-}a

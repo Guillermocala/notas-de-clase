@@ -187,32 +187,297 @@ lista *ParImpar(lista *tope, lista *&tope1, lista *&tope2)
 }
 6-------------------------------------------------------------------------------
 -----en el main:
-
+case 4:
+   system("clear");
+   cout << "Ingrese el elemento: ";
+   cin >> xinfo;
+   Tope = InsertOrd(Tope, xinfo);
+   Mostrar(Tope);
+   break;
 -----en la funcion:
-
+lista *InsertOrd(lista *tope, int elem)
+{
+   /*como solo necesitamos insertar una ocurrencia usamos un switch*/
+   int sw = 1;
+   lista *tope2;
+   tope2 = InicCola(tope2);
+   while(!ColaVacia(tope))
+   {
+      if(elem < InfoCola(tope) && sw)
+      {
+         tope2 = InsertaCola(tope2, elem);
+         sw = 0;
+      }
+      tope2 = InsertaCola(tope2, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   return tope2;
+}
 7-------------------------------------------------------------------------------
 -----en el main:
-
+case 4:
+   system("clear");
+   Tope = Tiempos(Tope);
+   Mostrar(Tope);
+   break;
 -----en la funcion:
-
+lista *Tiempos(lista *tope)
+{
+   int max, min;
+   float promedio, sum = 0, cant = 0;
+   lista *tope2;
+   tope2 = InicCola(tope2);
+   max = InfoCola(tope);
+   min = InfoCola(tope);
+   while(!ColaVacia(tope))
+   {
+      cant++;
+      sum += InfoCola(tope);
+      if(max < InfoCola(tope))
+      {
+         max = InfoCola(tope);
+      }
+      else if(min > InfoCola(tope))
+      {
+         min = InfoCola(tope);
+      }
+      tope2 = InsertaCola(tope2, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   promedio = sum/cant;
+   cout << "El valor maximo es: " << max << endl;
+   cout << "El valor minimo es: " << min << endl;
+   cout << "El promedio es: " << promedio << endl;
+   return tope2;
+}
 8-------------------------------------------------------------------------------
 -----en el main:
-
+case 4:
+   system("clear");
+   Tope = ColasIguales(Tope, Tope1);
+   Mostrar(Tope);
+   break;
 -----en la funcion:
-
+/*retornamos una cola y la otra la pasamos por referencia, para no perder
+ninguna cola*/
+lista *ColasIguales(lista *tope, lista *&tope2)
+{
+   bool ver = true;
+   lista *tope3, *tope4;
+   tope3 = InicCola(tope3);
+   tope4 = InicCola(tope4);
+   while(!ColaVacia(tope))
+   {
+      if(!ColaVacia(tope2))
+      {
+         if(InfoCola(tope) != InfoCola(tope2))
+         {
+            ver = false;
+         }
+         tope4 = InsertaCola(tope4, InfoCola(tope2));
+         tope2 = ElimCola(tope2);
+      }
+      else
+      {
+         ver = false;
+      }
+      tope3 = InsertaCola(tope3, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   if(!ColaVacia(tope2))
+   {
+      ver = false;
+      while(!ColaVacia(tope2))
+      {
+         tope4 = InsertaCola(tope4, InfoCola(tope2));
+         tope2 = ElimCola(tope2);
+      }
+   }
+   while(!ColaVacia(tope4))
+   {
+      tope2 = InsertaCola(tope2, InfoCola(tope4));
+      tope4 = ElimCola(tope4);
+   }
+   if(ver)
+   {
+      cout << "Colas iguales" << endl;
+   }
+   else
+   {
+      cout << "Colas NO iguales" << endl;
+   }
+   return tope3;
+}
 9-------------------------------------------------------------------------------
------en el main:
-
------en la funcion:
-
+/*aqui decidi insertar por cola y eliminar por cabeza, las funciones estan asi*/
+-----las funciones:
+int InicCola(int tope)
+{
+   tope = -1;
+   return tope;
+}
+int InfoCola(int vector[], int tope)
+{
+   return vector[tope];
+}
+int InsertaCola(int tope, int vector[], int elem)
+{
+   tope++;
+   vector[tope] = elem;
+   return tope;
+}
+int ElimCola(int vector[], int tope)
+{
+   if(!ColaVacia(tope))
+   {
+      for(int i = 0; i <= tope; i++)
+      {
+         vector[i] = vector[i+1];
+      }
+      tope--;
+      printf("\n Registro Eliminado con Exito\n");
+      return tope;
+   }
+   else
+   {
+      printf("\n La Cola esta Vacia....\n");
+   }
+   cin.ignore();
+   cin.get();
+}
+bool ColaVacia(int tope)
+{
+   if(tope < 0)
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+void Mostrar(int vector[], int tope)
+{
+   if(tope < 0)
+   {
+      printf("\n La Cola esta Vacia....\n");
+   }
+   else
+   {
+      for(int i = 0; i <= tope; i++)
+      {
+         cout << vector[i] << " -> ";
+      }
+   }
+   cin.ignore();
+   cin.get();
+}
 10------------------------------------------------------------------------------
------en el main:
-
------en la funcion:
-
+/*aqui las funciones estan para insertar por cola y eliminar por cabeza*/
+-----las funciones:
+lista *InicCola(lista *tope)
+{
+   tope = NULL;
+   return tope;
+}
+int InfoCola(lista *tope)
+{
+   return tope->info;
+}
+lista *InsertaCola(lista *tope, int info)
+{
+   lista *r = (struct lista*) malloc (sizeof(lista)), *j;
+   r->info = info;
+   if(tope == NULL)
+   {
+      tope = r;
+      r->sig = NULL;
+   }
+   else
+   {
+      j = tope;
+      while(j->sig != NULL)
+      {
+         j = j->sig;
+      }
+      j->sig = r;
+      r->sig = NULL;
+   }
+   return tope;
+}
+lista *ElimCola(lista *tope)
+{
+   if(!ColaVacia(tope))
+   {
+      lista *r = tope;
+      tope = tope->sig;
+      free(r);
+      printf("\n Registro Eliminado con Exito\n");
+      return tope;
+   }
+   else
+   {
+      printf("\n La Cola esta Vacia....\n");
+   }
+   cin.ignore();
+   cin.get();
+}
+bool ColaVacia(lista *tope)
+{
+   if(tope == NULL)
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+void Mostrar(lista *tope)
+{
+   lista *r = tope;
+   if(tope == NULL)
+   {
+      printf("\n La Cola esta Vacia....\n");
+   }
+   else
+   {
+      while(r != NULL)
+      {
+         printf("[%d]->", r->info);
+         r = r->sig;
+      }
+   }
+   cin.ignore();
+   cin.get();
+}
 11------------------------------------------------------------------------------
 -----en el main:
-
+case 4:
+   system("clear");
+   cout << "Ingrese el dato: ";
+   cin >> xinfo;
+   cout << "En que posicion desea ingresarlo?: ";
+   cin >> xinfo2;
+   Tope = InsertPos(Tope, xinfo, xinfo2);
+   Mostrar(Tope);
+   break;
 -----en la funcion:
-
+lista *InsertPos(lista *tope, int elem, int pos)
+{
+   int cont = 0;
+   lista *tope2;
+   tope2 = InfoCola(tope2);
+   while(!ColaVacia(tope))
+   {
+      cont++;
+      if(cont == pos)
+      {
+         tope2 = InsertaCola(tope2, elem);
+      }
+      tope2 = InsertaCola(tope2, InfoCola(tope));
+      tope = ElimCola(tope);
+   }
+   return tope2;
+}
 END=============================================================================
