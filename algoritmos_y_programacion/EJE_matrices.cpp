@@ -8,6 +8,7 @@ int i, k;
 int produccion[5][30];
 int main()
 {
+	/*coloco 4 porque no voy a probar el algoritmo con 30 columnas, pero en vez del 4 va 30*/
 	for (k = 0; k < 4; k++) /*para crear la matriz por columnas (dias)*/
 	{
 		for (i = 0; i < 5; i++) /*se mueven mas rapido las filas (maquinas)*/
