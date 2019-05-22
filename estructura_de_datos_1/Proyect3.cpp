@@ -40,7 +40,8 @@ int main()
 	{
 		cout << "\tEXPRESION NO ESTA NOTACION INFIJA" << endl;
 	}
-	Tope = DestroyStack(Tope);
+//	Tope = DestroyStack(Tope);
+	Tope = InicPila(Tope);
 	Tope = Convertir(data, Tope);
 	if(Parentesis(Tope))
 	{
@@ -184,7 +185,7 @@ int NumElem(lista *tope)
 bool Verificacion(lista *tope)
 {
    lista *tope2, *tope3;
-	int cont = 0, cont2 = 0;
+	int cont = 0, cont2 = 0, cont3 = 0;
 	bool ver = true, spaces = true;
    tope2 = InicPila(tope2);
    tope3 = InicPila(tope3);
@@ -194,12 +195,18 @@ bool Verificacion(lista *tope)
       if(dato == '(' || dato == ')' || dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
       {
 			tope2 = InsertaPila(tope2, InfoPila(tope));
-			cont = 0;
-			if(dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
+			if(dato == '*' || dato == '/' || dato == '+' || dato == '-' ||
+			dato == '^')
 			{
+				cont3 = 0;
+				cont = 0;
 				cont2++;
 			}
-			if(cont2 > 1)
+			else if(dato == '(')
+			{
+				cont3++;
+			}
+			if(cont2 > 2)
 			{
 				ver = false;
 			}
@@ -211,13 +218,13 @@ bool Verificacion(lista *tope)
 		}
       else
       {
-			cont2 = 0;
 			cont++;
          tope3 = InsertaPila(tope3, InfoPila(tope));
-			if(cont > 1)
+			if(cont > 1 || cont3 > 0)
 			{
 				ver = false;
 			}
+			cont2 = 0;
       }
 		tope = ElimPila(tope);
    }
