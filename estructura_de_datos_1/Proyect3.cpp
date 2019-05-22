@@ -23,34 +23,33 @@ bool Parentesis(lista *tope);
 lista *Convertir(string dato, lista *tope);
 lista *DestroyStack(lista * tope);
 
-int main(int argc, char const *argv[])
+int main()
 {
    string data;
-   cout << "\t\tCALCULADORA INFIJA" << endl;
-   cout << "Si va a usar numeros de mas de un digito use variables\nIngrese la expresion: ";
+	system("cls");
+   cout << "\t\tEVALUADOR DE EXPRESION INFIJA" << endl;
+   cout << "Si va a usar numeros de mas de un digito use variables(x, y, z)" << endl;
+	cout << "Ingrese la expresion(SIN ESPACIOS): ";
    getline(cin, data);
 	Tope = Convertir(data, Tope);
 	if(Verificacion(Tope))
 	{
-		cout << "Esta en infija" << endl;
-		Tope = DestroyStack(Tope);
-		Tope = Convertir(data, Tope);
-		if(Parentesis(Tope))
-		{
-			cout << "Parentesis correctamente" << endl;
-		}
-		else
-		{
-			cout << "Parentesis no correctamente" << endl;
-		}
+		cout << "\tEXPRESION EN NOTACION INFIJA" << endl;
 	}
 	else
 	{
-		cout << "no esta en infija" << endl;
+		cout << "\tEXPRESION NO ESTA NOTACION INFIJA" << endl;
 	}
-	cout << data << endl;
-	cin.ignore();
-	cin.get();
+	Tope = DestroyStack(Tope);
+	Tope = Convertir(data, Tope);
+	if(Parentesis(Tope))
+	{
+		cout << "\tPARENTESIS CORRECTAMENTE" << endl;
+	}
+	else
+	{
+		cout << "\tPARENTESIS NO CORRECTAMENTE O SIN PARENTESIS" << endl;
+	}
    return 0;
 }
 lista *Convertir(string dato, lista *tope)
@@ -186,7 +185,7 @@ bool Verificacion(lista *tope)
 {
    lista *tope2, *tope3;
 	int cont = 0, cont2 = 0;
-	bool ver = true;
+	bool ver = true, spaces = true;
    tope2 = InicPila(tope2);
    tope3 = InicPila(tope3);
    while(!PilaVacia(tope))
@@ -196,9 +195,23 @@ bool Verificacion(lista *tope)
       {
 			tope2 = InsertaPila(tope2, InfoPila(tope));
 			cont = 0;
+			if(dato == '*' || dato == '/' || dato == '+' || dato == '-' || dato == '^')
+			{
+				cont2++;
+			}
+			if(cont2 > 1)
+			{
+				ver = false;
+			}
       }
+		else if(dato == ' ')
+		{
+			tope2 = InsertaPila(tope2, InfoPila(tope));
+			spaces = false;
+		}
       else
       {
+			cont2 = 0;
 			cont++;
          tope3 = InsertaPila(tope3, InfoPila(tope));
 			if(cont > 1)
@@ -208,6 +221,11 @@ bool Verificacion(lista *tope)
       }
 		tope = ElimPila(tope);
    }
+	if(!spaces)
+	{
+		cout << "\tERROR: Se ha encontrado un espacio en la expresion..." << endl;
+		ver = false;
+	}
 	return ver;
 }
 bool Parentesis(lista *tope)
@@ -217,61 +235,57 @@ bool Parentesis(lista *tope)
 	char dato;
 	tope2 = InicPila(tope2);
 	tope3 = InicPila(tope3);
-	tope4 = InicPila(tope4);
 	while(!PilaVacia(tope))
 	{
 		dato = InfoPila(tope);
-      /*si evaluamos con != no funciona y pasa todo a tope3*/
+      //si evaluamos con != no funciona y pasa todo a tope3
 		if(dato == '(' || dato == ')')
 		{
-			cant1++;
-			tope3 = InsertaPila(tope3, InfoPila(tope));
-		}
-		else
-		{
+			if(dato == '(')
+			{
+				cant1++;
+			}
+			else
+			{
+				cant2++;
+			}
 			tope2 = InsertaPila(tope2, InfoPila(tope));
 		}
 		tope = ElimPila(tope);
 	}
-   /*si no hay parentesis*/
-	if(PilaVacia(tope3))
+   //si no hay parentesis
+	if(PilaVacia(tope2))
 	{
 		return false;
 	}
 	else
 	{
-		cant2 = cant1;
-		while(!PilaVacia(tope3))
+		while(!PilaVacia(tope2))
 		{
-			dato = InfoPila(tope3);
+			dato = InfoPila(tope2);
          /*como quedan en orden inverso preguntamos por el contrario*/
 			if(dato == '(')
 			{
-				tope4 = InsertaPila(tope4, dato);
-				cant2++;
+				tope3 = InsertaPila(tope3, dato);
 			}
 			else
 			{
-				if(PilaVacia(tope4))
+				if(PilaVacia(tope3))
 				{
-					return false;
+					cout << "\tPARENTESIS: Hay " << cant1 << " De apertura y " << cant2 << " De cierre" << endl;
+					cout << "\tERROR: Falta " << cant2 - cant1 << " De apertura" << endl;
+ 					return false;
 				}
 				else
 				{
-					tope4 = ElimPila(tope4);
-					cant2--;
+					tope3 = ElimPila(tope3);
 				}
 			}
-			tope3 = ElimPila(tope3);
-			cant1--;
+			tope2 = ElimPila(tope2);
 		}
 		if(!PilaVacia(tope3))
 		{
-			cout << "ERROR: falta " << cant1  <<" '(' "<< endl;
-		}
-		if(!PilaVacia(tope4))
-		{
-			cout << "ERROR: falta " << cant2  <<" ')' "<< endl;
+			cout << "\tERROR: falta " << cant1 - cant2 <<" De cierre "<< endl;
 			return false;
 		}
 		return true;
