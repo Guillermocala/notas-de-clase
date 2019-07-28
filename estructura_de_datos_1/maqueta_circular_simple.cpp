@@ -232,7 +232,7 @@ int main(int argc, char const *argv[])
             {
                cout << "Lista 1 o 2 vacias..." << endl;
                cin.ignore();
-               cin.get();   
+               cin.get();
             }
             else
             {

@@ -17,8 +17,7 @@ nodoa *InsertaCola(nodoa *p, int xinfo);
 nodoa *Buscarllave( nodoa *p, int elem);
 nodoa *Eliminacion(nodoa *p, int elem);
 void Mostrar(nodoa *p);
-void *Memory(nodoa *ptr);
-nodoa *DestroyList(nodoa *ptr);
+nodoa *OrdenarAsc(nodoa *ptr);
 int menu(void);
 
 int main()
@@ -67,7 +66,7 @@ int main()
                {
                   printf("No se encontro el Elemento");
                }
-            getch();
+               getch();
             }
             break;
          case 5:
@@ -86,10 +85,15 @@ int main()
             break;
          case 6:
             system("cls");
-            Memory(ptr);
-            ptr = DestroyList(ptr);
+            ptr = OrdenarAsc(ptr);
+            cout << "lista ordenada" << endl;
             getch();
             break;
+            /*
+               q  p
+            1  7  2
+
+            */
          case 0:
             system("CLS");
             printf("Press any key to exit...");
@@ -251,8 +255,8 @@ nodoa *Eliminacion(nodoa *ptr, int elem)
             free(q);
          }
       }
-      return ptr;
    }
+   return ptr;
 }
 void Mostrar(nodoa *ptr)
 {
@@ -270,5 +274,56 @@ void Mostrar(nodoa *ptr)
 }
 nodoa *OrdenarAsc(nodoa *ptr)
 {
-   
+   nodoa *p, *q, *aux, *aux2;
+   p = ptr;
+   while(p != NULL)
+   {
+      q = ptr;
+      while(q != NULL)
+      {
+         if(q->info > p->info)
+         {
+            aux = q->sig;
+            if(q == ptr)
+            {
+               q->sig = p->sig;
+               p->sig = aux;
+               aux->sig = q;
+               ptr = p;
+            }
+            else
+            {
+               if(aux->sig != NULL)
+               {
+                  aux2 = ptr;
+                  while(aux2->sig != q)
+                  {
+                     aux2 = aux2->sig;
+                  }
+                  q->sig = aux->sig;
+                  aux->sig = q;
+                  aux2->sig = aux;
+               }
+               else
+               {
+                  aux2 = ptr;
+                  while(aux2->sig != q)
+                  {
+                     aux2 = aux2->sig;
+                  }
+                  q->sig = ptr;
+                  aux->sig = q;
+                  aux2->sig = aux;
+               }
+            }
+            if(q == p)
+            {
+               p = aux;
+            }
+         }
+         q = q->sig;
+      }
+      p = p->sig;
+   }
+   return ptr;
 }
