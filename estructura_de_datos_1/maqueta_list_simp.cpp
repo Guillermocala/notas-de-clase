@@ -1,7 +1,9 @@
+#include "iostream"
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
+using namespace std;
 struct nodoa
 {
    int info;
@@ -15,6 +17,8 @@ nodoa *InsertaCola(nodoa *p, int xinfo);
 nodoa *Buscarllave( nodoa *p, int elem);
 nodoa *Eliminacion(nodoa *p, int elem);
 void Mostrar(nodoa *p);
+void *Memory(nodoa *ptr);
+nodoa *DestroyList(nodoa *ptr);
 int menu(void);
 
 int main()
@@ -81,6 +85,10 @@ int main()
             }
             break;
          case 6:
+            system("cls");
+            Memory(ptr);
+            ptr = DestroyList(ptr);
+            getch();
             break;
          case 0:
             system("CLS");
@@ -101,7 +109,7 @@ int menu()
    system("CLS");
    printf ("\n\n");
    printf("\t\t\t##################################\n");
-   printf("\t\t\t#        LISTA SIMPLE            #\n");
+   printf("\t\t\t#       MENU  LISTA SIMPLE       #\n");
    printf("\t\t\t##################################\n");
    printf("\t\t\t#                                #\n");
    printf("\t\t\t# 1  ->  Insertar Nodos cabeza   #\n");
@@ -114,7 +122,7 @@ int menu()
    printf("\t\t\t#                                #\n");
    printf("\t\t\t# 5  ->  Eliminar                #\n");
    printf("\t\t\t#                                #\n");
-   printf("\t\t\t# 6  ->                          #\n");
+   printf("\t\t\t# 6  ->  Taller                  #\n");
    printf("\t\t\t#                                #\n");
    printf("\t\t\t#                                #\n");
    printf("\t\t\t# 0  ->  Salir                   #\n");
@@ -251,12 +259,16 @@ void Mostrar(nodoa *ptr)
    system("CLS");
    nodoa *p;
    p = ptr;
-   printf("PTR");
+   cout << "PTR -> ";
    while(p != NULL)
    {
-      printf("[%d]->", p->info);
+      cout << "[" << p->info << "] -> ";
       p = p->sig;
    }
-   printf("NULL");
+   cout << "NULL ";
    getch();
+}
+nodoa *OrdenarAsc(nodoa *ptr)
+{
+   
 }

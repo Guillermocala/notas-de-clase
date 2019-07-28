@@ -45,3 +45,183 @@ si: 1. ((ai=b) 1 <= i <= m) y (n > m)
 25- Void restarLista(lista list1, lista list2)
 	list1 y list2 son listas de digitos que representan un numero entero. Esta rutina suma list1 y list2. por ej, si
 	list1 = <4,2,1,4> y list2 = <3,4>, despues de la llamada a la funcion el valor de list1 es <4,1,8,0>.
+
+DESARROLLO======================================================================
+1-------------------------------------------------------------------------------
+-----en el main:
+case 6:
+	system("cls");
+	cout << "Ingrese el dato a buscar: ";
+	cin >> i;
+	ptr = ElimSgte(ptr, i);
+	break;
+-----en la funcion:
+nodoa *ElimSgte(nodoa *ptr, int elem)
+{
+   nodoa *p, *q;
+   p = Buscarllave(ptr, elem);
+   if(p == NULL || p->sig == NULL)
+   {
+      cout << "No se puede eliminar" << endl;
+   }
+   else
+   {
+      q = p->sig;
+      p->sig = q->sig;
+      free(q);
+   }
+   return ptr;
+}
+2-------------------------------------------------------------------------------
+-----en el main:
+case 6:
+	system("cls");
+	Cuenta(ptr);
+	getch();
+	break;
+-----en la funcion:
+/*se puede añadir dentro de la funcion mostrar solamente colocando un contador*/
+void *Cuenta(nodoa *ptr)
+{
+   int cant = 0;
+   nodoa *p;
+   p = ptr;
+   while(p != NULL)
+   {
+      p = p->sig;
+      cant++;
+   }
+   cout << "La cantidad de elementos de la lista es: " << cant << endl;
+}
+3-------------------------------------------------------------------------------
+-----en el main:
+case 6:
+	system("cls");
+	Memory(ptr);
+	ptr = DestroyList(ptr);
+	getch();
+	break;
+-----en la funcion:
+void *Memory(nodoa *ptr)
+{
+   int cant = 0;
+   nodoa *p, *q;
+   p = ptr;
+   while(p != NULL)
+   {
+      cant += sizeof(p);
+      p = p->sig;
+   }
+   cout << "La cantidad de memoria de la lista es: " << cant << " bytes" << endl;
+}
+nodoa *DestroyList(nodoa *ptr)
+{
+   nodoa *p, *r;
+   r = ptr;
+   while(r != NULL)
+   {
+      p = ptr;
+      if(p->sig == NULL)
+      {
+         ptr = NULL;
+         free(p);
+         cout << "Lista destruida" << endl;
+         return ptr;
+      }
+      else
+      {
+         ptr = ptr->sig;
+         free(p);
+      }
+      r = r->sig;
+   }
+}
+4-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+5-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+6-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+7-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+8-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+9-------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+10------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+11------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+12------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+13------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+14------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+15------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+16------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+17------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+18------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+19------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+20------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+21------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+22------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+23------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+24------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+25------------------------------------------------------------------------------
+-----en el main:
+
+-----en la funcion:
+FINAL===========================================================================
