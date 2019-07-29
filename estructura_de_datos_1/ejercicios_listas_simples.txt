@@ -138,12 +138,104 @@ nodoa *DestroyList(nodoa *ptr)
 }
 4-------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr->sig == NULL)
+	{
+		printf("La lista esta vacia o tiene un solo elemento");
+	}
+	else
+	{
+		ptr = OrdenarAsc(ptr);
+	}
+	getch();
+	break;
 -----en la funcion:
+nodoa *OrdenarAsc(nodoa *ptr)
+{
+   nodoa *p, *q, *aux, *aux2;
+   p = ptr;
+   while(p != NULL)
+   {
+      q = ptr;
+      while(q != NULL)
+      {
+         if(q->sig != NULL && q->info > q->sig->info)
+         {
+            aux = q->sig;
+            if(q == ptr)
+            {
+               q->sig = aux->sig;
+               aux->sig = q;
+               ptr = aux;
+            }
+            else
+            {
+               aux2 = ptr;
+               while(aux2->sig != q)
+               {
+                  aux2 = aux2->sig;
+               }
+               q->sig = aux->sig;
+               aux2->sig = aux;
+               aux->sig = q;
+            }
+				/*si movemos el nodo que contiene a p, debemos devolverlo a su posicion
+				anterior para no alterar el buen funcionamiento del algoritmo*/
+            if(q == p)
+            {
+               p = aux;
+            }
+         }
+         q = q->sig;
+      }
+      p = p->sig;
+   }
+   cout << "lista ordenada" << endl;
+   return ptr;
+}
 5-------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr->sig == NULL)
+	{
+		printf("La lista esta vacia o tiene un solo elemento");
+	}
+	else
+	{
+		ptr1 = MayorPromedio(ptr, ptr1);
+		Mostrar(ptr);
+		Mostrar(ptr1);
+	}
+	getch();
+	break;
 -----en la funcion:
+nodoa *MayorPromedio(nodoa *ptr, nodoa* ptr1)
+{
+   int prom, cant = 0, cont = 0;
+   nodoa *q;
+   q = ptr;
+   while(q != NULL)
+   {
+      cant += q->info;
+      cont++;
+      q = q->sig;
+   }
+   prom = cant / cont;
+   cout << "El promedio es: " << prom << endl;
+   getch();
+   q = ptr;
+   while(q != NULL)
+   {
+      if(q->info >= prom)
+      {
+         ptr1 = InsertaCabeza(ptr1, q->info);
+      }
+      q = q->sig;
+   }
+   return ptr1;
+}
 6-------------------------------------------------------------------------------
 -----en el main:
 
