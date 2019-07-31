@@ -17,7 +17,7 @@ nodoa *InsertaCola(nodoa *p, int xinfo);
 nodoa *Buscarllave( nodoa *p, int elem);
 nodoa *Eliminacion(nodoa *p, int elem);
 void Mostrar(nodoa *p);
-nodoa *MayorPromedio(nodoa *ptr, nodoa* ptr1);
+int PosMedia(nodoa *ptr, int elem);
 int menu(void);
 
 int main()
@@ -90,7 +90,18 @@ int main()
             }
             else
             {
-               /*unexpected function*/
+               cout << "Posicion del valor medio de la lista (si solo hay una ocurrencia no se podra operar)" << endl;
+               cout << "Ingrese el dato a buscar: ";
+               cin >> i;
+               j = PosMedia(ptr, i);
+               if(j != 0)
+               {
+                  cout << "La posicion media del dato " << i << " es: " << j << endl;
+               }
+               else
+               {
+                  cout << "No se puede operar..." << endl;
+               }
             }
             getch();
             break;

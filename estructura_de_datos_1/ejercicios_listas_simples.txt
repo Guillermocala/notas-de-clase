@@ -238,8 +238,78 @@ nodoa *MayorPromedio(nodoa *ptr, nodoa* ptr1)
 }
 6-------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr->sig == NULL)
+	{
+		printf("La lista esta vacia o tiene un solo elemento");
+	}
+	else
+	{
+		cout << "Posicion del valor medio de la lista (si solo hay una ocurrencia no se podra operar)" << endl;
+		cout << "Ingrese el dato a buscar: ";
+		cin >> i;
+		j = PosMedia(ptr, i);
+		if(j != 0)
+		{
+			cout << "La posicion media del dato " << i << " es: " << j << endl;
+		}
+		else
+		{
+			cout << "No se puede operar..." << endl;
+		}
+	}
+	getch();
+	break;
 -----en la funcion:
+int PosMedia(nodoa *ptr, int elem)
+{
+   int pos = 1, cant = 0;
+   nodoa *p, *q;
+   p = Buscarllave(ptr, elem);
+   if(p == NULL)
+   {
+      cout << "Elemento no encontrado" << endl;
+      return pos;
+   }
+   else
+   {
+      for(p = ptr; p != NULL; p = p->sig)
+      {
+         if(p->info == elem)
+         {
+            cant++;
+         }
+      }
+      if(cant != 1)
+      {
+         if(cant % 2 != 0)
+         {
+            cant = ((cant / 2) + 1);
+         }
+         else
+         {
+            cant = (cant / 2);
+         }
+         for(p = ptr; p != NULL; p = p->sig)
+         {
+            if(p->info == elem)
+            {
+               cant--;
+               if(cant == 0)
+               {
+                  return pos;
+               }
+            }
+            pos++;
+         }
+      }
+      else
+      {
+         return pos;
+      }
+   }
+}
 7-------------------------------------------------------------------------------
 -----en el main:
 
