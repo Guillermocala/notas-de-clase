@@ -326,25 +326,24 @@ int PosMedia(nodoa *ptr, int elem)
 }
 nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1)
 {
-   int pos, cant = 1, aux, limit = 1;
+   int pos, cant = 1, aux, current = 1;
    nodoa *p = ptr, *q;
    for(p = ptr; p != NULL; p = p->sig)
    {
-      aux = PosMedia(ptr, p->info);
-      if(aux == limit)
-      {
-         pos = aux;
-      }
       cant++;
    }
-   for(p = ptr; p != NULL; p = p->sig)
+   for(int i = current; i <= cant; i++)
    {
-      if(pos == limit)
+      for(p = ptr; p != NULL; p = p->sig)
       {
-         q = Buscarllave(ptr1, p->info);
-         if(q == NULL)
+         pos = PosMedia(ptr, p->info);
+         if(pos == current)
          {
-            ptr1 = InsertaCabeza(ptr1, p->info);
+            q = Buscarllave(ptr1, p->info);
+            if(q == NULL)
+            {
+               ptr1 = InsertaCola(ptr1, p->info);
+            }
          }
       }
    }
