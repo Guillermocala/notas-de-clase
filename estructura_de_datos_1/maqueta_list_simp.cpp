@@ -18,6 +18,7 @@ nodoa *Buscarllave( nodoa *p, int elem);
 nodoa *Eliminacion(nodoa *p, int elem);
 void Mostrar(nodoa *p);
 int PosMedia(nodoa *ptr, int elem);
+nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1);
 int menu(void);
 
 int main()
@@ -43,6 +44,7 @@ int main()
          case 3:
             system("CLS");
             Mostrar(ptr);
+            Mostrar(ptr1);
             break;
          case 4:
             system("cls");
@@ -90,18 +92,9 @@ int main()
             }
             else
             {
-               cout << "Posicion del valor medio de la lista (si solo hay una ocurrencia no se podra operar)" << endl;
-               cout << "Ingrese el dato a buscar: ";
-               cin >> i;
-               j = PosMedia(ptr, i);
-               if(j != 0)
-               {
-                  cout << "La posicion media del dato " << i << " es: " << j << endl;
-               }
-               else
-               {
-                  cout << "No se puede operar..." << endl;
-               }
+               ptr1 = InsertaPos(ptr, ptr1);
+               Mostrar(ptr);
+               Mostrar(ptr1);
             }
             getch();
             break;
@@ -282,4 +275,82 @@ void Mostrar(nodoa *ptr)
    }
    cout << "NULL ";
    getch();
+}
+int PosMedia(nodoa *ptr, int elem)
+{
+   int pos = 1, cant = 0;
+   nodoa *p, *q;
+   p = Buscarllave(ptr, elem);
+   if(p == NULL)
+   {
+      cout << "Elemento no encontrado" << endl;
+      return pos;
+   }
+   else
+   {
+      for(p = ptr; p != NULL; p = p->sig)
+      {
+         if(p->info == elem)
+         {
+            cant++;
+         }
+      }
+      if(cant != 1)
+      {
+         if(cant % 2 != 0)
+         {
+            cant = ((cant / 2) + 1);
+         }
+         else
+         {
+            cant = (cant / 2);
+         }
+         for(p = ptr; p != NULL; p = p->sig)
+         {
+            if(p->info == elem)
+            {
+               cant--;
+               if(cant == 0)
+               {
+                  return pos;
+               }
+            }
+            pos++;
+         }
+      }
+      else
+      {
+         return pos;
+      }
+   }
+}
+nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1)
+{
+   int pos, cant = 1, aux, limit = 1;
+   nodoa *p = ptr, *q;
+   for(p = ptr; p != NULL; p = p->sig)
+   {
+      aux = PosMedia(ptr, p->info);
+      if(aux == limit)
+      {
+         pos = aux;
+      }
+      cant++;
+   }
+   for(p = ptr; p != NULL; p = p->sig)
+   {
+      if(pos == limit)
+      {
+         q = Buscarllave(ptr1, p->info);
+         if(q == NULL)
+         {
+            ptr1 = InsertaCabeza(ptr1, p->info);
+         }
+      }
+   }
+
+
+
+
+   return ptr1;
 }
