@@ -325,8 +325,52 @@ int PosMedia(nodoa *ptr, int elem)
 }
 7-------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr->sig == NULL)
+	{
+		printf("La lista esta vacia o tiene un solo elemento");
+	}
+	else
+	{
+		ptr1 = InsertaPos(ptr, ptr1);
+		Mostrar(ptr);
+		Mostrar(ptr1);
+	}
+	getch();
+	break;
 -----en la funcion:
+/*usamos PosMedia la cual creamos en el ejercicio pasado, asi que no la pondre de nuevo*/
+nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1)
+{
+   int pos, cant = 1;
+   nodoa *p, *q;
+   /*recorremos la lista para saber cuantos elementos hay en total*/
+   for(p = ptr; p != NULL; p = p->sig)
+   {
+      cant++;
+   }
+   /*empezamos en 1(la posicion inicial de la lista) y terminamos en el max de la lista*/
+   for(int i = 1; i <= cant; i++)
+   {
+      /*recorremos la lista para hallar la posicion i*/
+      for(p = ptr; p != NULL; p = p->sig)
+      {
+         pos = PosMedia(ptr, p->info);
+         if(pos == i)
+         {
+            /*verificamos que el elemento no este repetido, porque no nos interesa
+            guardar mas de una ocurrencia*/
+            q = Buscarllave(ptr1, p->info);
+            if(q == NULL)
+            {
+               ptr1 = InsertaCola(ptr1, p->info);
+            }
+         }
+      }
+   }
+   return ptr1;
+}
 8-------------------------------------------------------------------------------
 -----en el main:
 

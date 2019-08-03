@@ -92,17 +92,9 @@ int main()
          	}
          	else
          	{
-         		cout << "Ingrese el dato a buscar: ";
-         		cin >> i;
-         		j = PosMedia(ptr, i);
-         		if(j != 0)
-         		{
-         			cout << "La posicion media del dato " << i << " es: " << j << endl;
-         		}
-         		else
-         		{
-         			cout << "No se puede operar..." << endl;
-         		}
+         		ptr1 = InsertaPos(ptr, ptr1);
+               Mostrar(ptr);
+               Mostrar(ptr1);
          	}
          	getch();
          	break;
@@ -283,95 +275,4 @@ void Mostrar(nodoa *ptr)
    }
    cout << "NULL ";
    getch();
-}
-int PosMedia(nodoa *ptr, int elem)
-{
-   int pos = 1, cant = 0, exit = 0;
-   nodoa *p, *q;
-   p = Buscarllave(ptr, elem);
-   if(p == NULL)
-   {
-      cout << "Elemento no encontrado" << endl;
-      return exit;
-   }
-   else
-   {
-      /*recorremos la lista para ver cuantas ocurrencias del elem hay*/
-      for(p = ptr; p != NULL; p = p->sig)
-      {
-         if(p->info == elem)
-         {
-            cant++;
-         }
-      }
-      if(cant != 1)
-      {
-         /*si es impar reasignamos el valor con su equivalencia al valor medio, el cual
-         seria la mitad + 1. de lo contrario, solo la mitad*/
-         if(cant % 2 != 0)
-         {
-            cant = ((cant / 2) + 1);
-         }
-         else
-         {
-            cant = (cant / 2);
-         }
-         /*recorremos y llegamos hasta el elemento y retornamos su posicion*/
-         for(p = ptr; p != NULL; p = p->sig)
-         {
-            if(p->info == elem)
-            {
-               cant--;
-               if(cant == 0)
-               {
-                  return pos;
-               }
-            }
-            pos++;
-         }
-      }
-      else
-      {
-         /*si solo hay una ocurrencia del elem retornamos su posicion ya que seria
-         su posicion media*/
-         for(q = ptr; q != NULL; q = q->sig)
-         {
-            if(q->info == elem)
-            {
-               break;
-            }
-            pos++;
-         }
-         return pos;
-      }
-   }
-}
-nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1)
-{
-   int pos, cant = 1, aux, current = 1;
-   nodoa *p, *q;
-   for(p = ptr; p != NULL; p = p->sig)
-   {
-      cant++;
-   }
-   for(int i = current; i <= cant; i++)
-   {
-      for(p = ptr; p != NULL; p = p->sig)
-      {
-         pos = PosMedia(ptr, p->info);
-         if(pos == current)
-         {
-            q = Buscarllave(ptr1, p->info);
-            if(q == NULL)
-            {
-               ptr1 = InsertaCola(ptr1, p->info);
-            }
-         }
-      }
-   }
-
-
-
-
-   return ptr1;
 }
