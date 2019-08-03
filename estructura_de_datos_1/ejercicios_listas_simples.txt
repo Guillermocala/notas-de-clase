@@ -15,7 +15,7 @@ sea la aparicion media del elemento la que permaneza. por ej, despues de podar l
 se obtiene la lista <1,4,5,2,6>
 8- Hacer una funcion que retorne la posicion de la i-esima ocurrencia del elem de la lista. Si hay menos de
 i ocurrencias, retorna el valor de 0.
-9- Haces una funcion que deje en lista todos los elementos de lista menores que elem, y en lista2 los mayores a dicho
+9- Hacer una funcion que deje en lista todos los elementos de lista menores que elem, y en lista2 los mayores a dicho
 elemento. Suponga que las listas list1 y list2 llegan inicializadas y vacias a la rutina.
 10- La mediana de una lista se define como el elemento de dicha secuencia tal que la mitad de los elementos son menores
 que el y la otra mitad mayores o iguales. suponiendo que la lista list no es vacia, no ordenada y sin elementos repetidos, esta
@@ -373,8 +373,75 @@ nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1)
 }
 8-------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr->sig == NULL)
+	{
+		printf("La lista esta vacia o un elemento");
+	}
+	else
+	{
+		cout << "Ingrese el dato a buscar: ";
+		cin >> i;
+		j = PosOcurrencia(ptr, i);
+		if(j > 0)
+		{
+			cout << "La posicion es: " << j << endl;
+		}
+		else
+		{
+			cout << "El numero pedido de ocurrencia no corresponde al de las almacenadas" << endl;
+		}
+	}
+	getch();
+	break;
 -----en la funcion:
+int PosOcurrencia(nodoa *ptr, int elem)
+{
+   int cant = 0, ocu, pos = 1;
+   nodoa *q;
+   q = Buscarllave(ptr, elem);
+   if(q == NULL)
+   {
+      cout << "Elemento no encontrado..." << endl;
+      /*para no añadir mas casos o usar declaraciones aparte uso una variable
+      ya inicializada para salir*/
+      return cant;
+   }
+   else
+   {
+      for(q = ptr; q != NULL; q = q->sig)
+      {
+         if(q->info == elem)
+         {
+            cant++;
+         }
+      }
+      cout << "El dato " << elem << " tiene " << cant << " ocurrencias" << endl;
+      cout << "Ingrese la ocurrencia de la cual desea saber su posicion: ";
+      cin >> ocu;
+      if(ocu > 0 && ocu < cant)
+      {
+         for(q = ptr; q != NULL; q = q->sig)
+         {
+            if(q->info == elem)
+            {
+               ocu--;
+               if(ocu == 0)
+               {
+                  return pos;
+               }
+            }
+            pos++;
+         }
+      }
+      else
+      {
+         pos = 0;
+         return pos;
+      }
+   }
+}
 9-------------------------------------------------------------------------------
 -----en el main:
 

@@ -17,8 +17,7 @@ nodoa *InsertaCola(nodoa *p, int xinfo);
 nodoa *Buscarllave( nodoa *p, int elem);
 nodoa *Eliminacion(nodoa *p, int elem);
 void Mostrar(nodoa *p);
-int PosMedia(nodoa *ptr, int elem);
-nodoa *InsertaPos(nodoa *ptr, nodoa *ptr1);
+nodoa *MenorMayorElem(nodoa *ptr, nodoa *ptr1, int elem);
 int menu(void);
 
 int main()
@@ -31,9 +30,20 @@ int main()
       {
          case 1:
             system("CLS");
-            printf("Ingrese La Informacion: ");
-            scanf("%d", &i);
-            ptr = InsertaCabeza(ptr,i);
+            cout << "Que lista recibira datos?: ";
+            cin >> i;
+            if(i == 1)
+            {
+               cout << "Ingrese el dato: ";
+               cin >> j;
+               ptr = InsertaCabeza(ptr, j);
+            }
+            else
+            {
+               cout << "Ingrese el dato: ";
+               cin >> j;
+               ptr1 = InsertaCabeza(ptr1, j);
+            }
             break;
          case 2:
             system("CLS");
@@ -86,15 +96,15 @@ int main()
             break;
          case 6:
          	system("cls");
-         	if(ptr == NULL || ptr->sig == NULL)
+         	if(ptr == NULL || ptr1 == NULL)
          	{
-         		printf("La lista esta vacia o tiene un solo elemento");
+         		printf("Lista 1 o lista 2 vacia");
          	}
          	else
          	{
-         		ptr1 = InsertaPos(ptr, ptr1);
-               Mostrar(ptr);
-               Mostrar(ptr1);
+         		cout << "Ingrese el dato: ";
+               cin >> i;
+               MenorMayorElem(ptr, ptr1, i);
          	}
          	getch();
          	break;
@@ -275,4 +285,27 @@ void Mostrar(nodoa *ptr)
    }
    cout << "NULL ";
    getch();
+}
+nodoa *MenorMayorElem(nodoa *ptr, nodoa *ptr1, int elem)
+{
+   nodoa *p;
+   for(p = ptr; p != NULL; p = p->sig)
+   {
+      cout << "1" << endl;
+      if(p->info < elem)
+      {
+         ptr = Eliminacion(ptr, p->info);
+         p = p->sig;
+      }
+   }
+   cout << "2" << endl;
+   for(p = ptr1; p != NULL; p = p->sig)
+   {
+      if(p->info > elem)
+      {
+         cout << "3" << endl;
+         ptr1 = Eliminacion(ptr1, p->info);
+         p = p->sig;
+      }
+   }
 }
