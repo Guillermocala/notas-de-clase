@@ -246,7 +246,6 @@ case 6:
 	}
 	else
 	{
-		cout << "Posicion del valor medio de la lista (si solo hay una ocurrencia no se podra operar)" << endl;
 		cout << "Ingrese el dato a buscar: ";
 		cin >> i;
 		j = PosMedia(ptr, i);
@@ -264,16 +263,17 @@ case 6:
 -----en la funcion:
 int PosMedia(nodoa *ptr, int elem)
 {
-   int pos = 1, cant = 0;
+   int pos = 1, cant = 0, exit = 0;
    nodoa *p, *q;
    p = Buscarllave(ptr, elem);
    if(p == NULL)
    {
       cout << "Elemento no encontrado" << endl;
-      return pos;
+      return exit;
    }
    else
    {
+      /*recorremos la lista para ver cuantas ocurrencias del elem hay*/
       for(p = ptr; p != NULL; p = p->sig)
       {
          if(p->info == elem)
@@ -283,6 +283,8 @@ int PosMedia(nodoa *ptr, int elem)
       }
       if(cant != 1)
       {
+         /*si es impar reasignamos el valor con su equivalencia al valor medio, el cual
+         seria la mitad + 1. de lo contrario, solo la mitad*/
          if(cant % 2 != 0)
          {
             cant = ((cant / 2) + 1);
@@ -291,6 +293,7 @@ int PosMedia(nodoa *ptr, int elem)
          {
             cant = (cant / 2);
          }
+         /*recorremos y llegamos hasta el elemento y retornamos su posicion*/
          for(p = ptr; p != NULL; p = p->sig)
          {
             if(p->info == elem)
@@ -306,6 +309,16 @@ int PosMedia(nodoa *ptr, int elem)
       }
       else
       {
+         /*si solo hay una ocurrencia del elem retornamos su posicion ya que seria
+         su posicion media*/
+         for(q = ptr; q != NULL; q = q->sig)
+         {
+            if(q->info == elem)
+            {
+               break;
+            }
+            pos++;
+         }
          return pos;
       }
    }
