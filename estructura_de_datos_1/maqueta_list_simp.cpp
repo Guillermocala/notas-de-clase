@@ -17,12 +17,12 @@ nodoa *InsertaCola(nodoa *p, int xinfo);
 nodoa *Buscarllave( nodoa *p, int elem);
 nodoa *Eliminacion(nodoa *p, int elem);
 void Mostrar(nodoa *p);
-nodoa *MenorMayorElem(nodoa *ptr, nodoa *ptr1, int elem);
+void MenorMayorElem(nodoa *&ptr, nodoa *&ptr1, int elem);
 int menu(void);
 
 int main()
 {
-   system ("CLS");
+   system("cls");
    int sw = 1, i, j, x;
    long opcion;
    do{
@@ -115,7 +115,7 @@ int main()
             break;
          default:
             system("CLS");
-            printf("opcion no valida...por favor intente nuevamente\n");
+            printf("opcion no valida... por favor intente nuevamente\n");
             break;
       }
    }while(sw);
@@ -222,52 +222,29 @@ nodoa *Buscarllave(nodoa *ptr, int elem)
 }
 nodoa *Eliminacion(nodoa *ptr, int elem)
 {
-   nodoa *q, *k, *l;
+   nodoa *q, *k;
    q = Buscarllave(ptr, elem); /*verificamos que el elemento exista*/
    if(q == NULL)
    {
-      printf("No se puede eliminar el elemento");
+      cout << "No se puede eliminar el elemento" << endl;
    }
    else
    {
       if(q == ptr)
       {
-         if(q->sig == NULL)
-         {
-            ptr = NULL;
-            free(q);
-         }
-         else
-         {
-            ptr = q->sig;
-            free(q);
-         }
+         ptr = ptr->sig;
+         free(q);
       }
       else
       {
-         if(q->sig == NULL)
+         /*necesitamos un aux antes y para esto solo usamos un bucle*/
+         k = ptr;
+         while(k->sig != q)
          {
-            k = ptr;
-            while(k != q)
-            {
-               k = k->sig;
-            }
-            k->sig = NULL;
-            free(q);
+            k = k->sig;
          }
-         else
-         {
-            /*como necesitamos un aux antes y despues de, el de antes solo usamos
-            un bucle, el despues solo asignamos un ->sig al nodo que se eliminara*/
-            l = q->sig;
-            k = ptr;
-            while(k != q)
-            {
-               k = k->sig;
-            }
-            k->sig = l;
-            free(q);
-         }
+         k->sig = q->sig;
+         free(q);
       }
    }
    return ptr;
@@ -285,27 +262,4 @@ void Mostrar(nodoa *ptr)
    }
    cout << "NULL ";
    getch();
-}
-nodoa *MenorMayorElem(nodoa *ptr, nodoa *ptr1, int elem)
-{
-   nodoa *p;
-   for(p = ptr; p != NULL; p = p->sig)
-   {
-      cout << "1" << endl;
-      if(p->info < elem)
-      {
-         ptr = Eliminacion(ptr, p->info);
-         p = p->sig;
-      }
-   }
-   cout << "2" << endl;
-   for(p = ptr1; p != NULL; p = p->sig)
-   {
-      if(p->info > elem)
-      {
-         cout << "3" << endl;
-         ptr1 = Eliminacion(ptr1, p->info);
-         p = p->sig;
-      }
-   }
 }

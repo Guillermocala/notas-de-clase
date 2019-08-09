@@ -444,8 +444,42 @@ int PosOcurrencia(nodoa *ptr, int elem)
 }
 9-------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr1 == NULL)
+	{
+		printf("Lista 1 o lista 2 vacia");
+	}
+	else
+	{
+		cout << "Ingrese el dato: ";
+		cin >> i;
+		MenorMayorElem(ptr, ptr1, i);
+	}
+	getch();
+	break;
 -----en la funcion:
+void MenorMayorElem(nodoa *&ptr, nodoa *&ptr1, int elem)
+{
+   nodoa *p;
+   for(p = ptr; p != NULL; p = p->sig)
+   {
+      if(p->info <= elem)
+      {
+         ptr = Eliminacion(ptr, p->info);
+         p = ptr;
+      }
+   }
+   for(p = ptr1; p != NULL; p = p->sig)
+   {
+      if(p->info >= elem)
+      {
+         ptr1 = Eliminacion(ptr1, p->info);
+         p = ptr1;
+      }
+   }
+   cout << "Operacion realizada exitosamente" << endl;
+}
 10------------------------------------------------------------------------------
 -----en el main:
 
