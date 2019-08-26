@@ -1,0 +1,64 @@
+  QUIZZ
+1- Decir cuantos nodos tienen 2 hijos.
+2- Dado un dato decir su padre (si se encuentra ).
+3- Dado un arbol imprimir su subarbol izquierdo (sin la raiz principal, solo es sub izq).
+
+  DESARROLLO
+1---------------------------------
+int cont = 0;
+void CuentaHijos(Arbin r)
+{
+  if(r != null)
+  {
+    if(r.izq() != null && r.der() != null)
+    {
+      cont++;
+    }
+    CuentaHijos(r.izq());
+    CuentaHijos(r.der());
+  }
+}
+2---------------------------------
+int padre = 0;
+void EncuentraPadre(Arbin r, int elem)
+{
+  if(r != null)
+  {
+    if((r.izq() != null && r.izq().obtener() == elem) || (r.der() != null && r.der().obtener() == elem))
+    {
+      padre = r.obtener();
+    }
+    EncuentraPadre(r.izq(), elem);
+    EncuentraPadre(r.der(), elem);
+  }
+}
+if(padre == r.obtener() || padre == 0)
+{
+  escriba("Padre no encontrado");
+}
+else
+{
+  escriba("El padre es: ", padre);
+}
+3---------------------------------
+void MostrarSubArb(Arbin r)
+{
+  if(r != null)
+  {
+    if(r.izq() != null)
+    {
+      Arbin x = r.izq();
+      preorden(x);
+    }
+  }
+}
+void preorden(Arbin r)
+{
+  if(r != null)
+  {
+    escriba(" ", r.obtener());
+    preorden(r.izq());
+    preorden(r.der());
+  }
+}
+fin--------------------------------
