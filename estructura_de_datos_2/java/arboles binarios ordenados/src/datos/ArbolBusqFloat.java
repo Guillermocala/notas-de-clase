@@ -5,7 +5,7 @@
  */
 package datos;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class ArbolBusqFloat
 {
-   private Arbin<Float> raiz;
+   private Arbin<Float> raiz;   
    public void insertar(float x)
    {
       if(raiz == null)
@@ -53,6 +53,7 @@ public class ArbolBusqFloat
    String res = " ";
    public String listar()
    {
+      res = "";
       inorden(raiz);
       return res;
    }
@@ -108,32 +109,126 @@ public class ArbolBusqFloat
          }
       }
    }
-   public static void main(String[] args) /*psvm y tab*/
+   public void eliminar(float x)
    {
-      float num;
-      boolean result;
-      ArbolBusqFloat arbol = new ArbolBusqFloat();
-      arbol.insertar(4);
-      arbol.insertar(5);
-      arbol.insertar(7);
-      arbol.insertar(9);
-      arbol.insertar(1);
-      arbol.insertar(3);      
-      System.out.println(" " + arbol.listar());
-      System.out.println("Ingrese el dato a buscar: ");
-      Scanner entrada = new Scanner(System.in);
-      num = entrada.nextFloat();
-      result = arbol.buscar(num);
-      if(result)
+      if(buscar(x))
       {
-         System.out.println("Dato encontrado");
+         raiz = eliminar(raiz, x);
+      }
+   }
+   private Arbin eliminar(Arbin<Float> r, float x)
+   {
+      if(x == r.obtener())
+      {
+         return borrar(r, x);
       }
       else
       {
-         System.out.println("Dato no encontrado");
+         if(x < r.obtener())
+         {
+            r.enlIzq(eliminar(r.izq(), x));
+         }
+         else
+         {
+            r.enlDer(eliminar(r.der(), x));
+         }
+         return r;
       }
    }
+   public Arbin mayor(Arbin<Float> r)
+   {
+      if(r.der() != null)
+      {
+         return mayor(r.der());
+      }
+      else
+      {
+         return r;
+      }
+   }
+   private Arbin borrar(Arbin<Float> r, float x)
+   {
+      if(r.izq() == null && r.der() == null)
+      {
+         return null;
+      }
+      else
+      {
+         if(r.izq() == null)
+         {
+            return r.der();
+         }
+         else
+         {
+            if(r.der() == null)
+            {
+               return r.izq();
+            }
+            else
+            {
+               Arbin remp = mayor(r.izq());
+               r.modificar((Float) remp.obtener());
+               r.enlIzq(eliminar(r.izq(), (float) remp.obtener()));
+               return r;
+            }
+         }
+      }
+   }
+   public static void main(String[] args) /*psvm y tab*/
+   {
+      
+      ArbolBusqFloat arbol = new ArbolBusqFloat();
+      //hacer promedio de datos, mayor
+      
+      String menu = "1.Insertar \n2.Listar \n3.Buscar \n4.Eliminar \n5.Salir";
+      /*JOP tab primera opcion*/      
+      salir:do
+      {
+         String opcion = JOptionPane.showInputDialog(menu);
+         int op = Integer.parseInt(opcion);
+         switch(op)
+         {
+            case 1:
+               String num = JOptionPane.showInputDialog("Digite numero: ");
+               float numero = Float.parseFloat(num);
+               arbol.insertar(numero);
+               break;
+            case 2:
+               String aqui = arbol.listar();
+               JOptionPane.showMessageDialog(null, aqui);               
+               break;
+            case 3:
+               String parabuscar = JOptionPane.showInputDialog("Digite el numero a buscar: ");
+               float buscareal = Float.parseFloat(parabuscar);
+               if(arbol.buscar(buscareal))
+               {
+                  JOptionPane.showMessageDialog(null, "Dato encontrado");
+               }
+               else
+               {
+                  JOptionPane.showMessageDialog(null, "Dato no encontrado");
+               }
+               break;
+            case 4:
+               String parabuscar2 = JOptionPane.showInputDialog("Digite el numero a eliminar: ");
+               float buscareal2 = Float.parseFloat(parabuscar2);               
+               if(arbol.buscar(buscareal2))
+               {                  
+                  arbol.eliminar(buscareal2);
+               }
+               else
+               {
+                  JOptionPane.showMessageDialog(null, "Dato no encontrado");
+               }                                            
+               break;
+            case 5:                            
+               break salir;
+         }            
+      }while(true);
+
+   }
    /*porbar eliminar y buscar de los apuntes*/
+   
 
    
 }

@@ -5,6 +5,9 @@
  */
 package datos;
 //import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author enanv
@@ -118,30 +121,11 @@ public class ArbolBinEnteros
    
    public static void main(String[] args)
    { /* se escribe psvm y luego preciono tab*/
-      int p, num;
-      ArbolBinEnteros arbol = new ArbolBinEnteros();
-      Arbin raiz = arbol.crearArbol();
-      System.out.println("El arbol en orden inorden...");
-      arbol.inorden(raiz);
-      p = arbol.peso(raiz);
-      System.out.println("El peso del arbol es: " + p);
-      System.out.println("La altura del arbol es: " + arbol.altura(raiz));
-      p = arbol.altura(raiz);
-      System.out.println("El grado del arbol es: " + (p - 1));
-      /*System.out.println("Ingrese el dato a buscar: ");
-      Scanner entrada = new Scanner(System.in);
-      num = entrada.nextInt();
-      if(arbol.buscar(raiz, num))
-      {
-         System.out.println("Dato encontrado");
-      }
-      else
-      {
-         System.out.println("Dato no encontrado");
-      }*/
-      System.out.println("Las hojas son...");
-      arbol.escribaHojas(raiz);
-      arbol.sumaTodos(raiz);      
+      
+            
+      
+      
+      
       
    }
 }
