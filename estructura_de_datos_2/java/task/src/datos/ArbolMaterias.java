@@ -180,7 +180,9 @@ public class ArbolMaterias {
    public static void main(String[] args) {
       ArbolMaterias arbol = new ArbolMaterias();
       int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1;
-      String menu = "1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
+      String nombre = "Nombre Estudiante";
+      String temp = "0000000000";
+      String menu = "HISTORIAL ACADEMICO \nEstudiante: " + nombre + "\nCodigo estudiantil: " + temp + "\n1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
       String menu2 = "1.Modificar Nombre \n2.Modificar Codigo \n0.Salir";
       String menu3 = "1.Buscar \n2.Insertar \n3.Eliminar \n4.Codigo \n5.Materia \n0.Salir";
       String menu4 = "1.Promedio Ponderado \n2.%Materias perdidas \n3.Mejores 5 materias \n4.Semestres aprobados \n0.Salir";
