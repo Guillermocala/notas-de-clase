@@ -35,7 +35,7 @@ public class PlataformaImpl<E> implements TadMaterias<E> {
 
    @Override
    public TadMaterias<E> der() {
-      return izq;
+      return der;
    }
 
    @Override
