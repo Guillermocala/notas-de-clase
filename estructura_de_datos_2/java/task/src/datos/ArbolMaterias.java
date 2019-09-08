@@ -54,45 +54,45 @@ public class ArbolMaterias {
       }
    }
    String res = " ";
-   public String listar()
+   public String mostrar(TadMaterias<Materias> raiz)
    {
       res = "";
       inorden(raiz);
       return res;
    }
-   private void inorden(TadMaterias<Materias> raiz)
+   public void inorden(TadMaterias<Materias> raiz)
    {
       if(raiz != null)
       {
          inorden(raiz.izq());
-         res += " " + raiz.obtener();
+         res += "\n\nNombre: " + raiz.obtener().getNombre() + "\nCodigo: " + raiz.obtener().getCodigo() + "\nCreditos: " + raiz.obtener().getCreditos() + "\nNota: " + raiz.obtener().getNota() + "\nSemestre: " + raiz.obtener().getSemestre();         
          inorden(raiz.der());
       }
    }
-   public boolean buscar(Materias x)
+   public TadMaterias<Materias> buscarPorCodigo(int x)
    {
       if(raiz == null)
       {
-         return false;
+         return null;
       }
       else
       {
          return buscar(raiz, x);
       }
    }
-   private boolean buscar(TadMaterias<Materias> raiz, Materias x)
+   private TadMaterias<Materias> buscar(TadMaterias<Materias> raiz, int x)
    {
-      if(raiz.obtener() == x)
+      if(raiz.obtener().getCodigo() == x)
       {
-         return true;
+         return raiz;
       }
       else
       {
-         if(x.getCodigo() < raiz.obtener().getCodigo())
+         if(x < raiz.obtener().getCodigo())
          {
             if(raiz.izq() == null)
             {
-               return false;
+               return null;
             }
             else
             {
@@ -103,7 +103,7 @@ public class ArbolMaterias {
          {
             if(raiz.der() == null)
             {
-               return false;
+               return null;
             }
             else
             {
@@ -112,22 +112,65 @@ public class ArbolMaterias {
          }
       }
    }
-   public void eliminar(Materias x)
+   public TadMaterias<Materias> buscarPorNombre(String x)
    {
-      if(buscar(x))
+      if(raiz == null)
+      {
+         return null;
+      }
+      else
+      {
+         return buscar(raiz, x);
+      }
+   }
+   private TadMaterias<Materias> buscar(TadMaterias<Materias> raiz, String x)
+   {
+      if(raiz.obtener().getNombre() == x)
+      {
+         return raiz;
+      }
+      else
+      {
+         if(x.compareTo(raiz.obtener().getNombre()) < 0)
+         {
+            if(raiz.izq() == null)
+            {
+               return null;
+            }
+            else
+            {
+               return buscar(raiz.izq(), x);
+            }
+         }
+         else
+         {
+            if(raiz.der() == null)
+            {
+               return null;
+            }
+            else
+            {
+               return buscar(raiz.der(), x);
+            }
+         }
+      }
+   }
+   public void eliminar(int x)
+   {
+      if(buscarPorCodigo(x) != null)
       {
          raiz = eliminar(raiz, x);
       }
    }
-   private TadMaterias eliminar(TadMaterias<Materias> raiz, Materias x)
+   private TadMaterias eliminar(TadMaterias<Materias> raiz, int x)
    {
-      if(x.getCodigo() == raiz.obtener().getCodigo())
+      if(x == raiz.obtener().getCodigo())
       {
          return borrar(raiz, x);
       }
       else
       {
-         if(x.getCodigo() < raiz.obtener().getCodigo())
+         if(x < raiz.obtener().getCodigo())
          {
             raiz.enlIzq(eliminar(raiz.izq(), x));
          }
@@ -149,7 +192,7 @@ public class ArbolMaterias {
          return raiz;
       }
    }
-   private TadMaterias borrar(TadMaterias<Materias> r, Materias x)
+   private TadMaterias borrar(TadMaterias<Materias> raiz, int x)
    {
       if(raiz.izq() == null && raiz.der() == null)
       {
@@ -169,30 +212,31 @@ public class ArbolMaterias {
             }
             else
             {
-               TadMaterias remp = mayor(raiz.izq());
+               TadMaterias<Materias> remp = mayor(raiz.izq());
                raiz.modificar((Materias) remp.obtener());
-               raiz.enlIzq(eliminar(raiz.izq(), (Materias) remp.obtener()));
+               raiz.enlIzq(eliminar(raiz.izq(), remp.obtener()));
                return raiz;
             }
          }
       }
-   }
+   }   
    public static void main(String[] args) {
       ArbolMaterias arbol = new ArbolMaterias();
-      int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1;
-      String nombre = "Nombre Estudiante";
-      String temp = "0000000000";
-      String menu = "HISTORIAL ACADEMICO \nEstudiante: " + nombre + "\nCodigo estudiantil: " + temp + "\n1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
-      String menu2 = "1.Modificar Nombre \n2.Modificar Codigo \n0.Salir";
-      String menu3 = "1.Buscar \n2.Insertar \n3.Eliminar \n4.Codigo \n5.Materia \n0.Salir";
-      String menu4 = "1.Promedio Ponderado \n2.%Materias perdidas \n3.Mejores 5 materias \n4.Semestres aprobados \n0.Salir";
+      int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1, sw5 = 1;            
+      String nombreEst = "Nombre Estudiante";
+      String codigoEst = "0000000000";
+      String menu = "          HISTORIAL ACADEMICO \nEstudiante: " + nombreEst + "\nCodigo estudiantil: " + codigoEst + "\n1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
+      String menu2 = "          ESTUDIANTE \n1.Modificar Nombre \n2.Modificar Codigo \n0.Salir";
+      String menu3 = "          MATERIAS\n1.Buscar \n2.Insertar \n3.Eliminar \n4.Mostrar en lista \n0.Salir";
+      String menu4 = "          BUSCAR MATERIA\n1.Por codigo \n2.Por nombre \n0.Salir";
+      String menu5 = "          INFORMES\n1.Promedio Ponderado \n2.%Materias perdidas \n3.Mejores 5 materias \n4.Semestres aprobados \n0.Salir";
       /*JOP tab primera opcion*/      
       do
       {
          String opcion = JOptionPane.showInputDialog(menu);
-         int op = Integer.parseInt(opcion);
+         int op = Integer.parseInt(opcion);         
          switch(op)
-         {
+         {            
             case 1:               
                do
                {                  
@@ -202,9 +246,13 @@ public class ArbolMaterias {
                   {
                      case 1:
                         /*modificar nombre*/
+                        String name = JOptionPane.showInputDialog(null, "Ingrese el nombre: ");
+                        nombreEst = nombreEst.replaceAll(nombreEst, name);                                                
                         break;
                      case 2: 
                         /*modificar codigo*/
+                        String code = JOptionPane.showInputDialog(null, "Ingrese el codigo: ");
+                        codigoEst = codigoEst.replaceAll(codigoEst, code);                                                
                         break;
                      case 0:
                         sw2 = 0;
@@ -214,6 +262,7 @@ public class ArbolMaterias {
                         break;
                   }
                }while(sw2 != 0);                                             
+               menu = "          HISTORIAL ACADEMICO \nEstudiante: " + nombreEst + "\nCodigo estudiantil: " + codigoEst + "\n1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
                break;
             case 2:
                do
@@ -223,19 +272,51 @@ public class ArbolMaterias {
                   switch(op3)
                   {
                      case 1:
-                        /*Buscar materia*/
+                        /*Buscar materia*/  
+                        do
+                        {
+                           String opcion4 = JOptionPane.showInputDialog(menu4);
+                           int op4 = Integer.parseInt(opcion4);
+                           switch(op4)
+                           {
+                              case 1:
+                                 /*buscar por codigo*/
+                                 break;
+                              case 2:
+                                 /*buscar por nombre*/
+                                 break;
+                              case 0:
+                                 sw5 = 0;
+                              default:
+                                 JOptionPane.showMessageDialog(null, "Opcion erronea...");
+                                 break;                        
+                           }
+                        }while(sw5 != 0);            
                         break;
                      case 2:
                         /*Insertar materia*/
+                        String codigo = JOptionPane.showInputDialog("Ingrese Codigo: ");
+                        int codig = Integer.parseInt(codigo);
+                        String nombre = JOptionPane.showInputDialog("Ingrese Nombre: ");
+                        String creditos = JOptionPane.showInputDialog("Ingrese Creditos: ");
+                        int credito = Integer.parseInt(creditos);
+                        String nota = JOptionPane.showInputDialog("Ingrese Nota: ");
+                        int not = Integer.parseInt(nota);
+                        String semestre = JOptionPane.showInputDialog("Ingrese Semestre: ");
+                        int semestr = Integer.parseInt(semestre);
+                        Materias dato = new Materias(codig, nombre, credito, not, semestr);
+                        arbol.insertar(dato);
                         break;
                      case 3:
-                        /*eliminar materia*/                        
-                        break;
+                        /*eliminar materia*/
+                        String codigoElim = JOptionPane.showInputDialog("Ingrese Codigo: ");
+                        int codigElim = Integer.parseInt(codigoElim);
+                        
+                        break;             
                      case 4:
-                        /*codigo de materia*/
-                        break;
-                     case 5:
-                        /*Nombre de materia*/
+                        /*mostrar materias*/
+                        TadMaterias<Materias> temp = arbol.getRaiz();
+                        JOptionPane.showMessageDialog(null, "          MATERIAS" + arbol.mostrar(temp));
                         break;
                      case 0:
                         sw3 = 0;
@@ -249,9 +330,9 @@ public class ArbolMaterias {
             case 3:
                do
                {
-                  String opcion4 = JOptionPane.showInputDialog(menu4);
-                  int op4 = Integer.parseInt(opcion4);
-                  switch(op4)
+                  String opcion5 = JOptionPane.showInputDialog(menu5);
+                  int op5 = Integer.parseInt(opcion5);
+                  switch(op5)
                   {
                      case 1:
                         /*promedio ponderado*/
@@ -281,6 +362,6 @@ public class ArbolMaterias {
                JOptionPane.showMessageDialog(null, "Opcion erronea...");
                break;
          }            
-      }while(sw != 0);   
-   }     
+      }while(sw != 0);
+   }   
 }

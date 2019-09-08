@@ -5,33 +5,34 @@
  */
 package datos;
 
+import java.io.IOException;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author 57300
  */
-public class ArbolBusqFloat
-{
-   private Arbin<Float> raiz;   
-   public void insertar(float x)
+public class ArbolString implements Serializable{
+   private Arbin<String> raiz;   
+   public void insertar(String x)
    {
       if(raiz == null)
       {
-         raiz = new ArbinEnl<>(x);
+         raiz = new ArbinImpl<>(x);
       }
       else
       {
          insertar(raiz, x);
       }
    }
-   private void insertar(Arbin<Float> raiz, float x)
+   private void insertar(Arbin<String> raiz, String x)
    {
-      if(x < raiz.obtener())
-      {
+      if(x.compareTo(raiz.obtener()) < 0)
+      {         
          if(raiz.izq() == null)
          {
-            raiz.enlIzq(new ArbinEnl<>(x));
+            raiz.enlIzq(new ArbinImpl<>(x));
          }
          else
          {
@@ -40,14 +41,17 @@ public class ArbolBusqFloat
       }
       else
       {
-         if(raiz.der() == null)
+         if(x.compareTo(raiz.obtener()) > 0)
          {
-            raiz.enlDer(new ArbinEnl<>(x));
-         }
-         else
-         {
-            insertar(raiz.der(), x);
-         }
+            if(raiz.der() == null)
+            {
+               raiz.enlDer(new ArbinImpl<>(x));
+            }
+            else
+            {
+               insertar(raiz.der(), x);
+            }
+         }         
       }
    }
    String res = " ";
@@ -57,16 +61,16 @@ public class ArbolBusqFloat
       inorden(raiz);
       return res;
    }
-   private void inorden(Arbin<Float> raiz)
+   private void inorden(Arbin<String> raiz)
    {
       if(raiz != null)
       {
          inorden(raiz.izq());
-         res += " " + raiz.obtener();
+         res += " - " + raiz.obtener();
          inorden(raiz.der());
       }
    }
-   public boolean buscar(float x)
+   public boolean buscar(String x)
    {
       if(raiz == null)
       {
@@ -77,15 +81,15 @@ public class ArbolBusqFloat
          return buscar(raiz, x);
       }
    }
-   private boolean buscar(Arbin<Float> raiz, float x)
+   private boolean buscar(Arbin<String> raiz, String x)
    {
-      if(raiz.obtener() == x)
+      if(x.compareTo(raiz.obtener()) == 0)
       {
          return true;
       }
       else
       {
-         if(x < raiz.obtener())
+         if(x.compareTo(raiz.obtener()) < 0)
          {
             if(raiz.izq() == null)
             {
@@ -109,97 +113,95 @@ public class ArbolBusqFloat
          }
       }
    }
-   public void eliminar(float x)
+   public void eliminar(String x)
    {
       if(buscar(x))
       {
          raiz = eliminar(raiz, x);
       }
    }
-   private Arbin eliminar(Arbin<Float> r, float x)
+   private Arbin eliminar(Arbin<String> raiz, String x)
    {
-      if(x == r.obtener())
+      if(x.compareTo(raiz.obtener()) == 0)
       {
-         return borrar(r, x);
+         return borrar(raiz, x);
       }
       else
       {
-         if(x < r.obtener())
+         if(x.compareTo(raiz.obtener()) < 0)
          {
-            r.enlIzq(eliminar(r.izq(), x));
+            raiz.enlIzq(eliminar(raiz.izq(), x));
          }
          else
          {
-            r.enlDer(eliminar(r.der(), x));
+            raiz.enlDer(eliminar(raiz.der(), x));
          }
-         return r;
+         return raiz;
       }
    }
-   public Arbin mayor(Arbin<Float> r)
+   public Arbin mayor(Arbin<String> raiz)
    {
-      if(r.der() != null)
+      if(raiz.der() != null)
       {
-         return mayor(r.der());
+         return mayor(raiz.der());
       }
       else
       {
-         return r;
+         return raiz;
       }
    }
-   private Arbin borrar(Arbin<Float> r, float x)
+   private Arbin borrar(Arbin<String> raiz, String x)
    {
-      if(r.izq() == null && r.der() == null)
+      if(raiz.izq() == null && raiz.der() == null)
       {
          return null;
       }
       else
       {
-         if(r.izq() == null)
+         if(raiz.izq() == null)
          {
-            return r.der();
+            return raiz.der();
          }
          else
          {
-            if(r.der() == null)
+            if(raiz.der() == null)
             {
-               return r.izq();
+               return raiz.izq();
             }
             else
             {
-               Arbin remp = mayor(r.izq());
-               r.modificar((Float) remp.obtener());
-               r.enlIzq(eliminar(r.izq(), (float) remp.obtener()));
-               return r;
+               Arbin remp = mayor(raiz.izq());
+               raiz.modificar((String) remp.obtener());
+               raiz.enlIzq(eliminar(raiz.izq(), (String) remp.obtener()));
+               return raiz;
             }
          }
       }
    }
-   public static void main(String[] args) /*psvm y tab*/
-   {      
-      ArbolBusqFloat arbol = new ArbolBusqFloat();
-      //hacer promedio de datos, mayor
-      
+   public static void main(String[] args) throws IOException {
+      ArbolString arbol = new ArbolString();
+      Persistencia archivo = new Persistencia();
+      //hacer promedio de datos, mayor      
       String menu = "1.Insertar \n2.Listar \n3.Buscar \n4.Eliminar \n5.Salir";
-      /*JOP tab primera opcion*/      
+      /*JOP tab primera opcion*/   
+      arbol = archivo.recuperar("archivo.ch");
       salir:do
-      {
+      {         
          String opcion = JOptionPane.showInputDialog(menu);
          int op = Integer.parseInt(opcion);
          switch(op)
          {
             case 1:
-               String num = JOptionPane.showInputDialog("Digite numero: ");
-               float numero = Float.parseFloat(num);
-               arbol.insertar(numero);
+               String num = JOptionPane.showInputDialog("Digite el dato: ");               
+               arbol.insertar(num);
                break;
             case 2:
                String aqui = arbol.listar();
                JOptionPane.showMessageDialog(null, aqui);               
                break;
             case 3:
-               String parabuscar = JOptionPane.showInputDialog("Digite el numero a buscar: ");
-               float buscareal = Float.parseFloat(parabuscar);
-               if(arbol.buscar(buscareal))
+               String parabuscar = JOptionPane.showInputDialog("Digite la dato a buscar: ");               
+               if(arbol.buscar(parabuscar))
                {
                   JOptionPane.showMessageDialog(null, "Dato encontrado");
                }
@@ -209,25 +211,20 @@ public class ArbolBusqFloat
                }
                break;
             case 4:
-               String parabuscar2 = JOptionPane.showInputDialog("Digite el numero a eliminar: ");
-               float buscareal2 = Float.parseFloat(parabuscar2);               
-               if(arbol.buscar(buscareal2))
+               String parabuscar2 = JOptionPane.showInputDialog("Digite el dato a eliminar: ");               
+               if(arbol.buscar(parabuscar2))
                {                  
-                  arbol.eliminar(buscareal2);
+                  arbol.eliminar(parabuscar2);
                }
                else
                {
                   JOptionPane.showMessageDialog(null, "Dato no encontrado");
                }                                            
-               break;
-            case 5:                            
+               break;            
+            case 5:        
+               archivo.guardar(arbol);
                break salir;
          }            
       }while(true);
-
    }
-   /*porbar eliminar y buscar de los apuntes*/
-   
-
-   
 }

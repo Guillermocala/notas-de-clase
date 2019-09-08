@@ -23,6 +23,10 @@ public class Materias {
       this.nota = nota;
       this.semestre = semestre;
    }
+
+   Materias() {
+      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   }
    /**
     * @return the codigo
     */
