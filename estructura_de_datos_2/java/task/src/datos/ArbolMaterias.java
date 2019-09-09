@@ -125,7 +125,7 @@ public class ArbolMaterias {
    }
    private TadMaterias<Materias> buscar(TadMaterias<Materias> raiz, String x)
    {
-      if(raiz.obtener().getNombre() == x)
+      if(x.compareTo(raiz.obtener().getNombre()) == 0)
       {
          return raiz;
       }
@@ -162,7 +162,7 @@ public class ArbolMaterias {
          raiz = eliminar(raiz, x);
       }
    }
-   private TadMaterias eliminar(TadMaterias<Materias> raiz, int x)
+   private TadMaterias<Materias> eliminar(TadMaterias<Materias> raiz, int x)
    {
       if(x == raiz.obtener().getCodigo())
       {
@@ -181,7 +181,7 @@ public class ArbolMaterias {
          return raiz;
       }
    }
-   public TadMaterias mayor(TadMaterias<Materias> raiz)
+   public TadMaterias<Materias> mayor(TadMaterias<Materias> raiz)
    {
       if(raiz.der() != null)
       {
@@ -192,7 +192,7 @@ public class ArbolMaterias {
          return raiz;
       }
    }
-   private TadMaterias borrar(TadMaterias<Materias> raiz, int x)
+   private TadMaterias<Materias> borrar(TadMaterias<Materias> raiz, int x)
    {
       if(raiz.izq() == null && raiz.der() == null)
       {
@@ -214,7 +214,7 @@ public class ArbolMaterias {
             {
                TadMaterias<Materias> remp = mayor(raiz.izq());
                raiz.modificar((Materias) remp.obtener());
-               raiz.enlIzq(eliminar(raiz.izq(), remp.obtener()));
+               raiz.enlIzq(eliminar(raiz.izq(), remp.obtener().getCodigo()));
                return raiz;
             }
          }
@@ -222,6 +222,8 @@ public class ArbolMaterias {
    }   
    public static void main(String[] args) {
       ArbolMaterias arbol = new ArbolMaterias();
+      TadMaterias<Materias> raiz;   
+      TadMaterias<Materias> temp;
       int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1, sw5 = 1;            
       String nombreEst = "Nombre Estudiante";
       String codigoEst = "0000000000";
@@ -272,26 +274,57 @@ public class ArbolMaterias {
                   switch(op3)
                   {
                      case 1:
-                        /*Buscar materia*/  
-                        do
+                        /*Buscar materia*/
+                        raiz = arbol.getRaiz();
+                        if(raiz != null)
                         {
-                           String opcion4 = JOptionPane.showInputDialog(menu4);
-                           int op4 = Integer.parseInt(opcion4);
-                           switch(op4)
+                           do
                            {
-                              case 1:
-                                 /*buscar por codigo*/
-                                 break;
-                              case 2:
-                                 /*buscar por nombre*/
-                                 break;
-                              case 0:
-                                 sw5 = 0;
-                              default:
-                                 JOptionPane.showMessageDialog(null, "Opcion erronea...");
-                                 break;                        
-                           }
-                        }while(sw5 != 0);            
+                              String opcion4 = JOptionPane.showInputDialog(menu4);
+                              int op4 = Integer.parseInt(opcion4);
+                              switch(op4)
+                              {
+                                 case 1:
+                                    /*buscar por codigo*/
+                                    String buscarCode = JOptionPane.showInputDialog("Ingrese el codigo: ");
+                                    int buscarCod = Integer.parseInt(buscarCode);                                
+                                    if(arbol.buscarPorCodigo(buscarCod) != null)
+                                    {
+                                       temp = arbol.buscarPorCodigo(buscarCod);
+                                       String muestraCodigoTemp = "          ELEMENTRO ENCONTRADO!\nNombre: " + temp.obtener().getNombre() + "\nCodigo: " + temp.obtener().getCodigo() + "\nCreditos: " + temp.obtener().getCreditos() + "\nNota: " + temp.obtener().getNota() + "\nSemestre: " + temp.obtener().getSemestre();                                                                        
+                                       JOptionPane.showMessageDialog(null, muestraCodigoTemp);                                    
+                                    }
+                                    else
+                                    {
+                                       JOptionPane.showMessageDialog(null, "Elemento no encontrado...");
+                                    }
+                                    break;
+                                 case 2:
+                                    /*buscar por nombre*/
+                                    String buscarName = JOptionPane.showInputDialog("Ingrese el nombre: ");
+                                    if(arbol.buscarPorNombre(buscarName) != null)
+                                    {
+                                       temp = arbol.buscarPorNombre(buscarName);
+                                       String muestraCodigoTemp = "          ELEMENTRO ENCONTRADO!\nNombre: " + temp.obtener().getNombre() + "\nCodigo: " + temp.obtener().getCodigo() + "\nCreditos: " + temp.obtener().getCreditos() + "\nNota: " + temp.obtener().getNota() + "\nSemestre: " + temp.obtener().getSemestre();                                                                        
+                                       JOptionPane.showMessageDialog(null, muestraCodigoTemp);                                    
+                                    }
+                                    else
+                                    {
+                                       JOptionPane.showMessageDialog(null, "Elemento no encontrado...");
+                                    }
+                                    break;
+                                 case 0:
+                                    sw5 = 0;
+                                 default:
+                                    JOptionPane.showMessageDialog(null, "Opcion erronea...");
+                                    break;                        
+                              }
+                           }while(sw5 != 0);
+                        }
+                        else
+                        {
+                           JOptionPane.showMessageDialog(null, "El arbol esta vacio...");
+                        }                                    
                         break;
                      case 2:
                         /*Insertar materia*/
@@ -309,14 +342,29 @@ public class ArbolMaterias {
                         break;
                      case 3:
                         /*eliminar materia*/
-                        String codigoElim = JOptionPane.showInputDialog("Ingrese Codigo: ");
-                        int codigElim = Integer.parseInt(codigoElim);
-                        
+                        raiz = arbol.getRaiz();
+                        if(raiz != null)
+                        {
+                           String codigoElim = JOptionPane.showInputDialog("Ingrese Codigo: ");
+                           int codigElim = Integer.parseInt(codigoElim);
+                           arbol.eliminar(codigElim);
+                        }
+                        else
+                        {
+                           JOptionPane.showMessageDialog(null, "El arbol esta vacio...");
+                        }                        
                         break;             
                      case 4:
-                        /*mostrar materias*/
-                        TadMaterias<Materias> temp = arbol.getRaiz();
-                        JOptionPane.showMessageDialog(null, "          MATERIAS" + arbol.mostrar(temp));
+                        /*mostrar materias*/                                                        
+                        raiz = arbol.getRaiz();
+                        if(raiz != null)
+                        {
+                           JOptionPane.showMessageDialog(null, "          MATERIAS" + arbol.mostrar(raiz));
+                        }
+                        else
+                        {
+                           JOptionPane.showMessageDialog(null, "El arbol esta vacio...");
+                        }                                 
                         break;
                      case 0:
                         sw3 = 0;
