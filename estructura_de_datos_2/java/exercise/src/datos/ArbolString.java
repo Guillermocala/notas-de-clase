@@ -5,6 +5,8 @@
  */
 package datos;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.swing.JOptionPane;
@@ -13,8 +15,8 @@ import javax.swing.JOptionPane;
  *
  * @author 57300
  */
-public class ArbolString implements Serializable{
-   private Arbin<String> raiz;   
+public class ArbolString implements Serializable {
+   private Arbin<String> raiz;
    public void insertar(String x)
    {
       if(raiz == null)
@@ -178,13 +180,21 @@ public class ArbolString implements Serializable{
          }
       }
    }
-   public static void main(String[] args) throws IOException {
+   public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
       ArbolString arbol = new ArbolString();
       Persistencia archivo = new Persistencia();
       //hacer promedio de datos, mayor      
-      String menu = "1.Insertar \n2.Listar \n3.Buscar \n4.Eliminar \n5.Salir";
-      /*JOP tab primera opcion*/   
-      arbol = archivo.recuperar("archivo.ch");
+      String menu = "1.Insertar \n2.Listar \n3.Buscar \n4.Eliminar \n0.Salir";
+//      File temp = new File("archivo.ch");
+//      if(temp.exists())
+//      {
+//         arbol = archivo.recuperar("archivo.ch");
+//      }
+//      else
+//      {
+//         
+//      }
+      /*JOP tab primera opcion*/            
       salir:do
       {         
          String opcion = JOptionPane.showInputDialog(menu);
@@ -221,7 +231,7 @@ public class ArbolString implements Serializable{
                   JOptionPane.showMessageDialog(null, "Dato no encontrado");
                }                                            
                break;            
-            case 5:        
+            case 0:        
                archivo.guardar(arbol);
                break salir;
          }            

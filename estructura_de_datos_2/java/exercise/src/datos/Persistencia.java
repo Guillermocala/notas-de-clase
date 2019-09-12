@@ -19,13 +19,13 @@ import java.io.ObjectOutputStream;
 public class Persistencia {
     public void guardar(ArbolString x) throws FileNotFoundException, IOException {
         ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"));
-        ob.writeObject(ob);
+        ob.writeObject(x);
         ob.close();        
     }
     public ArbolString recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
         ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
         ArbolString ar = (ArbolString) ob.readObject();
         ob.close();        
-        return ar;                
+        return ar;             
     }                
 }
