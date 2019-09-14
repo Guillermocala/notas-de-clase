@@ -13,10 +13,10 @@ public class Materias {
    private int codigo;
    private String nombre;
    private int creditos;
-   private int nota;
+   private float nota;
    private int semestre;
 
-   public Materias(int codigo, String nombre, int creditos, int nota, int semestre) {
+   public Materias(int codigo, String nombre, int creditos, float nota, int semestre) {
       this.codigo = codigo;
       this.nombre = nombre;
       this.creditos = creditos;
@@ -66,7 +66,7 @@ public class Materias {
    /**
     * @return the nota
     */
-   public int getNota() {
+   public float getNota() {
       return nota;
    }
    /**
