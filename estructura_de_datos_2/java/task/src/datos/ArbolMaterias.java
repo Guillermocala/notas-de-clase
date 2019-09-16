@@ -72,7 +72,7 @@ public class ArbolMaterias implements Serializable{
       if(raiz != null)
       {
          inorden(raiz.izq());
-         res += "\nNombre: " + raiz.obtener().getNombre() + "\nCodigo: " + raiz.obtener().getCodigo() + "\nCreditos: " + raiz.obtener().getCreditos() + "\nNota: " + raiz.obtener().getNota() + "\nSemestre: " + raiz.obtener().getSemestre();         
+         res += "\n-Nombre: " + raiz.obtener().getNombre() + "\nCodigo: " + raiz.obtener().getCodigo() + "\nCreditos: " + raiz.obtener().getCreditos() + "\nNota: " + raiz.obtener().getNota() + "\nSemestre: " + raiz.obtener().getSemestre();         
          inorden(raiz.der());
       }
    }
@@ -167,6 +167,10 @@ public class ArbolMaterias implements Serializable{
       if(buscarPorCodigo(x) != null)
       {
          raiz = eliminar(raiz, x);
+      }
+      else
+      {
+         JOptionPane.showMessageDialog(null, "Dato no encontrado...");
       }
    }
    private TadMaterias<Materias> eliminar(TadMaterias<Materias> raiz, int x)
@@ -284,7 +288,7 @@ public class ArbolMaterias implements Serializable{
          return false;
       }
    }
-   public static int cant = 0;
+   public static float cant = 0;
    public static float promedio(TadMaterias<Materias> raiz, int elem)
    {
       if(raiz != null)
@@ -328,9 +332,11 @@ public class ArbolMaterias implements Serializable{
       TadMaterias<Materias> temp;
       Persistencia archivo = new Persistencia();
       int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1, sw5 = 1;
-      float notasPorSemestre[] = new float [11];
-      int maxCreditos = 5;    //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DEL TIPO DE DATO
-      float maxNota = 500;   //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DEL TIPO DE DATO
+      String nombreEst;
+      String codigoEst;
+      int maxCreditos = 5;    //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DE CREDITOS
+      float maxNota = 500;   //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DE NOTAS
+      int maxSemestre = 10;    //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DE SEMESTRES
       File ob = new File("archivo.ch");
       if(ob.exists())
       {
@@ -340,13 +346,29 @@ public class ArbolMaterias implements Serializable{
       {
          arbol = new ArbolMaterias();
       }
-      String nombreEst = "Nombre Estudiante";
-      String codigoEst = "0000000000";
+      File est = new File("archivoEst.ch");
+      if(est.exists())
+      {
+         nombreEst = archivo.recuperarEst("archivoEst.ch");
+      }
+      else
+      {
+         nombreEst = "Nombre Estudiante";
+      }
+      File cod = new File("archivoCod.ch");
+      if(cod.exists())
+      {
+         codigoEst = archivo.recuperarCod("archivoCod.ch");
+      }
+      else
+      {
+         codigoEst = "0000000000";
+      }      
       String menu = "          HISTORIAL ACADEMICO \nEstudiante: " + nombreEst + "\nCodigo estudiantil: " + codigoEst + "\n1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
       String menu2 = "          ESTUDIANTE \n1.Modificar Nombre \n2.Modificar Codigo \n0.Salir";
       String menu3 = "          MATERIAS\n1.Buscar \n2.Insertar \n3.Eliminar \n4.Mostrar en lista \n0.Salir";
       String menu4 = "          BUSCAR MATERIA\n1.Por codigo \n2.Por nombre \n0.Salir";
-      String menu5 = "          INFORMES\n1.Promedio ponderado \n2.%Materias perdidas \n3.Mejores 5 materias \n4.Semestres aprobados \n0.Salir";
+      String menu5 = "          INFORMES\n1.Promedio ponderado \n2.% Materias perdidas \n3.Mejores 5 materias \n4.Semestres aprobados \n0.Salir";
       /*JOP tab primera opcion*/      
       do
       {
@@ -365,12 +387,14 @@ public class ArbolMaterias implements Serializable{
                      case 1:
                         /*modificar nombre*/
                         String name = JOptionPane.showInputDialog(null, "Ingrese el nombre: ");
-                        nombreEst = nombreEst.replaceAll(nombreEst, name);                                                
+                        nombreEst = nombreEst.replaceAll(nombreEst, name);
+                        archivo.guardarEst(name);
                         break;
                      case 2: 
                         /*modificar codigo*/
                         String code = JOptionPane.showInputDialog(null, "Ingrese el codigo: ");
-                        codigoEst = codigoEst.replaceAll(codigoEst, code);                                                
+                        codigoEst = codigoEst.replaceAll(codigoEst, code);
+                        archivo.guardarCod(code);
                         break;
                      case 0:
                         sw2 = 0;
@@ -432,6 +456,7 @@ public class ArbolMaterias implements Serializable{
                                     break;
                                  case 0:
                                     sw5 = 0;
+                                    break;
                                  default:
                                     JOptionPane.showMessageDialog(null, "Opcion erronea...");
                                     break;                        
@@ -455,32 +480,33 @@ public class ArbolMaterias implements Serializable{
                            codig = Integer.parseInt(codigo);
                         }
                         String nombre = JOptionPane.showInputDialog("Ingrese Nombre: ");
-                        String creditos = JOptionPane.showInputDialog("Ingrese Creditos(max 5): ");
+                        String creditos = JOptionPane.showInputDialog("Ingrese los creditos(1 a " + maxCreditos + "): ");
                         int credito = Integer.parseInt(creditos);
                         while(credito > maxCreditos || credito < 1)
                         {
                            JOptionPane.showMessageDialog(null, "Verifique el dato ingresado!");
-                           creditos = JOptionPane.showInputDialog("Ingrese Creditos(max 5): ");
+                           creditos = JOptionPane.showInputDialog("Ingrese los creditos(1 a " + maxCreditos + "): ");
                            credito = Integer.parseInt(creditos);
                         }
-                        String nota = JOptionPane.showInputDialog("Ingrese Nota(max 500): ");
+                        String nota = JOptionPane.showInputDialog("Ingrese la nota(1 a " + maxNota + "): ");
                         float not = Float.parseFloat(nota);
                         while(not > maxNota || not < 1)
                         {
                            JOptionPane.showMessageDialog(null, "Verifique el dato ingresado!");
-                           nota = JOptionPane.showInputDialog("Ingrese Nota(max 500): ");
+                           nota = JOptionPane.showInputDialog("Ingrese la nota(1 a " + maxNota + "): ");
                            not = Float.parseFloat(nota);
                         }
-                        String semestre = JOptionPane.showInputDialog("Ingrese Semestre(1 a 10): ");
+                        String semestre = JOptionPane.showInputDialog("Ingrese Semestre(1 a " + maxSemestre + "): ");
                         int semestr = Integer.parseInt(semestre);
-                        while(semestr > 10 || semestr < 1)
+                        while(semestr > maxSemestre || semestr < 1)
                         {
                            JOptionPane.showMessageDialog(null, "Verifique el dato ingresado!");
-                           semestre = JOptionPane.showInputDialog("Ingrese Semestre(1 a 10): ");                        
+                           semestre = JOptionPane.showInputDialog("Ingrese Semestre(1 a " + maxSemestre + "): ");
                            semestr = Integer.parseInt(semestre);                           
                         }
                         Materias dato = new Materias(codig, nombre, credito, not, semestr);
                         arbol.insertar(dato);
+                        archivo.guardar(arbol);
                         break;
                      case 3:
                         /*eliminar materia*/
@@ -494,7 +520,8 @@ public class ArbolMaterias implements Serializable{
                         else
                         {
                            JOptionPane.showMessageDialog(null, "El arbol esta vacio...");
-                        }                        
+                        }
+                        archivo.guardar(arbol);                        
                         break;             
                      case 4:
                         /*mostrar materias*/                                                        
@@ -535,19 +562,15 @@ public class ArbolMaterias implements Serializable{
                      {
                         case 1:
                            /*promedio ponderado*/
-//                           float notaTemp = promedio(raiz, 1);
-//                           if(notaTemp != 0)
-//                           {
-//                              notasPorSemestre[1] = notaTemp/cant;
-//                           }
-//                           else
-//                           {
-//                              notasPorSemestre[1] = 0;
-//                           }
-//                           System.out.println(" " + notasPorSemestre[1]);                           
+                           float vectTemp[] = new float[11];
+                           cant = 0;
+                           float notaTemp = promedio(raiz, 1);
+                           vectTemp[1] = notaTemp/cant;
+                           String mostrarDato = "El promedio es: " + Float.toString(vectTemp[1]);
+                           JOptionPane.showMessageDialog(null, mostrarDato);
                            break;
                         case 2:
-                           /*%materias perdidas*/
+                           /*% materias perdidas*/
                            cantMat = 0;
                            cantPerd = 0;
                            matPerdidas(raiz);
@@ -557,13 +580,15 @@ public class ArbolMaterias implements Serializable{
                            break;
                         case 3:
                            /*mejores 5 materias*/
+                           String nothingToDo = "Building...";
+                           JOptionPane.showMessageDialog(null, nothingToDo);
                            break;
                         case 4:
                            /*semestres aprobados*/
                            cantGana = 0;
                            matPerdidas(raiz);
                            String semAprob = JOptionPane.showInputDialog(null, "Ingrese la cantidad de creditos por semestre(entre 10 y 20): ");
-                           int cantPerSemestre = Integer.parseInt(semAprob);
+                           float cantPerSemestre = Float.parseFloat(semAprob);
                            while(cantPerSemestre < 10 || cantPerSemestre > 20)
                            {
                               JOptionPane.showMessageDialog(null, "Verifique el dato ingresado!");

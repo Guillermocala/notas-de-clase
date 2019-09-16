@@ -17,15 +17,37 @@ import java.io.ObjectOutputStream;
  * @author ESTUDIANTE
  */
 public class Persistencia {
-    public void guardar(ArbolMaterias x) throws FileNotFoundException, IOException {
-        ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"));
-        ob.writeObject(x);
-        ob.close();        
-    }
-    public ArbolMaterias recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-        ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
-        ArbolMaterias ar = (ArbolMaterias) ob.readObject();
-        ob.close();        
-        return ar;             
-    }                
+   public void guardar(ArbolMaterias x) throws FileNotFoundException, IOException {
+      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"));
+      ob.writeObject(x);
+      ob.close();
+   }
+   public ArbolMaterias recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
+      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
+      ArbolMaterias ar = (ArbolMaterias) ob.readObject();
+      ob.close();
+      return ar;
+   }
+   public void guardarEst(String x) throws FileNotFoundException, IOException {
+      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivoEst.ch"));
+      ob.writeObject(x);
+      ob.close();
+   }
+   public String recuperarEst(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
+      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
+      String ar = (String) ob.readObject();
+      ob.close();
+      return ar;
+   }
+   public void guardarCod(String x) throws FileNotFoundException, IOException {
+      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivoCod.ch"));
+      ob.writeObject(x);
+      ob.close();
+   }
+   public String recuperarCod(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
+      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
+      String ar = (String) ob.readObject();
+      ob.close();
+      return ar;
+   }
 }
