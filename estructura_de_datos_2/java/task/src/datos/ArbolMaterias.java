@@ -5,20 +5,20 @@
  */
 package datos;
 
+import java.awt.Dimension;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author 57300
  */
-public class ArbolMaterias {
+public class ArbolMaterias implements Serializable{
    private TadMaterias<Materias> raiz;
    /**
     * @return the raiz
@@ -72,7 +72,7 @@ public class ArbolMaterias {
       if(raiz != null)
       {
          inorden(raiz.izq());
-         res += "\n\nNombre: " + raiz.obtener().getNombre() + "\nCodigo: " + raiz.obtener().getCodigo() + "\nCreditos: " + raiz.obtener().getCreditos() + "\nNota: " + raiz.obtener().getNota() + "\nSemestre: " + raiz.obtener().getSemestre();         
+         res += "\nNombre: " + raiz.obtener().getNombre() + "\nCodigo: " + raiz.obtener().getCodigo() + "\nCreditos: " + raiz.obtener().getCreditos() + "\nNota: " + raiz.obtener().getNota() + "\nSemestre: " + raiz.obtener().getSemestre();         
          inorden(raiz.der());
       }
    }
@@ -255,7 +255,28 @@ public class ArbolMaterias {
          }
          else
          {
-            return verifCodigo(raiz.der(), codigo) || verifCodigo(raiz.izq(), codigo);
+            if(codigo < raiz.obtener().getCodigo())
+            {
+               if(raiz.izq() == null)
+               {
+                  return false;
+               }
+               else
+               {
+                  return verifCodigo(raiz.izq(), codigo);
+               }
+            }
+            else
+            {
+               if(raiz.der() == null)
+               {
+                  return false;
+               }
+               else
+               {
+                  return verifCodigo(raiz.der(), codigo);
+               }
+            }            
          }
       }
       else
@@ -263,54 +284,62 @@ public class ArbolMaterias {
          return false;
       }
    }
-   public static float sumTotal = 0, temporal;
-   public static int credits = 0;   
-   public static void promedio(TadMaterias<Materias> raiz, int elem, float temporal, float sumTotal, int credits)
+   public static int cant = 0;
+   public static float promedio(TadMaterias<Materias> raiz, int elem)
    {
       if(raiz != null)
       {
-         if(raiz.obtener().getSemestre() == elem)
+         if(elem == raiz.obtener().getSemestre())
          {
-            credits += raiz.obtener().getCreditos();
-            temporal = raiz.obtener().getNota() * raiz.obtener().getCreditos();
-            sumTotal += temporal;
-            promedio(raiz.izq(), elem, temporal, sumTotal, credits);
-            promedio(raiz.der(), elem, temporal, sumTotal, credits);
-         }         
-      }     
+            cant += raiz.obtener().getCreditos();
+            return ((raiz.obtener().getNota()*raiz.obtener().getCreditos()) + promedio(raiz.izq(), elem) + promedio(raiz.der(), elem));            
+         }
+         else
+         {            
+            return 0;
+         }
+      }
+      else
+      {
+         return 0;
+      }
+   }
+   public static float cantMat = 0, cantPerd = 0, cantGana = 0;
+   public static void matPerdidas(TadMaterias<Materias> raiz)
+   {
+      if(raiz != null)
+      {
+         if(raiz.obtener().getNota() < 300)
+         {
+            cantPerd++;
+         }
+         else
+         {
+            cantGana += raiz.obtener().getCreditos();
+         }
+         cantMat++;         
+         matPerdidas(raiz.izq());
+         matPerdidas(raiz.der());
+      }
    }
    public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException {
-      ArbolMaterias arbol = new ArbolMaterias();
+      ArbolMaterias arbol;
       TadMaterias<Materias> raiz;   
-      TadMaterias<Materias> temp; 
+      TadMaterias<Materias> temp;
+      Persistencia archivo = new Persistencia();
       int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1, sw5 = 1;
       float notasPorSemestre[] = new float [11];
       int maxCreditos = 5;    //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DEL TIPO DE DATO
       float maxNota = 500;   //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DEL TIPO DE DATO
-      /*File ob = new File("archivo.ch");
+      File ob = new File("archivo.ch");
       if(ob.exists())
       {
-         arbol = archivo.recuperar();
+         arbol = archivo.recuperar("archivo.ch");
       }
       else
       {
-         ArbolMaterias arbol = new ArbolMaterias();
-      }*/
-      /*ObjectInputStream ois;
-      try
-      {
-         File archivo=new File("datos.txt");
-         FileInputStream fis = new FileInputStream(archivo);
-         ois = new ObjectInputStream(fis);
-         while(true)
-         {
-            arbol = (ArbolMaterias) ois.readObject();
-         }
+         arbol = new ArbolMaterias();
       }
-      catch(IOException io)
-      {
-
-      }*/
       String nombreEst = "Nombre Estudiante";
       String codigoEst = "0000000000";
       String menu = "          HISTORIAL ACADEMICO \nEstudiante: " + nombreEst + "\nCodigo estudiantil: " + codigoEst + "\n1.Estudiante \n2.Materias \n3.Informes \n0.Salir";
@@ -472,7 +501,12 @@ public class ArbolMaterias {
                         raiz = arbol.getRaiz();
                         if(raiz != null)
                         {
-                           JOptionPane.showMessageDialog(null, "          MATERIAS" + arbol.mostrar(raiz));
+                           JTextArea textArea = new JTextArea(arbol.mostrar(raiz));
+                           JScrollPane scrollPane = new JScrollPane(textArea);  
+                           textArea.setLineWrap(true);  
+                           textArea.setWrapStyleWord(true); 
+                           scrollPane.setPreferredSize(new Dimension(250,400));
+                           JOptionPane.showMessageDialog(null, scrollPane, "                    MATERIAS", JOptionPane.YES_NO_OPTION);                           
                         }
                         else
                         {
@@ -501,34 +535,45 @@ public class ArbolMaterias {
                      {
                         case 1:
                            /*promedio ponderado*/
-                           sumTotal = 0;
-                           credits = 0;
-                           for(int i = 1; i < notasPorSemestre.length; i++)
-                           {
-                              temporal = 0;
-                              promedio(raiz, i, temporal, sumTotal, credits);
-                              if(credits != 0)
-                              {                                 
-                                 notasPorSemestre[i] = sumTotal/credits;
-                              }
-                              else
-                              {
-                                 notasPorSemestre[i] = 0;
-                              }
-                           }
-                           for(int i = 1; i < notasPorSemestre.length; i++)
-                           {
-                              System.out.println(" " + notasPorSemestre[i]);
-                           }
+//                           float notaTemp = promedio(raiz, 1);
+//                           if(notaTemp != 0)
+//                           {
+//                              notasPorSemestre[1] = notaTemp/cant;
+//                           }
+//                           else
+//                           {
+//                              notasPorSemestre[1] = 0;
+//                           }
+//                           System.out.println(" " + notasPorSemestre[1]);                           
                            break;
                         case 2:
                            /*%materias perdidas*/
+                           cantMat = 0;
+                           cantPerd = 0;
+                           matPerdidas(raiz);
+                           float percent = ((cantPerd/cantMat) * 100);
+                           String percent2 = "El porcentaje de materias perdidas es: " + Float.toString(percent) + "%";
+                           JOptionPane.showMessageDialog(null, percent2);
                            break;
                         case 3:
                            /*mejores 5 materias*/
                            break;
                         case 4:
                            /*semestres aprobados*/
+                           cantGana = 0;
+                           matPerdidas(raiz);
+                           String semAprob = JOptionPane.showInputDialog(null, "Ingrese la cantidad de creditos por semestre(entre 10 y 20): ");
+                           int cantPerSemestre = Integer.parseInt(semAprob);
+                           while(cantPerSemestre < 10 || cantPerSemestre > 20)
+                           {
+                              JOptionPane.showMessageDialog(null, "Verifique el dato ingresado!");
+                              semAprob = JOptionPane.showInputDialog(null, "Ingrese la cantidad de creditos por semestre(entre 10 y 20): ");
+                              cantPerSemestre = Integer.parseInt(semAprob);
+                           }
+                           float cantSemestres = 160/cantPerSemestre;
+                           float semesAprobados = cantGana/cantPerSemestre;
+                           String conclusion = "Con " + cantPerSemestre + " creditos por semestre, se aprobaron " + semesAprobados + " de " + cantSemestres + " semestres.";
+                           JOptionPane.showMessageDialog(null, conclusion);
                            break;                        
                         case 0:
                            sw4 = 0;
@@ -546,11 +591,7 @@ public class ArbolMaterias {
                break;
             case 0:               
                sw = 0;
-               /*File f = new File("datos.txt");
-               FileOutputStream fos = new FileOutputStream(f);
-               ObjectOutputStream oos = new ObjectOutputStream(fos);
-               oos.writeObject(arbol);
-               oos.close();*/
+               archivo.guardar(arbol);
                break;
             default:
                JOptionPane.showMessageDialog(null, "Opcion erronea...");

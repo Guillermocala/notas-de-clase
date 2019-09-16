@@ -5,11 +5,13 @@
  */
 package datos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 57300
  */
-public class PlataformaImpl<E> implements TadMaterias<E> {
+public class PlataformaImpl<E> implements TadMaterias<E>, Serializable{
    E dato;
    TadMaterias<E> izq;
    TadMaterias<E> der;

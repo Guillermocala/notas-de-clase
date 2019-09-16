@@ -5,11 +5,13 @@
  */
 package datos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 57300
  */
-public class Materias {
+public class Materias implements Serializable {
    private int codigo;
    private String nombre;
    private int creditos;
