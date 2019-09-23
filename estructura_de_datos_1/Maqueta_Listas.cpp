@@ -3,8 +3,18 @@
 #include "TAD_List_Simp.cpp"
 using namespace std;
 using namespace TAD_List_Simp;
-int menu(void);
+//using namespace TAD_List_Doble; <---------------- TAD LISTAS DOBLES
+//using namespace TAD_List_Circ_Simp; <---------------- TAD LISTAS CIRCULARES SIMPLES
+//using namespace TAD_List_Circ_Doble; <---------------- TAD LISTAS CIRCULARES DOBLES
 
+int menu(void);
+/*
+* InsertaCabeza
+* InsertaCola
+* Buscarllave
+* Mostrar
+* Eliminacion
+*/
 int main()
 {
    system("cls");
@@ -48,17 +58,17 @@ int main()
                case 1:
                   cout << "Ingrese el dato: ";
                   cin >> j;
-                  ptr = InsertaCabeza(ptr, j);
+                  ptr = InsertaCola(ptr, j);
                   break;
                case 2:
                   cout << "Ingrese el dato: ";
                   cin >> j;
-                  ptr1 = InsertaCabeza(ptr1, j);
+                  ptr1 = InsertaCola(ptr1, j);
                   break;
                case 3:
                   cout << "Ingrese el dato: ";
                   cin >> j;
-                  ptr2 = InsertaCabeza(ptr2, j);
+                  ptr2 = InsertaCola(ptr2, j);
                   break;
                default:
                   cout << "Valor invalido!" << endl;

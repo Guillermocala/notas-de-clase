@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class ArbolBusqFloat
 {
-   private Arbin<Float> raiz;   
+   private Arbin<Float> raiz;
    public void insertar(float x)
    {
       if(raiz == null)
