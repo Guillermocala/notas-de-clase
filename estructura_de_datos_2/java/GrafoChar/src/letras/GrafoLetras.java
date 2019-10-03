@@ -7,6 +7,7 @@ package letras;
 
 import datos.Grafo;
 import datos.GrafoMat;
+//import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,27 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class GrafoLetras {
    public Grafo<String> crear() {
-      Grafo<String> gra = new GrafoMat<>();
-      //gra.insVertice('A');
-      //gra.insVertice('B');
-      //gra.insVertice('C');
-      //gra.insVertice('D');
-      //gra.insVertice('E');
-      gra.insArista(0, 1, 2);
-      gra.insArista(0, 2, 10);
-      gra.insArista(0, 4, 12);
-      
-      gra.insArista(1, 0, 4);
-      gra.insArista(1, 2, 3);
-      
-      gra.insArista(2, 3, 7);
-      
-      gra.insArista(3, 0, 13);
-      gra.insArista(3, 4, 5);
-      
-      gra.insArista(4, 0, 9);
+      Grafo<String> gra = new GrafoMat<>();      
       int sw = 1;
-      String temp, temp2, temp3, temp4;
+      String temp, temp2, temp3;
       String menu = "1- Insertar vertice \n2- Insertar arista \n3- mostrar \n0- salir";      
       do {
          String opcion = JOptionPane.showInputDialog(menu);
@@ -45,7 +28,6 @@ public class GrafoLetras {
             case 1:
                temp = JOptionPane.showInputDialog(null, "Ingrese el dato del vertice: ");
                gra.insVertice(temp);
-               JOptionPane.showMessageDialog(null, "Building");
                break;
             case 2:
                temp = JOptionPane.showInputDialog(null, "Ingrese el num del vertice de partida: ");
@@ -55,7 +37,6 @@ public class GrafoLetras {
                temp3 = JOptionPane.showInputDialog(null, "Ingrese el dato: ");
                int data3 = Integer.parseInt(temp3);
                gra.insArista(data, data2, data3);
-               JOptionPane.showMessageDialog(null, "Building");
                break;
             case 3:               
                JOptionPane.showMessageDialog(null, gra.mostrar());
@@ -74,6 +55,16 @@ public class GrafoLetras {
    
    public static void main(String[] args) {
       GrafoLetras ob = new GrafoLetras();
+//      Persistencia archivo = new Persistencia();
+//      File recover = new File("archivo.ch");
+//      if(recover.exists())
+//      {
+//         ob = archivo.recuperar("archivo.ch");
+//      }
+//      else
+//      {
+//         ob = new GrafoLetras();
+//      }
       Grafo<String> crear = ob.crear();
       //System.out.println(" " + crear.mostrar());
    }
