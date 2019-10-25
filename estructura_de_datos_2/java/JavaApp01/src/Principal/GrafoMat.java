@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package letras;
+package Principal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author 57300
  * @param <E>
  */
-public class GrafoMat<E> implements Grafo<E>, Serializable {
+public class GrafoMat<E> implements Grafo<E>, Serializable{
    private int[][] aristas = new int[100][100];
    private ArrayList<E> vertices = new ArrayList();
    

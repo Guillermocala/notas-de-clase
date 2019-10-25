@@ -3,14 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package letras;
+package javaapplication13;
 
 /**
  *
  * @author 57300
- * @param <E>
  */
-public class Arista<E> {
-   E Dato;
-   Vertice vertice;
+public class JavaApplication13 {
+
+   /**
+    * @param args the command line arguments
+    */
+   public static void main(String[] args) {
+      // TODO code application logic here
+   }
+   
 }

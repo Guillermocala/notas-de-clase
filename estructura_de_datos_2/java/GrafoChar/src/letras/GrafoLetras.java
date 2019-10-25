@@ -7,6 +7,10 @@ package letras;
 
 import datos.Grafo;
 import datos.GrafoMat;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
 //import java.io.File;
 import javax.swing.JOptionPane;
 
@@ -14,9 +18,21 @@ import javax.swing.JOptionPane;
  *
  * @author 57300
  */
-public class GrafoLetras {
-   public Grafo<String> crear() {
-      Grafo<String> gra = new GrafoMat<>();      
+public class GrafoLetras implements Serializable{
+   Grafo<String> nose = new GrafoMat<>();
+   public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+      GrafoLetras ob = new GrafoLetras();
+      Grafo<String> gra;
+      Persistencia2<String> archivo = new Persistencia2();
+      File recover = new File("archivo.ch");
+      if(recover.exists())
+      {
+         gra = archivo.recuperar("archivo.ch");
+      }
+      else
+      {
+         gra = new GrafoMat<>();
+      }
       int sw = 1;
       String temp, temp2, temp3;
       String menu = "1- Insertar vertice \n2- Insertar arista \n3- mostrar \n0- salir";      
@@ -43,29 +59,12 @@ public class GrafoLetras {
                break;
             case 0:
                sw = 0;
+               archivo.guardar((letras.Grafo<String>) gra);
                break;
             default:
                JOptionPane.showMessageDialog(null, "Dato incorrecto!");
                break;
          }
       } while(sw != 0);
-      
-      return gra;
-   }
-   
-   public static void main(String[] args) {
-      GrafoLetras ob = new GrafoLetras();
-//      Persistencia archivo = new Persistencia();
-//      File recover = new File("archivo.ch");
-//      if(recover.exists())
-//      {
-//         ob = archivo.recuperar("archivo.ch");
-//      }
-//      else
-//      {
-//         ob = new GrafoLetras();
-//      }
-      Grafo<String> crear = ob.crear();
-      //System.out.println(" " + crear.mostrar());
    }
 }
