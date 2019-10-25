@@ -18,9 +18,12 @@ public class Vertice {
    /**
     * @return the nombre
     */
-   public void insAristas(Vertice vf, int dato) {
+   public void insArista(int vf, int dato) {
       Arista asd = new Arista(vf, dato);
       aristas.add(asd);
+   }
+   public int obtArista(int vf) {
+      
    }
    public String showMe() {
       String res = "";

@@ -57,7 +57,7 @@ public class SelecSort {
       }
       return lis;
    }
-   public void seleccion(int v[]) {
+   public void ordenar(int v[]) {
       for (int i = 0; i < v.length; i++) {         
          for (int j = (i + 1); j < v.length; j++) {
             if (v[j] < v[i]) {
@@ -68,7 +68,7 @@ public class SelecSort {
          }
       }
    }
-   public void seleccionArray(ArrayList<Integer> a) {
+   public void ordenarArray(ArrayList<Integer> a) {
       for (int i = 0; i < a.size(); i++) {
          for (int j = (i + 1); j < a.size(); j++) {
             if (a.get(j) < a.get(i)) {
@@ -79,7 +79,7 @@ public class SelecSort {
          }
       }
    }
-   public void seleccionList(LinkedList<Integer> v) {
+   public void ordenarList(LinkedList<Integer> v) {
       for (int i = 0; i < v.size(); i++) {
          for (int j = (i + 1); j < v.size(); j++) {
             if (v.get(j) < v.get(i)) {
@@ -92,23 +92,27 @@ public class SelecSort {
    }
    public static void main(String[] args) {
       SelecSort a = new SelecSort();
+      String mos = "";
 //      int vec[] = a.generar(5);
 //      String mos = a.mostrarvec(vec);
 //      JOptionPane.showMessageDialog(null, mos);
-//      a.seleccion(vec);
+//      a.ordenar(vec);
 //      mos = a.mostrarvec(vec);
 //      JOptionPane.showMessageDialog(null, mos);
 ////        ArrayList<Integer> b = a.generarArray(5);
 ////         String mos = a.mostrarArray(b);
 ////         JOptionPane.showMessageDialog(null, mos);
-////         a.seleccionArray(b);
+////         a.ordenarArray(b);
 ////         mos = a.mostrarArray(b);
 ////         JOptionPane.showMessageDialog(null, mos);
       LinkedList<Integer> abc = a.generarList(5);
-      String mos = a.mostrarList(abc);
-      JOptionPane.showMessageDialog(null, mos);
-      a.seleccionList(abc);
-      mos = a.mostrarList(abc);
+      mos += a.mostrarList(abc);      
+      long timeInit = System.nanoTime();
+      a.ordenarList(abc);
+      long timeFin = System.nanoTime();
+      long timeElapsed = (timeFin - timeInit);
+      mos += "\nOrdenado\n" + a.mostrarList(abc);
+      mos += "\nTime ejecution: " + timeElapsed + " Miliseconds";
       JOptionPane.showMessageDialog(null, mos);
    }
 }

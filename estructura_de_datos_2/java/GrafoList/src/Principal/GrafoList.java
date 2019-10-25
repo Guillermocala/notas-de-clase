@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * @param <E>
  */
 public class GrafoList<E> implements Grafo<E>{
-   LinkedList<Vertice> vertices = new LinkedList<>();
+   LinkedList<Vertice> vertices = new LinkedList<>();   
 
    @Override
    public void insVertice(E x) {
@@ -26,18 +26,19 @@ public class GrafoList<E> implements Grafo<E>{
    }
 
    @Override
-   public void insArista(E vf, int valor) {
-      Vertice asd = this.vertices.get(valor);
-      asd.insAristas((Vertice) vf, valor);      
+   public void insArista(int vi, int vf, int valor) {
+      Vertice temp = this.vertices.get(vi);
+      temp.insArista(vf, valor);      
    }
 
    @Override
-   public E obtArista(E vf) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   public E obtArista(int vi, int vf) {
+      Vertice temp = this.vertices.get(vi);
+      temp.getAristas()
    }
 
    @Override
-   public void elimArista(E vf) {
+   public void elimArista(int vi, int vf) {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
    }
 

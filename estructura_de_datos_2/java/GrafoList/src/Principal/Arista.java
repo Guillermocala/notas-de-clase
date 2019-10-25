@@ -10,10 +10,10 @@ package Principal;
  * @author 57300
  */
 public class Arista {
-   private Vertice vf;
+   private int vf;
    private int datoArista;
 
-   public Arista(Vertice vf, int datoArista) {
+   public Arista(int vf, int datoArista) {
       this.vf = vf;
       this.datoArista = datoArista;
    }
@@ -21,14 +21,14 @@ public class Arista {
    /**
     * @return the vf
     */
-   public Vertice getVf() {
+   public int getVf() {
       return vf;
    }
 
    /**
     * @param vf the vf to set
     */
-   public void setVf(Vertice vf) {
+   public void setVf(int vf) {
       this.vf = vf;
    }
 

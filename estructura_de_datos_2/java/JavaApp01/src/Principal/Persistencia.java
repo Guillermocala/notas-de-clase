@@ -20,14 +20,15 @@ import java.io.Serializable;
  */
 public class Persistencia {
    public void guardar(Grafo<Ciudad> x) throws FileNotFoundException, IOException {
-      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"));
-      ob.writeObject(x);
-      ob.close();
+      try (ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"))) {
+         ob.writeObject(x);
+      }
    }
    public Grafo<Ciudad> recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
-      Grafo<Ciudad> ar = (Grafo<Ciudad>) ob.readObject();
-      ob.close();
+      Grafo<Ciudad> ar;
+      try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom))) {
+         ar = (Grafo<Ciudad>) ob.readObject();
+      }
       return ar;
    }
 

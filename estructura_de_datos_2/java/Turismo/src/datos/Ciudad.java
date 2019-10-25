@@ -18,16 +18,16 @@ import javax.swing.JLabel;
 public class Ciudad extends JFrame {
    
 //    INTRUCCIONES BASICAS PARA IMPRIMIR IMAGENES EN JAVA
-//   String ruta1 = "foto1.jpg";
-//   ImageIcon imagen1 = new ImageIcon(ruta1);
-//   JLabel etiqueta = new JLabel(imagen1);   
-//   public Ciudad(){
-//      super("muestra imagen");
-//      getContentPane().add(etiqueta);
-//      this.setSize(500, 500);
-//   }
-//   public static void main(String[] args) {
-//      Ciudad a = new Ciudad();
-//      a.show();
-//   }
+   String ruta1 = "foto1.jpg";
+   ImageIcon imagen1 = new ImageIcon(ruta1);
+   JLabel etiqueta = new JLabel(imagen1);   
+   public Ciudad(){
+      super("muestra imagen");
+      getContentPane().add(etiqueta);
+      this.setSize(500, 500);
+   }
+   public static void main(String[] args) {
+      Ciudad a = new Ciudad();
+      a.show();
+   }
 }

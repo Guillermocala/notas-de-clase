@@ -13,9 +13,9 @@ package Principal;
 public interface Grafo<E> {
    void insVertice(E x);
    E obtVertice(int pos);
-   void insArista(E vf, int valor);
-   E obtArista(E vf);
-   void elimArista(E vf);
+   void insArista(int vi, int vf, int valor);
+   E obtArista(int vi, int vf);
+   void elimArista(int vi, int vf);
    int orden();
    String mostrar();
 }
