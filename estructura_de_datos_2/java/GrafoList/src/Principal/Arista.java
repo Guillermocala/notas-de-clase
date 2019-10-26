@@ -5,11 +5,13 @@
  */
 package Principal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 57300
  */
-public class Arista {
+public class Arista implements Serializable{
    private int vf;
    private int datoArista;
 
@@ -21,6 +23,11 @@ public class Arista {
    /**
     * @return the vf
     */
+   public String showMeAri() {
+      String res = "";
+      res += "[ " + this.datoArista + " | " + this.vf + " ]";
+      return res;
+   }
    public int getVf() {
       return vf;
    }

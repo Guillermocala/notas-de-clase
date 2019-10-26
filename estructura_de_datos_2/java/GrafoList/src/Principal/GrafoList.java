@@ -5,6 +5,7 @@
  */
 package Principal;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -12,7 +13,7 @@ import java.util.LinkedList;
  * @author 57300
  * @param <E>
  */
-public class GrafoList<E> implements Grafo<E>{
+public class GrafoList<E> implements Grafo<E>, Serializable{
    LinkedList<Vertice> vertices = new LinkedList<>();   
 
    @Override
@@ -52,8 +53,10 @@ public class GrafoList<E> implements Grafo<E>{
    @Override
    public String mostrar() {
       String res = "";
+      int i = 0;
       for (Vertice vertice : vertices) {
-         res += "Vertice: " + vertice.getDato()+ "\n";
+         res += "[" + i + "]" + vertice.showMe();
+         i++;
       }
       return res;
    }

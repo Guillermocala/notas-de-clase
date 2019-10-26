@@ -5,13 +5,14 @@
  */
 package Principal;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  *
  * @author 57300
  */
-public class Vertice<E> {
+public class Vertice<E> implements Serializable{
    private E dato;
    private LinkedList<Arista> aristas = new LinkedList<>();
 
@@ -35,11 +36,12 @@ public class Vertice<E> {
       this.aristas.remove(vf);
    }
    public String showMe() {
-      String res = "";
-      res += "nombre: " + this.dato + "\nAristas: ";
-      for (int i = 0; i < aristas.size(); i++) {
-         res += this.aristas.get(i) + "\n";         
-      }      
+      String res = "";      
+      res += " Nombre: " + this.dato + "\nAristas: ";
+      for (Arista arista : aristas) {
+         res += arista.showMeAri() + "\n";
+      }
+      res += "\n";
       return res;
    }
    public E getDato() {
