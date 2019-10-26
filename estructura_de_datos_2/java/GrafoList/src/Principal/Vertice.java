@@ -11,37 +11,46 @@ import java.util.LinkedList;
  *
  * @author 57300
  */
-public class Vertice {
-   private String nombre;
+public class Vertice<E> {
+   private E dato;
    private LinkedList<Arista> aristas = new LinkedList<>();
 
    /**
     * @return the nombre
     */
+   
+   public Vertice(E nombre) {
+      this.dato = nombre;
+   }
+
    public void insArista(int vf, int dato) {
       Arista asd = new Arista(vf, dato);
       aristas.add(asd);
    }
    public int obtArista(int vf) {
-      
+      Arista temp = this.aristas.get(vf);
+      return temp.getDatoArista();
+   }
+   public void borraArista(int vf) {
+      this.aristas.remove(vf);
    }
    public String showMe() {
       String res = "";
-      res += "nombre: " + this.nombre + "\nAristas: ";
+      res += "nombre: " + this.dato + "\nAristas: ";
       for (int i = 0; i < aristas.size(); i++) {
          res += this.aristas.get(i) + "\n";         
       }      
       return res;
    }
-   public String getNombre() {
-      return nombre;
+   public E getDato() {
+      return dato;
    }
 
    /**
     * @param nombre the nombre to set
     */
-   public void setNombre(String nombre) {
-      this.nombre = nombre;
+   public void setDato(E dato) {
+      this.dato = dato;
    }
 
    /**

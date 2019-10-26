@@ -5,17 +5,17 @@
  */
 package Principal;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 57300
  * @param <E>
  */
-public interface Grafo<E> {
-   void insVertice(E x);
-   E obtVertice(int pos);
-   void insArista(int vi, int vf, int valor);
-   int obtArista(int vi, int vf);
-   void elimArista(int vi, int vf);
-   int orden();
-   String mostrar();
+public class GrafoEnteros<E> {
+   public static void main(String[] args) {
+      Grafo<Integer> juas = new GrafoList<>();
+      
+      
+   }
 }

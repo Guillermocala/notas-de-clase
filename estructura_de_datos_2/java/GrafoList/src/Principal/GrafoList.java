@@ -17,7 +17,8 @@ public class GrafoList<E> implements Grafo<E>{
 
    @Override
    public void insVertice(E x) {
-      this.vertices.add((Vertice) x);
+      Vertice temp = new Vertice(x);
+      this.vertices.add(temp);
    }
 
    @Override
@@ -32,24 +33,28 @@ public class GrafoList<E> implements Grafo<E>{
    }
 
    @Override
-   public E obtArista(int vi, int vf) {
+   public int obtArista(int vi, int vf) {
       Vertice temp = this.vertices.get(vi);
-      temp.getAristas()
+      return temp.obtArista(vf);
    }
 
    @Override
    public void elimArista(int vi, int vf) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      Vertice temp = this.vertices.get(vi);
+      temp.borraArista(vf);
    }
 
    @Override
    public int orden() {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return this.vertices.size();
    }
 
    @Override
    public String mostrar() {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String res = "";
+      for (Vertice vertice : vertices) {
+         res += "Vertice: " + vertice.getDato()+ "\n";
+      }
+      return res;
    }
-   
 }
