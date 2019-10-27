@@ -5,8 +5,8 @@
  */
 package letras;
 
-import datos.Grafo;
-import datos.GrafoMat;
+import Principal.Grafo;
+import Principal.GrafoMatr;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,19 +19,17 @@ import javax.swing.JOptionPane;
  * @author 57300
  */
 public class GrafoLetras implements Serializable{
-   Grafo<String> nose = new GrafoMat<>();
-   public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
-      GrafoLetras ob = new GrafoLetras();
+   public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {      
       Grafo<String> gra;
-      Persistencia2<String> archivo = new Persistencia2();
+      Persistencia archivo = new Persistencia();
       File recover = new File("archivo.ch");
       if(recover.exists())
       {
-         gra = archivo.recuperar("archivo.ch");
+         gra = (Grafo<String>) archivo.recuperar("archivo.ch");
       }
       else
       {
-         gra = new GrafoMat<>();
+         gra = new GrafoMatr<>();
       }
       int sw = 1;
       String temp, temp2, temp3;
@@ -59,7 +57,7 @@ public class GrafoLetras implements Serializable{
                break;
             case 0:
                sw = 0;
-               archivo.guardar((letras.Grafo<String>) gra);
+               archivo.guardar(gra);
                break;
             default:
                JOptionPane.showMessageDialog(null, "Dato incorrecto!");

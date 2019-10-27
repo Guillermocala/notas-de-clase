@@ -5,8 +5,6 @@
  */
 package Principal;
 
-import datos.Grafo;
-import datos.GrafoMat;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

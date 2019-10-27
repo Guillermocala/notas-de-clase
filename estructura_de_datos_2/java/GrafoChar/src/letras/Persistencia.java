@@ -3,32 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Principal;
+package letras;
 
+import Principal.Grafo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 /**
  *
  * @author 57300
  */
 public class Persistencia {
-   public void guardar(Grafo<Ciudad> x) throws FileNotFoundException, IOException {
+   public void guardar(Grafo<String> x) throws FileNotFoundException, IOException {
       try (ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"))) {
          ob.writeObject(x);
       }
    }
-   public Grafo<Ciudad> recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-      Grafo<Ciudad> ar;
+   public Grafo<String> recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
+      Grafo<String> ar;
       try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom))) {
-         ar = (Grafo<Ciudad>) ob.readObject();
+         ar = (Grafo<String>) ob.readObject();
       }
       return ar;
    }
-
 }

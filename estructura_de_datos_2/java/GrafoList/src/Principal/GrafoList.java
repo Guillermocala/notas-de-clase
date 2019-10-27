@@ -14,8 +14,8 @@ import java.util.LinkedList;
  * @param <E>
  */
 public class GrafoList<E> implements Grafo<E>, Serializable{
-   LinkedList<Vertice> vertices = new LinkedList<>();   
-
+   LinkedList<Vertice> vertices = new LinkedList<>();
+   
    @Override
    public void insVertice(E x) {
       Vertice temp = new Vertice(x);

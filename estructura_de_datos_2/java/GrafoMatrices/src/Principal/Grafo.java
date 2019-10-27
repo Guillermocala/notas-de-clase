@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package letras;
+package Principal;
+
 import java.util.ArrayList;
+
 /**
  *
  * @author 57300
- * @param <E>
  */
 public interface Grafo<E> {
-   int inf = 999999;
-   void insVertice(E var1);
-   E obtVertice(int var1);
-   void insArista(int var1, int var2, int var3);
-   int obtArista(int var1, int var2);
-   void elimArista(int var1, int var2);
+   void insVertice(E x);
+   E obtVertice(int pos);
+   void insArista(int vi, int vf, int dato);
+   int obtArista(int vi, int vf);
+   void elimArista(int vi, int vf);
    int orden();
-   ArrayList<E> sucesores(int var1);
+   ArrayList<E> sucesores(int pos);
    String mostrar();
 }
