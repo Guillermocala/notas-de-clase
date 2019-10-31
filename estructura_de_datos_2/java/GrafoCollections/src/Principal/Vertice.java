@@ -6,16 +6,16 @@
 package Principal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
  *
  * @author 57300
- * @param <E>
  */
 public class Vertice<E> implements Serializable{
    private E dato;
-   private LinkedList<Arista> aristas = new LinkedList<>();
+   private ArrayList<Arista> aristas = new ArrayList<>();
 
    /**
     * @param nombre
@@ -59,14 +59,14 @@ public class Vertice<E> implements Serializable{
    /**
     * @return the aristas
     */
-   public LinkedList<Arista> getAristas() {
+   public ArrayList<Arista> getAristas() {
       return aristas;
    }
 
    /**
     * @param aristas the aristas to set
     */
-   public void setAristas(LinkedList<Arista> aristas) {
+   public void setAristas(ArrayList<Arista> aristas) {
       this.aristas = aristas;
    }
 }

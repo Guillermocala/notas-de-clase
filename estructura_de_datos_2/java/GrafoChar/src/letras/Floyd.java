@@ -6,7 +6,8 @@
 package letras;
 
 import Principal.Grafo;
-import Principal.GrafoMatr;
+import Principal.GrafoCollections;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -58,7 +59,7 @@ public class Floyd {
       }
    }
    public static void main(String[] args) {
-      Grafo<Integer> tryit = new GrafoMatr<>();
+      Grafo<Integer> tryit = new GrafoCollections<>();
       tryit.insVertice(0);
       tryit.insVertice(1);
       tryit.insVertice(2);

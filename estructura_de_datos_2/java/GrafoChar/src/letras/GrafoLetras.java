@@ -6,7 +6,8 @@
 package letras;
 
 import Principal.Grafo;
-import Principal.GrafoMatr;
+import Principal.GrafoCollections;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class GrafoLetras implements Serializable{
       }
       else
       {
-         gra = new GrafoMatr<>();
+         gra = new GrafoCollections<>();
       }
       int sw = 1;
       String temp, temp2, temp3;
@@ -50,6 +51,7 @@ public class GrafoLetras implements Serializable{
                int data2 = Integer.parseInt(temp2);
                temp3 = JOptionPane.showInputDialog(null, "Ingrese el dato: ");
                int data3 = Integer.parseInt(temp3);
+               
                gra.insArista(data, data2, data3);
                break;
             case 3:               

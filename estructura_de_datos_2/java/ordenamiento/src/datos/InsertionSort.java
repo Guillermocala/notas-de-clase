@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
  *
  * @author 57300
  */
-public class QuickSort {
+public class InsertionSort {
    public int[] generarVec(int n) {
       int v[] = new int[n];
       for (int i = 0; i < v.length; i++) {
@@ -31,27 +31,16 @@ public class QuickSort {
       }
       return lis;
    }
-   public void ordenarVec(int v[], int ini, int fin) {      
-      int pivot = v[ini];
-      int i = ini;
-      int j = fin;
-      int temp;
-      while (i < j) {
-         while (v[i] <= pivot && i<j) i++;
-         while (v[j] > pivot) j--;  
-         if (i < j) {
-            temp = v[i];
-            v[i] = v[j];
-            v[j] = temp;
+   public void ordenaVec(int v[]) {
+      int n = v.length;
+      for (int i = 1; i < n; i++) {
+         int ward = v[i];
+         int j = i - 1;
+         while (j >= 0 && v[j] > ward) {            
+            v[j + 1] = v[j];
+            j = j - 1;
          }
-      }
-      v[ini] = v[j];
-      v[j] = pivot;
-      if (ini < (j - 1)) {
-         ordenarVec(v, ini, (j - 1));
-      }
-      else if ((j + 1) < fin) {
-         ordenarVec(v, j + 1, fin);
+         v[j + 1] = ward;
       }
    }
    public LinkedList<Integer> generarList(int n) {
@@ -68,27 +57,16 @@ public class QuickSort {
       }
       return lis;
    }
-   public void ordenarList(LinkedList<Integer> lis, int ini, int fin) {
-      int pivot = lis.get(ini);
-      int i = ini;
-      int j = fin;
-      int temp;
-      while (i < j) {
-         while (lis.get(i) <= pivot && i < j) i++;
-         while (lis.get(j) > pivot) j--;  
-         if (i < j) {
-            temp = lis.get(i);
-            lis.set(i, lis.get(j));
-            lis.set(j, temp);
+   public void ordenaList(LinkedList<Integer> lista) {
+      int n = lista.size();
+      for (int i = 1; i < n; i++) {
+         int ward = lista.get(i);
+         int j = i - 1;
+         while (j >= 0 && lista.get(j) > ward) {
+            lista.set(j + 1, lista.get(j));
+            j = j - 1;
          }
-      }
-      lis.set(ini, lis.get(j));
-      lis.set(j, lis.get(j));      
-      if (ini < (j - 1)) {
-         ordenarList(lis, ini, (j - 1));
-      }
-      else if ((j + 1) < fin) {
-         ordenarList(lis, j + 1, fin);
+         lista.set(j + 1, ward);
       }
    }
    public ArrayList<Integer> generarCol(int n) {
@@ -105,36 +83,25 @@ public class QuickSort {
       }
       return lis;
    }
-   public void ordenarCol(ArrayList<Integer> lis, int ini, int fin) {
-      int pivot = lis.get(ini);
-      int i = ini;
-      int j = fin;
-      int temp;
-      while (i < j) {
-         while (lis.get(i) <= pivot && i<j) i++;
-         while (lis.get(j) > pivot) j--;  
-         if (i < j) {
-            temp = lis.get(i);
-            lis.set(i, lis.get(j));
-            lis.set(j, temp);            
+   public void ordenaCol(ArrayList<Integer> lista) {
+      int n = lista.size();
+      for (int i = 1; i < n; i++) {
+         int ward = lista.get(i);
+         int j = i - 1;
+         while (j >= 0 && lista.get(j) > ward) {
+            lista.set(j + 1, lista.get(j));            
+            j = j - 1;
          }
-      }
-      lis.set(ini, lis.get(j));
-      lis.set(j, pivot);
-      if (ini < (j - 1)) {
-         ordenarCol(lis, ini, (j - 1));
-      }
-      else if ((j + 1) < fin) {
-         ordenarCol(lis, j + 1, fin);
+         lista.set(j + 1, ward);
       }
    }
    public static void main(String[] args) {
-      QuickSort nuevo = new QuickSort();     
+      InsertionSort nuevo = new InsertionSort();
       String showMe, tamanio;
       int sw = 1, tamanio1;
       JTextArea textarea;
       JScrollPane scroll;
-      String menu = "QUICKSORT SORTING METHOD\n1- Vector \n2- List \n3- Collection \n0- Exit";      
+      String menu = "INSERTION-SORT SORTING METHOD\n1- Vector \n2- List \n3- Collection \n0- Exit";      
       do {
          showMe = "";
          String opcion = JOptionPane.showInputDialog(menu);
@@ -147,7 +114,7 @@ public class QuickSort {
                int vector[] = nuevo.generarVec(tamanio1);
                showMe += nuevo.mostrarVec(vector);
                long timeInit = System.nanoTime();
-               nuevo.ordenarVec(vector, 0, (vector.length - 1));
+               nuevo.ordenaVec(vector);
                long timeFinal = System.nanoTime();
                long timeElapsed = timeFinal - timeInit;
                showMe += "\nOrdered\n" + nuevo.mostrarVec(vector);
@@ -155,8 +122,8 @@ public class QuickSort {
                textarea = new JTextArea(showMe);
                scroll = new JScrollPane(textarea);
                textarea.setLineWrap(true);
-               scroll.setPreferredSize(new Dimension(250, 400));
-               JOptionPane.showMessageDialog(null, scroll, "Quicksort Vect", 0);
+               textarea.setPreferredSize(new Dimension(250, 400));
+               JOptionPane.showMessageDialog(null, scroll, "Insertion-sort Vect", 0);
                break;
             case 2:
                tamanio = JOptionPane.showInputDialog("Enter the length: ");
@@ -164,7 +131,7 @@ public class QuickSort {
                LinkedList<Integer> lista2 = nuevo.generarList(tamanio1);               
                showMe += nuevo.mostrarList(lista2);
                timeInit = System.nanoTime();
-               nuevo.ordenarList(lista2, 0, (lista2.size() - 1));
+               nuevo.ordenaList(lista2);
                timeFinal = System.nanoTime();
                timeElapsed = timeFinal - timeInit;
                showMe += "\nOrdered\n" + nuevo.mostrarList(lista2);
@@ -172,16 +139,16 @@ public class QuickSort {
                textarea = new JTextArea(showMe);
                scroll = new JScrollPane(textarea);
                textarea.setLineWrap(true);
-               scroll.setPreferredSize(new Dimension(250, 400));
-               JOptionPane.showMessageDialog(null, scroll, "Quicksort List", 0);
+               textarea.setPreferredSize(new Dimension(250, 400));
+               JOptionPane.showMessageDialog(null, scroll, "Insertion-sort Vect", 0);
                break;
             case 3:
                tamanio = JOptionPane.showInputDialog("Enter the length: ");
                tamanio1 = Integer.parseInt(tamanio);
-               ArrayList<Integer> col = nuevo.generarCol(tamanio1);
+               ArrayList<Integer> col = nuevo.generarCol(tamanio1);               
                showMe += nuevo.mostrarCol(col);
                timeInit = System.nanoTime();
-               nuevo.ordenarCol(col, 0, (col.size() - 1));
+               nuevo.ordenaCol(col);
                timeFinal = System.nanoTime();
                timeElapsed = timeFinal - timeInit;
                showMe += "\nOrdered\n" + nuevo.mostrarCol(col);
@@ -189,8 +156,8 @@ public class QuickSort {
                textarea = new JTextArea(showMe);
                scroll = new JScrollPane(textarea);
                textarea.setLineWrap(true);
-               scroll.setPreferredSize(new Dimension(250, 400));
-               JOptionPane.showMessageDialog(null, scroll, "Quicksort Collections", 0);
+               textarea.setPreferredSize(new Dimension(250, 400));
+               JOptionPane.showMessageDialog(null, scroll, "Insertion-sort Vect", 0);
                break;
             case 0:
                sw = 0;               

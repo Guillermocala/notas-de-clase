@@ -7,10 +7,12 @@ package Principal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 57300
+ * @param <E>
  */
 public class GrafoMatr<E> implements Grafo<E>, Serializable{
    private int[][] aristas = new int[100][100];
@@ -39,17 +41,33 @@ public class GrafoMatr<E> implements Grafo<E>, Serializable{
 
    @Override
    public void insArista(int vI, int vF, int dato) {
-      this.aristas[vI][vF] = dato;
+      if ((vI > -1 && vI < this.vertices.size()) && (vF > -1 && vF < this.vertices.size()) && (vI != vF)) {
+         this.aristas[vI][vF] = dato;
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Valor incorrecto!");
+      }
    }
 
    @Override
    public int obtArista(int vI, int vF) {
-      return this.aristas[vI][vF];
+      if ((vI > -1 && vI < this.vertices.size()) && (vF > -1 && vF < this.vertices.size()) && (vI != vF)) {
+         return this.aristas[vI][vF];
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Valor incorrecto!");
+         return 0;
+      }
    }
 
    @Override
    public void elimArista(int vI, int vF) {
-      this.aristas[vI][vF] = 999999;
+      if ((vI > -1 && vI < this.vertices.size()) && (vF > -1 && vF < this.vertices.size()) && (vI != vF)) {
+         this.aristas[vI][vF] = 999999;
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Valor incorrecto!");
+      }
    }
 
    @Override

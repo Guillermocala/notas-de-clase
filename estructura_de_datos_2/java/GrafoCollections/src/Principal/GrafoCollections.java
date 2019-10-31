@@ -6,7 +6,7 @@
 package Principal;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
  * @author 57300
  * @param <E>
  */
-public class GrafoList<E> implements Grafo<E>, Serializable{
-   LinkedList<Vertice> vertices = new LinkedList<>();
+public class GrafoCollections<E> implements Grafo<E>, Serializable{
+   ArrayList<Vertice> vertices = new ArrayList<>();
    
    @Override
    public void insVertice(E x) {
