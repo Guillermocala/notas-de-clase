@@ -29,9 +29,11 @@ public class Concesionario implements Serializable{
       autos.add(a);
    }
    public String listar() {
+      int indice = 0;
       String res = "";
       for (Auto auto : autos) {
-         res += " " + auto.toString();
+         res += indice + "- " + auto.toString();
+         indice++;
       }
       return res;
    }

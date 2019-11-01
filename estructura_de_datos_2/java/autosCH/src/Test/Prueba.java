@@ -8,6 +8,7 @@ package Test;
 import Principal.Auto;
 import Principal.Concesionario;
 import Principal.Persistencia;
+import Principal.Search;
 import Principal.SortAutoCost;
 import Principal.SortAutoModel;
 import Principal.SortAutoPlaca;
@@ -28,6 +29,7 @@ public class Prueba {
    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
       Concesionario nuevo;
       Persistencia archivo = new Persistencia();
+      Search busq = new Search();
       File angel = new File("archivo.ch");
       if (angel.exists()) {
          nuevo = archivo.recuperar("archivo.ch");
@@ -41,7 +43,8 @@ public class Prueba {
       JTextArea textarea;
       JScrollPane scroll;
       String menu = "1- Ingrese auto \n2- Eliminar auto \n3- Mostrar autos \n4- Ordenar \n5- Buscar \n0- Exit";
-      String menu2 = "Ordenar \n1-Placa \n2- Modelo \n3- Costo \n0- Exit";
+      String menu2 = "\tORDENAR \n1- Placa \n2- Modelo \n3- Costo \n0- Exit";
+      String menu3 = "\tBUSQUEDA \n1- Placa \n2- Modelo \n3- Costo \n0- Exit";
       do {
          String opcion = JOptionPane.showInputDialog(menu);
          int opcion2 = Integer.parseInt(opcion);
@@ -69,7 +72,7 @@ public class Prueba {
                JOptionPane.showMessageDialog(null, scroll, "Concesionario", 0);
                break;
             case 4:
-               do {         
+               do {
                   String opcionSub = JOptionPane.showInputDialog(menu2);
                   int opcionSub2 = Integer.parseInt(opcionSub);
                   switch(opcionSub2)
@@ -96,6 +99,53 @@ public class Prueba {
                } while(sw2 != 0);
                break;
             case 5:
+               do {
+                  String opcionSub2 = JOptionPane.showInputDialog(menu3);
+                  int opcionSub3 = Integer.parseInt(opcionSub2);
+                  switch(opcionSub3)
+                  {
+                     case 1:
+                        placa = JOptionPane.showInputDialog(null, "Ingrese la placa a buscar: ");
+                        int result = busq.busqBinariaPlaca(nuevo.getAutos(), placa);
+                        showMe = "El auto se encuentra en la posicion: " + result;
+                        if (result != -1) {
+                           JOptionPane.showMessageDialog(null, showMe);
+                        }
+                        else {
+                           JOptionPane.showMessageDialog(null, "Auto no encontrado");
+                        }
+                        break;
+                     case 2:
+                        modelo = JOptionPane.showInputDialog(null, "Ingrese el modelo a buscar: ");
+                        result = busq.busqBinariaModelo(nuevo.getAutos(), modelo);
+                        showMe = "El auto se encuentra en la posicion: " + result;
+                        if (result != -1) {
+                           JOptionPane.showMessageDialog(null, showMe);
+                        }
+                        else {
+                           JOptionPane.showMessageDialog(null, "Auto no encontrado");
+                        }
+                        break;
+                     case 3:
+                        precio = JOptionPane.showInputDialog(null, "Ingrese el costo del auto a buscar: ");
+                        precio1 = Float.parseFloat(precio);
+                        result = busq.busqBinariaCosto(nuevo.getAutos(), precio1);
+                        showMe = "El auto se encuentra en la posicion: " + result;
+                        if (result != -1) {
+                           JOptionPane.showMessageDialog(null, showMe);
+                        }
+                        else {
+                           JOptionPane.showMessageDialog(null, "Auto no encontrado");
+                        }
+                        break;            
+                     case 0:
+                        sw3 = 0;               
+                        break;
+                     default:
+                        JOptionPane.showMessageDialog(null, "Dato incorrecto!");
+                        break;
+                  }
+               } while(sw3 != 0);
                break;
             case 0:
                sw = 0;
@@ -105,9 +155,6 @@ public class Prueba {
                JOptionPane.showMessageDialog(null, "Dato incorrecto!");
                break;
          }
-      } while(sw != 0);      
-      //ordenar por marca
-      //busqueda binaria por placa
-
+      } while(sw != 0);
    }
 }
