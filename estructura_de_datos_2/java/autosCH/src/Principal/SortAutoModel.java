@@ -11,13 +11,13 @@ import java.util.Comparator;
  *
  * @author 57300
  */
-public class SortAutoPlaca implements Comparator<Object>{
+public class SortAutoModel implements Comparator<Object>{
 
    @Override
    public int compare(Object t, Object t1) {
       Auto a1 = (Auto) t;
       Auto a2 = (Auto) t1;
-      return (a1.getPlaca().compareTo(a2.getPlaca()));
+      return (a1.getMarca().compareTo(a2.getMarca()));
    }
    
 }

@@ -18,36 +18,39 @@ import java.io.ObjectOutputStream;
  */
 public class Persistencia {
    public void guardar(ArbolMaterias x) throws FileNotFoundException, IOException {
-      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"));
-      ob.writeObject(x);
-      ob.close();
+      try (ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"))) {
+         ob.writeObject(x);
+      }
    }
    public ArbolMaterias recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
-      ArbolMaterias ar = (ArbolMaterias) ob.readObject();
-      ob.close();
+      ArbolMaterias ar;
+      try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom))) {
+         ar = (ArbolMaterias) ob.readObject();
+      }
       return ar;
    }
    public void guardarEst(String x) throws FileNotFoundException, IOException {
-      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivoEst.ch"));
-      ob.writeObject(x);
-      ob.close();
+      try (ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivoEst.ch"))) {
+         ob.writeObject(x);
+      }
    }
    public String recuperarEst(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
-      String ar = (String) ob.readObject();
-      ob.close();
+      String ar;
+      try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom))) {
+         ar = (String) ob.readObject();
+      }
       return ar;
    }
    public void guardarCod(String x) throws FileNotFoundException, IOException {
-      ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivoCod.ch"));
-      ob.writeObject(x);
-      ob.close();
+      try (ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivoCod.ch"))) {
+         ob.writeObject(x);
+      }
    }
    public String recuperarCod(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-      ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom));
-      String ar = (String) ob.readObject();
-      ob.close();
+      String ar;
+      try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom))) {
+         ar = (String) ob.readObject();
+      }
       return ar;
    }
 }

@@ -5,11 +5,13 @@
  */
 package Principal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 57300
  */
-public class Auto {
+public class Auto implements Serializable{
    private String placa;
    private String marca;
    private float costo;
@@ -22,7 +24,7 @@ public class Auto {
 
    @Override
    public String toString() {
-      return "Auto{" + "placa=" + placa + ", marca=" + marca + ", costo=" + costo + '}' + "\n";
+      return "Auto [ " + "placa = " + placa + ", marca = " + marca + ", costo = " + costo + " ]" + "\n";
    }
 
    /**

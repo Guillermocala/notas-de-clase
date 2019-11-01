@@ -5,17 +5,18 @@
  */
 package Principal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author 57300
  */
-public class Concesionario {
+public class Concesionario implements Serializable{
    private ArrayList<Auto> autos;
 
    public Concesionario() {
-      autos =  new ArrayList<>();
+      this.autos =  new ArrayList<>();
    }
 
    /**
@@ -33,5 +34,12 @@ public class Concesionario {
          res += " " + auto.toString();
       }
       return res;
+   }
+   public void elimAuto(String placa) {
+      for (int i = 0; i < autos.size(); i++) {
+         if (autos.get(i).getPlaca().compareTo(placa) == 0) {
+            autos.remove(i);
+         }
+      }
    }
 }

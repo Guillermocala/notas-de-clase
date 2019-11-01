@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -332,7 +333,7 @@ public class ArbolMaterias implements Serializable{
       TadMaterias<Materias> temp;
       Persistencia archivo = new Persistencia();
       int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1, sw5 = 1;
-      String nombreEst;
+      String nombreEst, showMe;
       String codigoEst;
       int maxCreditos = 5;    //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DE CREDITOS
       float maxNota = 500;   //<---------------------- PARA CONTROLAR LA CANTIDAD MAXIMA DE NOTAS
@@ -552,6 +553,7 @@ public class ArbolMaterias implements Serializable{
             case 3:
                /*Informes*/
                raiz = arbol.getRaiz();
+               showMe = "";
                if(raiz != null)
                {
                   do
@@ -562,12 +564,14 @@ public class ArbolMaterias implements Serializable{
                      {
                         case 1:
                            /*promedio ponderado*/
-                           float vectTemp[] = new float[11];
+                           ArrayList<Float> notas = new ArrayList<>();
                            cant = 0;
                            float notaTemp = promedio(raiz, 1);
-                           vectTemp[1] = notaTemp/cant;
-                           String mostrarDato = "El promedio es: " + Float.toString(vectTemp[1]);
-                           JOptionPane.showMessageDialog(null, mostrarDato);
+                           notas.add(notaTemp);
+                           for (int i = 0; i < notas.size(); i++) {
+                              showMe += " " + notas.get(i);
+                           }
+                           JOptionPane.showMessageDialog(null, showMe);
                            break;
                         case 2:
                            /*% materias perdidas*/
