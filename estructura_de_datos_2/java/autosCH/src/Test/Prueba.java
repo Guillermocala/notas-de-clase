@@ -44,7 +44,7 @@ public class Prueba {
       JScrollPane scroll;
       String menu = "1- Ingrese auto \n2- Eliminar auto \n3- Mostrar autos \n4- Ordenar \n5- Buscar \n0- Exit";
       String menu2 = "\tORDENAR \n1- Placa \n2- Modelo \n3- Costo \n0- Exit";
-      String menu3 = "\tBUSQUEDA \n1- Placa \n2- Modelo \n3- Costo \n0- Exit";
+      String menu3 = "\tBUSQUEDA BINARIA (los datos deben estar ordenados)\n1- Placa \n2- Modelo \n3- Costo \n0- Exit";
       do {
          String opcion = JOptionPane.showInputDialog(menu);
          int opcion2 = Integer.parseInt(opcion);
