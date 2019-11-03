@@ -5,10 +5,113 @@
  */
 package Principal;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  *
  * @author 57300
  */
-public class Platform {
+public class Platform implements Serializable{
+   private ArrayList<Taxi> taxis = new ArrayList<>();
+   private ArrayList<Conductor> conductores = new ArrayList<>();
+
+   /**
+    * @return the taxis
+    */
+   public ArrayList<Taxi> getTaxis() {
+      return taxis;
+   }
+   /**
+    * @param pos
+    * @return the conductores
+    */
    
+   public Taxi getTaxi(int pos) {
+      return taxis.get(pos);
+   }
+   
+   public Conductor getConduc(int pos) {
+      return conductores.get(pos);
+   }
+   
+   public ArrayList<Conductor> getConductores() {
+      return conductores;
+   }
+   
+   public void addTaxi(Taxi taxi) {
+      taxis.add(taxi);
+   }
+   
+   public void addConductor(Conductor conduc) { 
+      conductores.add(conduc);
+   }
+   public void elimTaxi(String placa) {
+      for (Taxi taxi : taxis) {
+         if (placa.compareTo(taxi.getPlaca()) == 0) {
+            taxis.remove(taxi);
+         }
+      }
+   }
+   public void elimConduc(String nombre) {
+      for (Conductor conduc : conductores) {
+         if (nombre.compareTo(conduc.getNombre()) == 0) {
+            conductores.remove(conduc);
+         }
+      }
+   }
+   public Taxi busqLinealTaxi(String placa) {
+      for (Taxi taxi : taxis) {
+         if (taxi.getPlaca().compareTo(placa) == 0) {
+            return taxi;
+         }
+      }
+      return null;
+   }
+   public Taxi busqBinTaxi(String placa) {
+      int ini = 0;
+      int fin = taxis.size() - 1;
+      while (ini <= fin) {         
+         int c = (ini + fin) / 2;
+         if (placa.compareTo(taxis.get(c).getPlaca()) == 0) {
+            return taxis.get(c);
+         }
+         else {
+            if (placa.compareTo(taxis.get(c).getPlaca()) > 0) {
+               ini = c + 1;
+            }
+            else {
+               fin = c - 1 ;
+            }
+         }
+      }
+      return null;
+   }
+   public Conductor busqLinealConduc(String nombre) {
+      for (Conductor conduc : conductores) {
+         if (conduc.getNombre().compareTo(nombre) == 0) {
+            return conduc;
+         }
+      }
+      return null;
+   }
+   public Conductor busqBinConduc(String nombre) {
+      int ini = 0;
+      int fin = conductores.size() - 1;
+      while (ini <= fin) {         
+         int c = (ini + fin) / 2;
+         if (nombre.compareTo(conductores.get(c).getNombre()) == 0) {
+            return conductores.get(c);
+         }
+         else {
+            if (nombre.compareTo(conductores.get(c).getNombre()) > 0) {
+               ini = c + 1;
+            }
+            else {
+               fin = c - 1 ;
+            }
+         }
+      }
+      return null;
+   }
 }

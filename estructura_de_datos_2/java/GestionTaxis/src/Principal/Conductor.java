@@ -5,23 +5,32 @@
  */
 package Principal;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 57300
  */
-public class Conductor {
-   private double cedula;
+public class Conductor implements Serializable{
+   private long cedula;
    private String nombre;
    private String placaTaxi;
-   public Conductor(double cedula, String nombre) {
+   public Conductor(long cedula, String nombre) {
       this.cedula = cedula;
       this.nombre = nombre;
    }
 
+   @Override
+   public String toString() {
+      return "Conductor " + " Cedula = " + cedula + ", nombre = " + nombre + "\n";
+   }
+   public String listarAll() {
+      return "Conductor " + "\nCedula = " + cedula + "\nNombre = " + nombre + "\nTaxi asignado = " + placaTaxi;
+   }
    /**
     * @return the cedula
     */
-   public double getCedula() {
+   public long getCedula() {
       return cedula;
    }
 

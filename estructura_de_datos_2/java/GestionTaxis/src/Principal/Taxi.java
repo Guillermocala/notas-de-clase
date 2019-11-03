@@ -5,13 +5,14 @@
  */
 package Principal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author 57300
  */
-public class Taxi {
+public class Taxi implements Serializable{
    private String placa;
    private Conductor conductor;
    private boolean statusOcu;
@@ -22,6 +23,15 @@ public class Taxi {
       this.placa = placa;
    }
 
+   @Override
+   public String toString() {
+      return "Taxi " + "placa = " + placa + ", conductor = " + conductor + "\n";
+   }
+   public String listarAll() {
+      String res = "";
+      res += "Taxi \nPlaca = " + placa + "\nConductor = " + conductor + "\nOcupado = " + statusOcu;
+      return res;
+   }
    /**
     * @return the placa
     */
