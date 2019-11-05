@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Conductor implements Serializable{
    private long cedula;
    private String nombre;
-   private String placaTaxi;
+   private Taxi taxi;
    public Conductor(long cedula, String nombre) {
       this.cedula = cedula;
       this.nombre = nombre;
@@ -25,7 +25,7 @@ public class Conductor implements Serializable{
       return "Conductor " + " Cedula = " + cedula + ", nombre = " + nombre + "\n";
    }
    public String listarAll() {
-      return "Conductor " + "\nCedula = " + cedula + "\nNombre = " + nombre + "\nTaxi asignado = " + placaTaxi;
+      return "Conductor " + "\nCedula = " + cedula + "\nNombre = " + nombre + "\nTaxi asignado = " + taxi.toString();
    }
    /**
     * @return the cedula
@@ -44,15 +44,15 @@ public class Conductor implements Serializable{
    /**
     * @return the placaTaxi
     */
-   public String getPlacaTaxi() {
-      return placaTaxi;
+   public Taxi getTaxi() {
+      return taxi;
    }
 
    /**
-    * @param placaTaxi the placaTaxi to set
+    * @param taxi
     */
-   public void setPlacaTaxi(String placaTaxi) {
-      this.placaTaxi = placaTaxi;
+   public void setTaxi(Taxi taxi) {
+      this.taxi = taxi;
    }
    
 }

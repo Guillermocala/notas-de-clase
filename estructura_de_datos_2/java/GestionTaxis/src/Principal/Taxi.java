@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class Taxi implements Serializable{
    private String placa;
    private Conductor conductor;
-   private boolean statusOcu;
-   private boolean statusAsig;
-   private ArrayList<String> carreras;
+   private boolean statusOcu = false;
+   private boolean statusAsig = false;
+   private ArrayList<String> carreras = new ArrayList<>();
 
    public Taxi(String placa) {
       this.placa = placa;
@@ -25,11 +25,16 @@ public class Taxi implements Serializable{
 
    @Override
    public String toString() {
-      return "Taxi " + "placa = " + placa + ", conductor = " + conductor + "\n";
+      return "Taxi " + "placa = " + placa + ", conductor = " + conductor + ", Asignado = " + statusAsig + ", Ocupado = " + statusOcu + "\n";
    }
    public String listarAll() {
+      int i = 0;
       String res = "";
-      res += "Taxi \nPlaca = " + placa + "\nConductor = " + conductor + "\nOcupado = " + statusOcu;
+      res += "Taxi \nPlaca = " + placa + "\nConductor = " + conductor + "\nOcupado = " + statusOcu + "\nAsignado = " + statusAsig + "\n";
+      for (String carrera : carreras) {
+         res += "Carrera #" + i + " = " + carrera + "\n";
+         i++;
+      }
       return res;
    }
    /**
@@ -93,5 +98,8 @@ public class Taxi implements Serializable{
     */
    public void setConductor(Conductor conductor) {
       this.conductor = conductor;
+   }
+   public void elimCarrera(String carrera) {
+      carreras.remove(carrera);
    }
 }

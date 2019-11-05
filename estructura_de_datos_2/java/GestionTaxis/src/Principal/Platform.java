@@ -7,6 +7,8 @@ package Principal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 public class Platform implements Serializable{
    private ArrayList<Taxi> taxis = new ArrayList<>();
    private ArrayList<Conductor> conductores = new ArrayList<>();
-
+   private LinkedList<Taxi> taxisDisponibles = new LinkedList<>();
+   private LinkedList<Taxi> taxisOcupados = new LinkedList<>();
    /**
     * @return the taxis
     */
@@ -46,6 +49,27 @@ public class Platform implements Serializable{
    public void addConductor(Conductor conduc) { 
       conductores.add(conduc);
    }
+   
+   public void insTaxiDisponible(Taxi taxi) {
+      taxi.setStatusOcu(false);
+      taxisDisponibles.addLast(taxi);
+   }
+   
+   public void insTaxiOcupado(Taxi taxi) {
+      taxi.setStatusOcu(true);
+      taxisOcupados.addLast(taxi);
+   }
+   
+   public void remTaxiDisponible(Taxi taxi) {
+      taxi.setStatusOcu(true);
+      taxisDisponibles.remove(taxi);
+   }
+   
+   public void remTaxiOcupado(Taxi taxi) {
+      taxi.setStatusOcu(false);
+      taxisOcupados.remove(taxi);
+   }
+   
    public void elimTaxi(String placa) {
       for (Taxi taxi : taxis) {
          if (placa.compareTo(taxi.getPlaca()) == 0) {
@@ -57,6 +81,13 @@ public class Platform implements Serializable{
       for (Conductor conduc : conductores) {
          if (nombre.compareTo(conduc.getNombre()) == 0) {
             conductores.remove(conduc);
+         }
+      }
+   }
+   public void elimCarrera(Taxi taxi, String carrera) {      
+      for (int i = 0; i < (taxi.getCarreras().size() - 1); i++) {
+         if (carrera.compareTo(taxi.getCarreras().get(i)) == 0) {
+            taxi.elimCarrera(carrera);
          }
       }
    }
@@ -95,6 +126,14 @@ public class Platform implements Serializable{
       }
       return null;
    }
+   public Conductor busqLinealConduc(double cedula) {
+      for (Conductor conduc : conductores) {
+         if (cedula == conduc.getCedula()) {
+            return conduc;
+         }
+      }
+      return null;
+   }
    public Conductor busqBinConduc(String nombre) {
       int ini = 0;
       int fin = conductores.size() - 1;
@@ -113,5 +152,38 @@ public class Platform implements Serializable{
          }
       }
       return null;
+   }
+   public void asigConducTaxi(double cedula, String placa) {
+      Taxi taxi = busqLinealTaxi(placa);
+      Conductor conductor = busqLinealConduc(cedula);
+      if (taxi.isStatusAsig()) {
+         if (taxis.contains(taxi) && conductores.contains(conductor)) {
+            taxi.setConductor(conductor);
+            taxi.setStatusAsig(true);
+            conductor.setTaxi(taxi);
+            insTaxiDisponible(taxi);
+         }
+         else {
+            JOptionPane.showMessageDialog(null, "Alguno de los dos datos ha sido erroneo!");
+         }
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Ya ha sido asignado un conductor al taxi!");
+      }
+   }
+   public void asigCarreraTaxi(String placa, String carrera) {
+      Taxi taxi = busqBinTaxi(placa);
+      if (taxis.contains(taxi)) {
+         taxi.addCarreras(carrera);
+         remTaxiDisponible(taxi);
+         if (taxisOcupados.size() == 2) {
+            insTaxiDisponible(taxisOcupados.getFirst());
+            taxisOcupados.removeFirst();
+         }
+         insTaxiOcupado(taxi);
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Taxi no encontrado!");
+      }
    }
 }

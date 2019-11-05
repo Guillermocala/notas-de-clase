@@ -14,7 +14,6 @@ import Principal.Taxi;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JOptionPane;
 
@@ -38,13 +37,13 @@ public class Test {
       }
       int sw = 1, sw2 = 1, sw3 = 1, sw4 = 1, sw5 = 1, sw6 = 1;
       long cedula;
-      String placa, nombre, cedu, showMe;
+      String placa, nombre, cedu, carrera, showMe;
       String menu = "MENU PRINCIPAL\n1- Ingresar \n2- Asignaciones \n3- Mostrar \n4- Buscar \n5- Eliminacion \n0- Salir";
       String menu2 = "INSERCION \n1- Taxi \n2- Conductor \n0- Salir";
       String menu3 = "ASIGNACIONES \n1- Conductor a taxi \n2- Carrera a taxi \n0- Salir";
       String menu4 = "LISTADO \n1- Taxis ordenado por placa \n2- Conductores ordenado por cedula \n3- Taxis con sus carreras \n0- Salir";
       String menu5 = "BUSQUEDA \n1- Taxi por placa \n2- Conductor por nombre \n0- Salir";
-      String menu6 = "ELIMINACION \n1- Taxi por placa \n2- Conductor por nombre \n0- Salir";
+      String menu6 = "ELIMINACION \n1- Taxi por placa \n2- Conductor por nombre \n3- Carrera de taxi\n0- Salir";
       do {
          String opcionSub = JOptionPane.showInputDialog(menu);
          int opcionSub2 = Integer.parseInt(opcionSub);
@@ -88,12 +87,17 @@ public class Test {
                   {
                      case 1:
                         //ASIGNA CONDUCTOR A TAXI
-
+                        cedu = JOptionPane.showInputDialog(null, "Ingrese la cedula del conductor: ");
+                        cedula = Long.parseLong(cedu);
+                        placa = JOptionPane.showInputDialog(null, "Ingrese la placa del taxi a asignar: ");
+                        nuevo.asigConducTaxi(cedula, placa);
                         break;
                      case 2:
                         //ASIGNA CARRERA A TAXI
-                        
-                        break;                     
+                        placa = JOptionPane.showInputDialog(null, "Ingrese la placa del taxi: ");
+                        carrera = JOptionPane.showInputDialog(null, "Ingrese la carrera: ");
+                        nuevo.asigCarreraTaxi(placa, carrera);
+                        break;
                      case 0:
                         sw3 = 0;               
                         break;
@@ -134,21 +138,33 @@ public class Test {
                         if (orden.isOrderedCedu(nuevo.getConductores())) {
                            for (int i = 0; i < (nuevo.getConductores().size() - 1); i++) {
                               Conductor conduc = nuevo.getConductores().get(i);
-                              showMe += "[" + (i + 1) + "]" + conduc.toString();
+                              showMe += "\t[" + (i + 1) + "]" + conduc.toString();
                            }
                         }
                         else {
                            orden.sortByCedu(nuevo.getConductores());
                            for (int i = 0; i < (nuevo.getConductores().size() - 1); i++) {
                               Conductor conduc = nuevo.getConductores().get(i);
-                              showMe += "[" + (i + 1) + "]" + conduc.toString();
+                              showMe += "\t[" + (i + 1) + "]" + conduc.toString();
                            }
                         }
                         JOptionPane.showMessageDialog(null, showMe);
                         break;
                      case 3:
                         //LISTA TAXIS CON SUS CARRERAS
-                        
+                        if (orden.isOrderedPlate(nuevo.getTaxis())) {
+                           for (int i = 0; i < (nuevo.getTaxis().size() - 1); i++) {
+                              Taxi taxiTemp = nuevo.getTaxis().get(i);
+                              showMe += "[" + (i + 1) + "]" + taxiTemp.listarAll();
+                           }
+                        }
+                        else {
+                           Collections.sort(nuevo.getTaxis(), new SortByPlate());
+                           for (int i = 0; i < (nuevo.getTaxis().size() - 1); i++) {
+                              Taxi taxiTemp = nuevo.getTaxis().get(i);
+                              showMe += "[" + (i + 1) + "]" + taxiTemp.listarAll();
+                           }
+                        }
                         break;
                      case 0:
                         sw4 = 0;               
@@ -204,7 +220,14 @@ public class Test {
                         //ELIMINA CONDUCTOR POR NOMBRE
                         nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre a buscar: ");
                         nuevo.elimConduc(nombre);
-                        break;                     
+                        break;
+                     case 3:
+                        //ELIMINA CARRERA
+                        placa = JOptionPane.showInputDialog(null, "Ingrese la placa: ");
+                        taxi = nuevo.busqLinealTaxi(placa);
+                        carrera = JOptionPane.showInputDialog(null, "Ingrese la carrera: ");
+                        nuevo.elimCarrera(taxi, carrera);
+                        break;
                      case 0:
                         sw6 = 0;
                         break;
