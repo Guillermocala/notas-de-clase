@@ -25,7 +25,7 @@ public class Taxi implements Serializable{
 
    @Override
    public String toString() {
-      return "Taxi " + "placa = " + placa + ", conductor = " + conductor + ", Asignado = " + statusAsig + ", Ocupado = " + statusOcu + "\n";
+      return "Taxi " + "placa = " + placa + ", " + conductor + ", Asignado = " + statusAsig + ", Ocupado = " + statusOcu + "\n";
    }
    public String listarAll() {
       int i = 0;

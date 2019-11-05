@@ -119,14 +119,14 @@ public class Test {
                      case 1:
                         //LISTA TAXIS ORDENADOS POR PLACA
                         if (orden.isOrderedPlate(nuevo.getTaxis())) {
-                           for (int i = 0; i < (nuevo.getTaxis().size() - 1); i++) {
+                           for (int i = 0; i < nuevo.getTaxis().size(); i++) {
                               Taxi taxiTemp = nuevo.getTaxis().get(i);
                               showMe += "[" + (i + 1) + "]" + taxiTemp.toString();
                            }
                         }
                         else {
                            Collections.sort(nuevo.getTaxis(), new SortByPlate());
-                           for (int i = 0; i < (nuevo.getTaxis().size() - 1); i++) {
+                           for (int i = 0; i < nuevo.getTaxis().size(); i++) {
                               Taxi taxiTemp = nuevo.getTaxis().get(i);
                               showMe += "[" + (i + 1) + "]" + taxiTemp.toString();
                            }
@@ -136,14 +136,14 @@ public class Test {
                      case 2:
                         //LISTA CONDUCTORES ORDENADOS POR CEDULA
                         if (orden.isOrderedCedu(nuevo.getConductores())) {
-                           for (int i = 0; i < (nuevo.getConductores().size() - 1); i++) {
+                           for (int i = 0; i < nuevo.getConductores().size(); i++) {
                               Conductor conduc = nuevo.getConductores().get(i);
                               showMe += "\t[" + (i + 1) + "]" + conduc.toString();
                            }
                         }
                         else {
                            orden.sortByCedu(nuevo.getConductores());
-                           for (int i = 0; i < (nuevo.getConductores().size() - 1); i++) {
+                           for (int i = 0; i < nuevo.getConductores().size(); i++) {
                               Conductor conduc = nuevo.getConductores().get(i);
                               showMe += "\t[" + (i + 1) + "]" + conduc.toString();
                            }
@@ -153,14 +153,14 @@ public class Test {
                      case 3:
                         //LISTA TAXIS CON SUS CARRERAS
                         if (orden.isOrderedPlate(nuevo.getTaxis())) {
-                           for (int i = 0; i < (nuevo.getTaxis().size() - 1); i++) {
+                           for (int i = 0; i < nuevo.getTaxis().size(); i++) {
                               Taxi taxiTemp = nuevo.getTaxis().get(i);
                               showMe += "[" + (i + 1) + "]" + taxiTemp.listarAll();
                            }
                         }
                         else {
                            Collections.sort(nuevo.getTaxis(), new SortByPlate());
-                           for (int i = 0; i < (nuevo.getTaxis().size() - 1); i++) {
+                           for (int i = 0; i < nuevo.getTaxis().size(); i++) {
                               Taxi taxiTemp = nuevo.getTaxis().get(i);
                               showMe += "[" + (i + 1) + "]" + taxiTemp.listarAll();
                            }
@@ -196,7 +196,7 @@ public class Test {
                         JOptionPane.showMessageDialog(null, conductor.listarAll());
                         break;                     
                      case 0:
-                        sw5 = 0;               
+                        sw5 = 0;
                         break;
                      default:
                         JOptionPane.showMessageDialog(null, "Dato incorrecto!");

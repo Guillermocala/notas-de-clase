@@ -29,7 +29,7 @@ public class Ordenamiento {
       return true;
    }
    public void sortByCedu(ArrayList<Conductor> conductores) {
-      for (int i = 0; i < (conductores.size() - 1); i++) {
+      for (int i = 0; i < conductores.size(); i++) {
          Conductor ward = conductores.get(i);
          int j = i - 1;
          while (j >= 0 && conductores.get(j).getCedula() > ward.getCedula()) {

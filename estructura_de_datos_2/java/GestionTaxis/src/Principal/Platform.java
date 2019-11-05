@@ -71,24 +71,33 @@ public class Platform implements Serializable{
    }
    
    public void elimTaxi(String placa) {
-      for (Taxi taxi : taxis) {
-         if (placa.compareTo(taxi.getPlaca()) == 0) {
-            taxis.remove(taxi);
-         }
+      Taxi taxi = busqLinealTaxi(placa);
+      if (taxi != null) {
+         taxis.remove(taxi);
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "No encontrado!");
       }
    }
    public void elimConduc(String nombre) {
-      for (Conductor conduc : conductores) {
-         if (nombre.compareTo(conduc.getNombre()) == 0) {
-            conductores.remove(conduc);
-         }
+      Conductor conduc = busqLinealConduc(nombre);
+      if (conduc != null) {
+         conductores.remove(conduc);
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "No encontrado!");
       }
    }
-   public void elimCarrera(Taxi taxi, String carrera) {      
-      for (int i = 0; i < (taxi.getCarreras().size() - 1); i++) {
-         if (carrera.compareTo(taxi.getCarreras().get(i)) == 0) {
-            taxi.elimCarrera(carrera);
+   public void elimCarrera(Taxi taxi, String carrera) {
+      if (taxi != null) {
+         for (int i = 0; i < taxi.getCarreras().size(); i++) {
+            if (carrera.compareTo(taxi.getCarreras().get(i)) == 0) {
+               taxi.elimCarrera(carrera);
          }
+         }
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Taxi no encontrado");
       }
    }
    public Taxi busqLinealTaxi(String placa) {
@@ -156,19 +165,19 @@ public class Platform implements Serializable{
    public void asigConducTaxi(double cedula, String placa) {
       Taxi taxi = busqLinealTaxi(placa);
       Conductor conductor = busqLinealConduc(cedula);
-      if (taxi.isStatusAsig()) {
-         if (taxis.contains(taxi) && conductores.contains(conductor)) {
+      if (taxis.contains(taxi) && conductores.contains(conductor)) {
+         if (!taxi.isStatusAsig()) {
             taxi.setConductor(conductor);
             taxi.setStatusAsig(true);
             conductor.setTaxi(taxi);
             insTaxiDisponible(taxi);
          }
          else {
-            JOptionPane.showMessageDialog(null, "Alguno de los dos datos ha sido erroneo!");
+            JOptionPane.showMessageDialog(null, "Ya ha sido asignado un conductor al taxi!");
          }
       }
       else {
-         JOptionPane.showMessageDialog(null, "Ya ha sido asignado un conductor al taxi!");
+         JOptionPane.showMessageDialog(null, "Alguno de los dos datos ha sido erroneo!");
       }
    }
    public void asigCarreraTaxi(String placa, String carrera) {
