@@ -11,11 +11,14 @@ import Principal.Persistencia;
 import Principal.Platform;
 import Principal.SortByPlate;
 import Principal.Taxi;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -44,6 +47,8 @@ public class Test {
       String menu4 = "LISTADO \n1- Taxis ordenado por placa \n2- Conductores ordenado por cedula \n3- Taxis con sus carreras \n0- Salir";
       String menu5 = "BUSQUEDA \n1- Taxi por placa \n2- Conductor por nombre \n0- Salir";
       String menu6 = "ELIMINACION \n1- Taxi por placa \n2- Conductor por nombre \n3- Carrera de taxi\n0- Salir";
+      JTextArea textarea;
+      JScrollPane scroll;
       do {
          String opcionSub = JOptionPane.showInputDialog(menu);
          int opcionSub2 = Integer.parseInt(opcionSub);
@@ -121,50 +126,63 @@ public class Test {
                         if (orden.isOrderedPlate(nuevo.getTaxis())) {
                            for (int i = 0; i < nuevo.getTaxis().size(); i++) {
                               Taxi taxiTemp = nuevo.getTaxis().get(i);
-                              showMe += "[" + (i + 1) + "]" + taxiTemp.toString();
+                              showMe += "[" + (i + 1) + "] " + taxiTemp.toString();
                            }
                         }
                         else {
                            Collections.sort(nuevo.getTaxis(), new SortByPlate());
                            for (int i = 0; i < nuevo.getTaxis().size(); i++) {
                               Taxi taxiTemp = nuevo.getTaxis().get(i);
-                              showMe += "[" + (i + 1) + "]" + taxiTemp.toString();
+                              showMe += "[" + (i + 1) + "] " + taxiTemp.toString();
                            }
                         }
-                        JOptionPane.showMessageDialog(null, showMe);
+                        textarea = new JTextArea(showMe);
+                        scroll = new JScrollPane(textarea);
+                        textarea.setLineWrap(true);
+                        scroll.setPreferredSize(new Dimension(400, 250));
+                        JOptionPane.showMessageDialog(null, scroll, "TAXIS ORDENADOS POR PLACA", JOptionPane.YES_NO_OPTION);
                         break;
                      case 2:
                         //LISTA CONDUCTORES ORDENADOS POR CEDULA
                         if (orden.isOrderedCedu(nuevo.getConductores())) {
                            for (int i = 0; i < nuevo.getConductores().size(); i++) {
                               Conductor conduc = nuevo.getConductores().get(i);
-                              showMe += "\t[" + (i + 1) + "]" + conduc.toString();
+                              showMe += "[" + (i + 1) + "] " + conduc.toString();
                            }
                         }
                         else {
                            orden.sortByCedu(nuevo.getConductores());
                            for (int i = 0; i < nuevo.getConductores().size(); i++) {
                               Conductor conduc = nuevo.getConductores().get(i);
-                              showMe += "\t[" + (i + 1) + "]" + conduc.toString();
+                              showMe += "[" + (i + 1) + "] " + conduc.toString();
                            }
                         }
-                        JOptionPane.showMessageDialog(null, showMe);
+                        textarea = new JTextArea(showMe);
+                        scroll = new JScrollPane(textarea);
+                        textarea.setLineWrap(true);
+                        scroll.setPreferredSize(new Dimension(400, 250));
+                        JOptionPane.showMessageDialog(null, scroll, "CONDUCTORES ORDENADOS POR CEDULA", JOptionPane.YES_NO_OPTION);
                         break;
                      case 3:
                         //LISTA TAXIS CON SUS CARRERAS
                         if (orden.isOrderedPlate(nuevo.getTaxis())) {
                            for (int i = 0; i < nuevo.getTaxis().size(); i++) {
-                              Taxi taxiTemp = nuevo.getTaxis().get(i);
-                              showMe += "[" + (i + 1) + "]" + taxiTemp.listarAll();
+                              taxi = nuevo.getTaxis().get(i);
+                              showMe += "[" + (i + 1) + "] " + taxi.listarAll();
                            }
                         }
                         else {
                            Collections.sort(nuevo.getTaxis(), new SortByPlate());
                            for (int i = 0; i < nuevo.getTaxis().size(); i++) {
-                              Taxi taxiTemp = nuevo.getTaxis().get(i);
-                              showMe += "[" + (i + 1) + "]" + taxiTemp.listarAll();
+                              taxi = nuevo.getTaxis().get(i);
+                              showMe += "[" + (i + 1) + "] " + taxi.listarAll();
                            }
                         }
+                        textarea = new JTextArea(showMe);
+                        scroll = new JScrollPane(textarea);
+                        textarea.setLineWrap(true);
+                        scroll.setPreferredSize(new Dimension(400, 250));
+                        JOptionPane.showMessageDialog(null, scroll, "TAXIS ORDENADOS POR PLACA CON SUS CARRERAS", JOptionPane.YES_NO_OPTION);
                         break;
                      case 0:
                         sw4 = 0;               
@@ -186,14 +204,36 @@ public class Test {
                      case 1:
                         //BUSQUEDA TAXI POR PLACA
                         placa = JOptionPane.showInputDialog(null, "Ingrese la placa a buscar: ");
-                        taxi = nuevo.busqLinealTaxi(placa);
-                        JOptionPane.showMessageDialog(null, taxi.listarAll());
+                        if (orden.isOrderedPlate(nuevo.getTaxis())) {
+                           taxi = nuevo.busqBinTaxi(placa);
+                           if (taxi != null) {
+                              JOptionPane.showMessageDialog(null, taxi.listarAll());
+                           }
+                           else {
+                              JOptionPane.showMessageDialog(null, "Taxi no encontrado");
+                           }
+                        }
+                        else {
+                           Collections.sort(nuevo.getTaxis(), new SortByPlate());
+                           taxi = nuevo.busqBinTaxi(placa);
+                           if (taxi != null) {
+                              JOptionPane.showMessageDialog(null, taxi.listarAll());
+                           }
+                           else {
+                              JOptionPane.showMessageDialog(null, "Taxi no encontrado");
+                           }
+                        }
                         break;
                      case 2:
                         //BUSQUEDA CONDUCTOR POR NOMBRE
                         nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre a buscar: ");
                         conductor = nuevo.busqLinealConduc(nombre);
-                        JOptionPane.showMessageDialog(null, conductor.listarAll());
+                        if (conductor != null) {
+                           JOptionPane.showMessageDialog(null, conductor.listarAll());
+                        }
+                        else {
+                           JOptionPane.showMessageDialog(null, "Conductor no encontrado");
+                        }
                         break;                     
                      case 0:
                         sw5 = 0;

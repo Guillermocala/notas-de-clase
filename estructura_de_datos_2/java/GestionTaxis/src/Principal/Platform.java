@@ -165,7 +165,7 @@ public class Platform implements Serializable{
    public void asigConducTaxi(double cedula, String placa) {
       Taxi taxi = busqLinealTaxi(placa);
       Conductor conductor = busqLinealConduc(cedula);
-      if (taxis.contains(taxi) && conductores.contains(conductor)) {
+      if (taxi != null && conductor != null) {
          if (!taxi.isStatusAsig()) {
             taxi.setConductor(conductor);
             taxi.setStatusAsig(true);
@@ -182,7 +182,7 @@ public class Platform implements Serializable{
    }
    public void asigCarreraTaxi(String placa, String carrera) {
       Taxi taxi = busqBinTaxi(placa);
-      if (taxis.contains(taxi)) {
+      if (taxi != null && taxi.isStatusOcu()==false) {
          taxi.addCarreras(carrera);
          remTaxiDisponible(taxi);
          if (taxisOcupados.size() == 2) {
@@ -192,7 +192,10 @@ public class Platform implements Serializable{
          insTaxiOcupado(taxi);
       }
       else {
-         JOptionPane.showMessageDialog(null, "Taxi no encontrado!");
+         if(taxi==null){
+            JOptionPane.showMessageDialog(null, "Taxi no encontrado!");
+         }else
+            JOptionPane.showMessageDialog(null, "Taxi ocupado!");
       }
    }
 }

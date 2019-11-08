@@ -25,15 +25,34 @@ public class Taxi implements Serializable{
 
    @Override
    public String toString() {
-      return "Taxi " + "placa = " + placa + ", " + conductor + ", Asignado = " + statusAsig + ", Ocupado = " + statusOcu + "\n";
+      String res = "";
+      res += "Taxi " + "placa = " + placa + ", \n"; 
+      if (conductor != null) {
+         res += conductor.toString() + " Ocupado = " + statusOcu + "\n";
+      }
+      else {
+         res += "Sin conductor\n";
+      }
+      return res;
    }
    public String listarAll() {
       int i = 0;
       String res = "";
-      res += "Taxi \nPlaca = " + placa + "\nConductor = " + conductor + "\nOcupado = " + statusOcu + "\nAsignado = " + statusAsig + "\n";
-      for (String carrera : carreras) {
-         res += "Carrera #" + i + " = " + carrera + "\n";
-         i++;
+      res += "Taxi \nPlaca = " + placa;
+      if (conductor != null) {
+         res += "\n" + conductor.toString()+ "\nOcupado = " + statusOcu + "\nAsignado = " + statusAsig + "\n";
+         if (!carreras.isEmpty()) {
+            for (String carrera : carreras) {
+               res += "Carrera #" + (i + 1) + " = " + carrera + "\n";
+               i++;
+            }
+         }
+         else {
+            res += "No tiene carreras";
+         }
+      }
+      else {
+         res += "Sin conductor\n";
       }
       return res;
    }

@@ -22,10 +22,10 @@ public class Conductor implements Serializable{
 
    @Override
    public String toString() {
-      return "Conductor " + " Cedula = " + cedula + ", nombre = " + nombre + "\n";
+      return "Conductor: " + " Cedula = " + cedula + ", nombre = " + nombre + "\n";
    }
    public String listarAll() {
-      return "Conductor " + "\nCedula = " + cedula + "\nNombre = " + nombre + "\nTaxi asignado = " + taxi.toString();
+      return "Conductor: " + "\nCedula = " + cedula + "\nNombre = " + nombre + "\nTaxi asignado = " + taxi.toString();
    }
    /**
     * @return the cedula
