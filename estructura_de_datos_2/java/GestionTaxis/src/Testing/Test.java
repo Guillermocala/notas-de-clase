@@ -99,7 +99,22 @@ public class Test {
                         break;
                      case 2:
                         //ASIGNA CARRERA A TAXI
-                        placa = JOptionPane.showInputDialog(null, "Ingrese la placa del taxi: ");
+                        showMe = "";
+                        if (orden.isOrderedPlate(nuevo.getTaxis())) {
+                           for (int i = 0; i < nuevo.getTaxis().size(); i++) {
+                              Taxi taxiTemp = nuevo.getTaxis().get(i);
+                              showMe += "[" + (i + 1) + "] " + taxiTemp.toString();
+                           }
+                        }
+                        else {
+                           Collections.sort(nuevo.getTaxis(), new SortByPlate());
+                           for (int i = 0; i < nuevo.getTaxis().size(); i++) {
+                              Taxi taxiTemp = nuevo.getTaxis().get(i);
+                              showMe += "[" + (i + 1) + "] " + taxiTemp.toString();
+                           }
+                        }
+                        showMe += "\nIngrese la placa del taxi: ";
+                        placa = JOptionPane.showInputDialog(null, showMe);
                         carrera = JOptionPane.showInputDialog(null, "Ingrese la carrera: ");
                         nuevo.asigCarreraTaxi(placa, carrera);
                         break;
