@@ -139,7 +139,7 @@ namespace TAD_List_Doble
    nodoa *InsertaCola(nodoa *ptr, int elem)
    {
       p = (struct nodoa *) malloc (sizeof (nodoa));
-      p->info = xinfo;
+      p->info = elem;
       if(ptr == NULL)
       {
          ptr = p;
@@ -229,8 +229,8 @@ namespace TAD_List_Doble
                free(q);
             }
          }
-         return ptr;
       }
+      return ptr;
    }
 }
 namespace TAD_List_Circ_Simp
@@ -337,7 +337,7 @@ namespace TAD_List_Circ_Simp
    }
    Nodo *Eliminacio(Nodo *ptr, int elem)
    {
-      Nodo *q = Buscar(ptr, elem);
+      Nodo *q = Buscarllave(ptr, elem);
       if(q == NULL)
       {
          cout << "Elemento no encontrado " << endl;
@@ -491,7 +491,7 @@ namespace TAD_List_Circ_Doble
    }
    Nodo *Eliminacion(Nodo *ptr, int elem)
    {
-      Nodo *q = Buscar(ptr, elem);
+      Nodo *q = Buscarllave(ptr, elem);
       if(q == NULL)
       {
          cout << "Elemento no encontrado " << endl;

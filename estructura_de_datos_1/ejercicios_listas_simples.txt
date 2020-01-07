@@ -22,10 +22,10 @@ que el y la otra mitad mayores o iguales. suponiendo que la lista list no es vac
 funcion calcula su mediana.
 11- Hacer una funcion que retorna la lista de ceros y unos correspondientes a la representacion binaria del entero positivo num.
 Por ej, si num = 215, binario = <11010111>.
-12- Hacer unafuncion que diga si una lista de caracteres es palindroma(igual leerla de izq a der que de der a izq). por ej,
+12- Hacer una funcion que diga si una lista de caracteres es palindroma(igual leerla de izq a der que de der a izq). por ej,
 son palindromo <ANITALAVALATINA> esta funcion indica si la lista list es palindromo.
-13- Hacer una funcion que diga si la lista list1 y list2 son semejantes: son semejantes si tienen la misma info en diferente orden.
-14- Hacer una funcion que diga que retorna el elemento de la lista list cuyo valor es maximo, suponiendo la existencia
+13- Hacer una funcion que diga si las listas list1 y list2 son semejantes: son semejantes si tienen la misma info en diferente orden.
+|14- Hacer una funcion que retorna el elemento de la lista list cuyo valor es maximo, suponiendo la existencia
 de una relacion de orden < definida entre los elementos de la lista. La lista list no es vacia.
 15- Hacer una funcion que diga si todos los elementos de la lista aparecen igual numero de veces.
 16- Hacer una funcion que informe si la lista list1 es mayor que la lista list2, utilizando el sgte criterio para decidir
@@ -482,24 +482,216 @@ void MenorMayorElem(nodoa *&ptr, nodoa *&ptr1, int elem)
 }
 10------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL) {
+		cout << "Mediana de datos no repetidos" << endl;
+		float result = mediana(ptr);
+		if (result != 999999) {
+			cout << "La mediana es: " << result << endl;
+		}
+		else {
+			cout << "Hay datos repetidos en la lista!" << endl;
+		}
+	}
+	else {
+		cout << "Lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+bool repeat(nodoa *ptr) {
+   int aux;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      for (nodoa *j = ptr; j != NULL; j = j->sig) {
+         if (i != j && i->info == j->info) {
+            return false;
+         }
+      }
+   }
+   return true;
+}
+int cantidad(nodoa *ptr) {
+   int cont = 0;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      cont++;
+   }
+   return cont;
+}
+float mediana(nodoa *ptr) {
+   if (repeat(ptr)) {
+      nodoa *aux = ptr;
+      float result;
+      int par_impar = cantidad(ptr);
+      if (par_impar % 2 != 0) {
+         /*mediana de cantidad impor. (numDatos + 1) / 2*/
+         result = (par_impar + 1) / 2;
+         for (int i = 1; i < result; i++) {
+            aux = aux->sig;
+         }
+         return aux->info;
+      }
+      else {
+         /*mediana de cantidad por. (Suma de los dos datos de la mitad ) / 2*/
+         int pivot = par_impar / 2;
+         for (int i = 1; i < pivot; i++) {
+            aux = aux->sig;
+         }
+         result = (aux->info + aux->sig->info) / 2;
+         return result;
+      }
+   }
+   else {
+      /*en caso que no lo encuentre retorne un dato muy alto, para no confundirlo*/
+      return 999999;
+   }
+}
 11------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	ptr = NULL; /*para dejar la lista en blanco, sino acumularia otros numeros binarios*/
+	cout << "Decimal a binario \nIngrese el decimal: ";
+	cin >> j;
+	ptr = decimal_a_binario(ptr, j);
+	cout << "Operacion exitosa!(guardado en lista1)" << endl;
+	getch();
+	break;
 -----en la funcion:
+nodoa *decimal_a_binario(nodoa *ptr, int decimal) {
+   int aux;
+   while (decimal > 1) {
+      aux = decimal % 2;
+      /*insertamos al reves, para que el binario quede corractamente*/
+      ptr = InsertaCabeza(ptr, aux);
+      decimal /= 2;
+   }
+   /*por fuera del ciclo insertamos el 1 final*/
+   ptr = InsertaCabeza(ptr, 1);
+   return ptr;
+}
 12------------------------------------------------------------------------------
 -----en el main:
-
+case 1:
+	ptr = NULL;
+	cout << "Ingrese el dato: ";
+	cin.ignore();
+	getline(cin, temp);
+	cadena = new char[temp.size()];
+	strcpy(cadena, temp.c_str());
+	for (int i = 0; i < temp.size()  ; i++) {
+		ptr = InsertaCola(ptr, cadena[i]);
+	}
+	getch();
+	break;
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL) {
+		if (palindrome(ptr)) {
+			cout << "palindrome" << endl;
+		}
+		else {
+			cout << "no palindrome" << endl;
+		}
+	}
+	else {
+		cout << "Lista vacia" << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+bool palindrome(nodoa *ptr) {
+   nodoa *aux = ptr, *list2 = NULL;
+   /*uso una lista auxilar para colocar al reves los elementos*/
+   while (aux != NULL) {
+      list2 = InsertaCabeza(list2, aux->info);
+      aux = aux->sig;
+   }
+   /*solo queda verificar sencillamente los elementos en la misma posicion*/
+   while (list2 != NULL) {
+      if (list2->info != ptr->info) {
+         return false;
+      }
+      list2 = list2->sig;
+      ptr = ptr->sig;
+   }
+   return true;
+}
 13------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	cout << "Algoritmo para evaluar si son listas iguales(lista1 y lista2)" << endl;
+	if (ptr != NULL && ptr1 != NULL) {
+		if (listas_iguales(ptr, ptr1)) {
+			cout << "listas iguales" << endl;
+		}
+		else {
+			cout << "no listas iguales" << endl;
+		}
+	}
+	else {
+		cout << "Lista 1 o 2 vacias" << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+bool listas_iguales(nodoa *ptr, nodoa *ptr1) {
+   int cant;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      cant = 1;
+      /*reviso cuantas ocurrencias hay del elemento en la posicion i de lista 1*/
+      for (nodoa *j = ptr; j != NULL; j = j->sig) {
+         if (i != j && i->info == j->info) {
+            cant++;
+         }
+      }
+      /*pregunto por esa misma cantidad en la lista 2, si no es la misma return false*/
+      for (nodoa *k = ptr1; k != NULL; k = k->sig) {
+         if (i->info == k->info) {
+            cant--;
+         }
+      }
+      if (cant != 0) {
+         return false;
+      }
+   }
+   return true;
+}
 14------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	cout << "ELEMENTO MAXIMO DE LA LISTA" << endl;
+	if (ptr != NULL) {
+		/*use funcion modelo para hacerlo mas flexible*/
+		int res = maximo<int>(ptr);
+		cout << "El elemento maximo es: " << res << endl;
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+/*me dio la gana de usar funciones modelo y ya :V pero no se puede usar strings*/
+template <class G>
+G maximo(nodoa *ptr) {
+   nodoa *aux = ptr;
+   G result = aux->info;
+   while (aux != NULL) {
+      if (aux->info > result) {
+         result = aux->info;
+      }
+      aux = aux->sig;
+   }
+   return result;
+}
 15------------------------------------------------------------------------------
 -----en el main:
 

@@ -155,7 +155,7 @@ public class QuickSort {
                textarea = new JTextArea(showMe);
                scroll = new JScrollPane(textarea);
                textarea.setLineWrap(true);
-               scroll.setPreferredSize(new Dimension(250, 400));
+               scroll.setPreferredSize(new Dimension(600, 600));
                JOptionPane.showMessageDialog(null, scroll, "Quicksort Vect", 0);
                break;
             case 2:
@@ -172,7 +172,7 @@ public class QuickSort {
                textarea = new JTextArea(showMe);
                scroll = new JScrollPane(textarea);
                textarea.setLineWrap(true);
-               scroll.setPreferredSize(new Dimension(250, 400));
+               scroll.setPreferredSize(new Dimension(600, 600));
                JOptionPane.showMessageDialog(null, scroll, "Quicksort List", 0);
                break;
             case 3:
@@ -189,7 +189,7 @@ public class QuickSort {
                textarea = new JTextArea(showMe);
                scroll = new JScrollPane(textarea);
                textarea.setLineWrap(true);
-               scroll.setPreferredSize(new Dimension(250, 400));
+               scroll.setPreferredSize(new Dimension(600, 600));
                JOptionPane.showMessageDialog(null, scroll, "Quicksort Collections", 0);
                break;
             case 0:

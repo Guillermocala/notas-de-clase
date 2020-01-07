@@ -1,8 +1,9 @@
 #include "iostream"
 #include <conio.h>
-#include "TAD_List_Simp.cpp"
+#include "cstring"
+#include "TAD_Listas.cpp"
 using namespace std;
-using namespace TAD_List_Simp;
+using namespace TAD_List_Simp; //<---------------- TAD LISTAS SIMPLES
 //using namespace TAD_List_Doble; <---------------- TAD LISTAS DOBLES
 //using namespace TAD_List_Circ_Simp; <---------------- TAD LISTAS CIRCULARES SIMPLES
 //using namespace TAD_List_Circ_Doble; <---------------- TAD LISTAS CIRCULARES DOBLES
@@ -33,6 +34,7 @@ int main()
                   cout << "Ingrese el dato: ";
                   cin >> j;
                   ptr = InsertaCabeza(ptr, j);
+                  getch();
                   break;
                case 2:
                   cout << "Ingrese el dato: ";
@@ -243,8 +245,14 @@ int main()
             break;
          case 6:
          	system("cls");
-         	cout << "Espacio reservado para ejercicio..." << endl;
-         	getch();
+         	//cout << "Espacio reservado para ejercicio..." << endl;
+            if (ptr != NULL) {
+               /*unexpected function*/
+            }
+            else {
+               cout << "lista vacia..." << endl;
+            }
+            getch();
          	break;
          case 0:
             system("CLS");
@@ -278,7 +286,7 @@ int menu()
    printf("\t\t\t#                                #\n");
    printf("\t\t\t# 5  ->  Eliminar                #\n");
    printf("\t\t\t#                                #\n");
-   printf("\t\t\t# 6  ->  Ejercicio               #\n");
+   printf("\t\t\t# 6  ->  Ejercicio(lista1)       #\n");
    printf("\t\t\t#                                #\n");
    printf("\t\t\t# 0  ->  Salir                   #\n");
    printf("\t\t\t##################################\n");
