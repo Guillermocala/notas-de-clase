@@ -1,4 +1,4 @@
-	EJERCICIOS LISTAS SIMPLES
++	EJERCICIOS LISTAS SIMPLES
 1- Dada una lista, formar la lista resultante de eliminar el nodo que sigue al nodo apuntado por p.
 2- Dada una lista, devuelve el numero de elementos de la lista.
 3- Destruye la lista retornando toda la memoria ocupada.
@@ -25,15 +25,15 @@ Por ej, si num = 215, binario = <11010111>.
 12- Hacer una funcion que diga si una lista de caracteres es palindroma(igual leerla de izq a der que de der a izq). por ej,
 son palindromo <ANITALAVALATINA> esta funcion indica si la lista list es palindromo.
 13- Hacer una funcion que diga si las listas list1 y list2 son semejantes: son semejantes si tienen la misma info en diferente orden.
-|14- Hacer una funcion que retorna el elemento de la lista list cuyo valor es maximo, suponiendo la existencia
+14- Hacer una funcion que retorna el elemento de la lista list cuyo valor es maximo, suponiendo la existencia
 de una relacion de orden < definida entre los elementos de la lista. La lista list no es vacia.
 15- Hacer una funcion que diga si todos los elementos de la lista aparecen igual numero de veces.
 16- Hacer una funcion que informe si la lista list1 es mayor que la lista list2, utilizando el sgte criterio para decidir
 si una lista es mayor que otra: Sea list1 = <a1, a2, ..., an> y list2 = <b1, b2, ..., bm> se dice que list1 es mayor que list2
-si: 1. ((ai=b) 1 <= i <= m) y (n > m)
-	 2. ej <= n, j <= m (ai = bi 1 <= i <= j)  y (aj >bj)
+si: 1. ((ai = b) 1 <= i <= m) y (n > m))
+	 2. ej i <= n, j <= m (ai = bi, 1 <= i <= j)  y (aj >bj)
 17- Hacer una funcion que diga si la lista 2 esta contenida en la lista 1.
-18- Inserta la list2 en la list1 de manera que el primer elemento de list2 quede en la posicion de la list1.
+18- Inserta la list2 en la list1 de manera que el primer elemento de list2 quede en la posicion del final de la list1.
 19- Hacer una funcion que elimine de la lista todos los elementos correspondientes entre la posicion p1 y la posicion p2 inclusive.
 20- Elimina todas las ocurrencias de la list2 en la list1.
 21- Hacer un procedimiento que ordene ascendentemente la lista ya creada.
@@ -694,24 +694,263 @@ G maximo(nodoa *ptr) {
 }
 15------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL) {
+		/*unexpected function*/
+		if (igual_cant(ptr)) {
+			cout << "ocurrencias iguales" << endl;
+		}
+		else {
+			cout << "no iguales" << endl;
+		}
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+/*creamos esta estructura para tener un manejo flexible de la solucion
+a dicho ejercicio, en caso que se ocupen datos muy grandes*/
+struct temp {
+   int dato;
+   int cant;
+   temp *sig;
+};
+temp *ingresa(temp *ptr, int num, int veces) {
+   temp *aux = (struct temp*) malloc (sizeof (temp));
+   aux->dato = num;
+   aux->cant = veces;
+   if (ptr == NULL) {
+      aux->sig = NULL;
+      ptr = aux;
+   }
+   else {
+      aux->sig = ptr;
+      ptr = aux;
+   }
+   return ptr;
+}
+bool existe(temp *ptr, int dato) {
+   if (ptr == NULL) {
+      return false;
+   }
+   else {
+      for (temp *i = ptr; i != NULL; i = i->sig) {
+         if (dato == i->dato) {
+            return true;
+         }
+      }
+      return false;
+   }
+}
+bool igual_cant(nodoa *ptr) {
+   int cant, dato;
+   temp *aux = NULL;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      cant = 1;
+      dato = i->info;
+      /*preguntamos si el elemento ya esta dentro de la lista, sino opera normal*/
+      if (!(existe(aux, dato))) {
+         for (nodoa *j = ptr; j != NULL; j = j->sig) {
+            /*contamos los elementos iguales de la lista*/
+            if (i != j && i->info == j->info) {
+               cant++;
+            }
+         }
+         aux = ingresa(aux, dato, cant);
+      }
+   }
+   cant = aux->cant;
+   /*evaluamos si la cant de veces de la lista es diferente, en caso tal retorna falso*/
+   for (temp *i = aux; i != NULL; i = i->sig) {
+      if (cant != i->cant) {
+         return false;
+      }
+   }
+   return true;
+}
 16------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL && ptr1 != NULL) {
+		/*unexpected function*/
+		if (mayor(ptr, ptr1)) {
+			cout << "lista 1 es mayor que lista 2" << endl;
+		}
+		else {
+			cout << "lista 1 NO es mayor que lista 2" << endl;
+		}
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+int cant_lista(nodoa *ptr) {
+   int cant = 0;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      cant++;
+   }
+   return cant;
+}
+bool mayor(nodoa *ptr, nodoa *ptr1) {
+   int list1 = cant_lista(ptr);
+   int list2 = cant_lista(ptr1);
+   nodoa *aux = ptr, *aux2 = ptr1;
+   if (list1 > list2) {
+      for (int i = 0; i < list2; i++) {
+         if (aux->info < aux2->info) {
+            return false;
+         }
+         aux2 = aux2->sig;
+         aux = aux->sig;
+      }
+		/*en caso de acabar la lista 2, como tiene mas elementos la otra. por deduccion
+		debe ser la lista con mas elementos la mayor*/
+      return true;
+   }
+	/*aca valida si las listas tienen igual tamaño, en caso de ser ambas iguales
+	solamente retorna falso y ya, el ejercicio solo dice si es mayor o no. no
+	especifica que diga si es igual, asi que esta de más escribir codigo extra*/
+   else {
+      for (int i = 0; i < list1; i++) {
+         if (aux->info > aux2->info) {
+            return true;
+         }
+         aux2 = aux2->sig;
+         aux = aux->sig;
+      }
+      return false;
+   }
+}
 17------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL && ptr1 != NULL) {
+		/*unexpected function*/
+		if (contenida(ptr1, ptr)) {
+			cout << "Lista 2 contenida en lista 1" << endl;
+		}
+		else {
+			cout << "Lista 2 NO contenida en lista 1" << endl;
+		}
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+bool contenida(nodoa *ptr1, nodoa *ptr) {
+   nodoa *aux = ptr1;
+   bool entrada = false, consecutivo = true;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      if (i->info == aux->info) {
+         entrada = true;
+         aux = aux->sig;
+      }
+      else {
+         if (entrada == true) {
+            /*comprueba que no hay una sucesion de la lista 2 en la lista 1
+            (no esta contenida)*/
+            consecutivo = false;
+         }
+      }
+   }
+   return (entrada && consecutivo) ? true : false;
+}
 18------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL && ptr1 != NULL) {
+		/*unexpected function*/
+		ptr = insert_list(ptr, ptr1);
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+nodoa *insert_list(nodoa *ptr, nodoa* ptr1) {
+   /*segun lo que comprendi es insertar la lista 2 al final de la lista 1
+   si se quiere insertar al inicio se usa InsertaCabeza*/
+   nodoa *aux = ptr;
+   for (nodoa *i = ptr1; i != NULL; i = i->sig) {
+      aux = InsertaCola(aux, i->info);
+   }
+   /*como solo nos interesa una lista(la union), retornamos el puntero con dicha info*/
+   return aux;
+}
 19------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL) {
+		/*unexpected function*/
+		int init, end;
+		int limit = cantidad(ptr);
+		cout << "ingrese el rango inicial(mayor a cero): ";
+		cin >> init;
+		while (init <= 0) {
+			cout << "valor erroneo!" << endl;
+			cout << "ingrese el rango inicial(mayor a cero): ";
+			cin >> init;
+		}
+		cout << "ingrese el rango final(mayor al rango inicial): ";
+		cin >> end;
+		while (end < init || end > limit) {
+			cout << "valor erroneo!" << endl;
+			cout << "ingrese el rango final(mayor al rango inicial): ";
+			cin >> end;
+		}
+		ptr = elim_rango(ptr, init, end);
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+nodoa *elim_rango(nodoa *ptr, int ini, int fin) {
+   nodoa *aux = ptr, *aux2 = ptr, *aux3;
+   /*colocamos un ptr en el elemento a eliminar y uno antes para poder hacer
+   conexiones y no perder elementos*/
+   for (int i = 1; i < ini; i++) {
+      aux = aux->sig;
+      if ((i + 1) < ini) { /*con esto dejamos un ptr antes del que se va a eliminar*/
+         aux2 = aux2->sig;
+      }
+   }
+   for (int i = ini; i <= fin; i++) {
+      /*para poder conectar de manera "facil" posiciono un ptr despues del que
+      se va a eliminar, si no usaramos aux3 se puede usar aux2->sig = aux->sig*/
+      aux3 = aux->sig;
+      if (aux == ptr) {
+         ptr = ptr->sig;
+         aux2 = ptr;
+      }
+      else {
+         aux2->sig = aux3;
+      }
+      free(aux);
+      /*reposicionamos el ptr eliminado al elemento sgte, si no usaramos aux3
+      se podria usar aux = aux2->sig*/
+      aux = aux3;
+   }
+   return ptr;
+}
 20------------------------------------------------------------------------------
 -----en el main:
 

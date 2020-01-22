@@ -16,6 +16,13 @@ int menu(void);
 * Mostrar
 * Eliminacion
 */
+int cantidad(nodoa *ptr) {
+   int res = 0;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      res++;
+   }
+   return res;
+}
 int main()
 {
    system("cls");
@@ -180,7 +187,7 @@ int main()
                      cout << "Ingrese el dato: ";
                      cin >> j;
                      nodoa *q;
-                     q = Buscarllave(ptr, i);
+                     q = Buscarllave(ptr, j);
                      if(q != NULL)
                      {
                         ptr = Eliminacion(ptr, j);
@@ -203,7 +210,7 @@ int main()
                      cout << "Ingrese el dato: ";
                      cin >> j;
                      nodoa *q;
-                     q = Buscarllave(ptr1, i);
+                     q = Buscarllave(ptr1, j);
                      if(q != NULL)
                      {
                         ptr1 = Eliminacion(ptr1, j);
@@ -226,7 +233,7 @@ int main()
                      cout << "Ingrese el dato: ";
                      cin >> j;
                      nodoa *q;
-                     q = Buscarllave(ptr2, i);
+                     q = Buscarllave(ptr2, j);
                      if(q != NULL)
                      {
                         ptr = Eliminacion(ptr, j);
