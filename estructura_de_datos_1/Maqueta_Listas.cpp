@@ -16,12 +16,24 @@ int menu(void);
 * Mostrar
 * Eliminacion
 */
-int cantidad(nodoa *ptr) {
-   int res = 0;
-   for (nodoa *i = ptr; i != NULL; i = i->sig) {
-      res++;
+nodoa *elimOcu(nodoa *ptr, nodoa *ptr1) {
+   int cant;
+   for (nodoa *i = ptr1; i != NULL; i = i->sig) {
+      cant = 0;
+      for (nodoa *j = ptr1; j != NULL; j = j->sig) {
+         if (i->info == j->info) {
+            cant++;
+         }
+      }
+      for (nodoa *j = ptr; j != NULL; j = j->sig) {
+         if (cant > 0 && i->info == j->info) {
+            ptr = Eliminacion(ptr, j->info);
+            j = ptr;
+            cant--;
+         }
+      }
    }
-   return res;
+   return ptr;
 }
 int main()
 {
@@ -255,6 +267,8 @@ int main()
          	//cout << "Espacio reservado para ejercicio..." << endl;
             if (ptr != NULL) {
                /*unexpected function*/
+               ptr = elimOcu(ptr, ptr1);
+               cout << "Operacion exitosa!" << endl;
             }
             else {
                cout << "lista vacia..." << endl;

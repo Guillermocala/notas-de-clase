@@ -35,7 +35,7 @@ si: 1. ((ai = b) 1 <= i <= m) y (n > m))
 17- Hacer una funcion que diga si la lista 2 esta contenida en la lista 1.
 18- Inserta la list2 en la list1 de manera que el primer elemento de list2 quede en la posicion del final de la list1.
 19- Hacer una funcion que elimine de la lista todos los elementos correspondientes entre la posicion p1 y la posicion p2 inclusive.
-20- Elimina todas las ocurrencias de la list2 en la list1.
+20- Elimina todas las ocurrencias de la list2 en la list1. (l1[1,1,2], l2[1,2,3] = l1[1])
 21- Hacer un procedimiento que ordene ascendentemente la lista ya creada.
 22- list es una lista de digitos. intLista es el entero que se puede crear a partir de esa lista. por ej, si list = <4,2,1,4>, intLista = 4214.
 23- Elimina de la lista list1 todos los elementos que aparecen en la lista list2.
@@ -140,40 +140,34 @@ nodoa *DestroyList(nodoa *ptr)
 -----en el main:
 case 6:
 	system("cls");
-	if(ptr == NULL || ptr->sig == NULL)
-	{
-		printf("La lista esta vacia o tiene un solo elemento");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL) {
+		/*unexpected function*/
+		ptr1 = crea_ascendente(ptr);
+		cout << "Operacion exitosa!" << endl;
 	}
-	else
-	{
-		ptr = OrdenarAsc(ptr);
+	else {
+		cout << "lista vacia..." << endl;
 	}
 	getch();
 	break;
 -----en la funcion:
-nodoa *OrdenarAsc(nodoa *ptr)
-{
+nodoa *OrdenarAsc(nodoa *ptr) {
    nodoa *p, *q, *aux, *aux2;
    p = ptr;
-   while(p != NULL)
-   {
+   while(p != NULL) {
       q = ptr;
-      while(q != NULL)
-      {
-         if(q->sig != NULL && q->info > q->sig->info)
-         {
+      while(q != NULL) {
+         if(q->sig != NULL && q->info > q->sig->info) {
             aux = q->sig;
-            if(q == ptr)
-            {
+            if(q == ptr) {
                q->sig = aux->sig;
                aux->sig = q;
                ptr = aux;
             }
-            else
-            {
+            else {
                aux2 = ptr;
-               while(aux2->sig != q)
-               {
+               while(aux2->sig != q) {
                   aux2 = aux2->sig;
                }
                q->sig = aux->sig;
@@ -182,8 +176,7 @@ nodoa *OrdenarAsc(nodoa *ptr)
             }
 				/*si movemos el nodo que contiene a p, debemos devolverlo a su posicion
 				anterior para no alterar el buen funcionamiento del algoritmo*/
-            if(q == p)
-            {
+            if(q == p) {
                p = aux;
             }
          }
@@ -191,8 +184,17 @@ nodoa *OrdenarAsc(nodoa *ptr)
       }
       p = p->sig;
    }
-   cout << "lista ordenada" << endl;
    return ptr;
+}
+nodoa *crea_ascendente(nodoa *ptr) {
+   /*hago una copia de la lista original y luego someto dicha copia a
+   un algoritmo de ordenamiento, al final retorno dicha lista ordenada*/
+   nodoa *aux = NULL;
+   for (nodoa *i = ptr; i != NULL; i = i->sig) {
+      aux = InsertaCabeza(aux, i->info);
+   }
+   aux = OrdenarAsc(aux);
+   return aux;
 }
 5-------------------------------------------------------------------------------
 -----en el main:
@@ -955,18 +957,96 @@ nodoa *elim_rango(nodoa *ptr, int ini, int fin) {
 -----en el main:
 
 -----en la funcion:
+
 21------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	if(ptr == NULL || ptr->sig == NULL)
+	{
+		printf("La lista esta vacia o tiene un solo elemento");
+	}
+	else
+	{
+		ptr = OrdenarAsc(ptr);
+		cout << "lista ordenada" << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+nodoa *OrdenarAsc(nodoa *ptr)
+{
+   nodoa *p, *q, *aux, *aux2;
+   p = ptr;
+   while(p != NULL)
+   {
+      q = ptr;
+      while(q != NULL)
+      {
+         if(q->sig != NULL && q->info > q->sig->info)
+         {
+            aux = q->sig;
+            if(q == ptr)
+            {
+               q->sig = aux->sig;
+               aux->sig = q;
+               ptr = aux;
+            }
+            else
+            {
+               aux2 = ptr;
+               while(aux2->sig != q)
+               {
+                  aux2 = aux2->sig;
+               }
+               q->sig = aux->sig;
+               aux2->sig = aux;
+               aux->sig = q;
+            }
+				/*si movemos el nodo que contiene a p, debemos devolverlo a su posicion
+				anterior para no alterar el buen funcionamiento del algoritmo*/
+            if(q == p)
+            {
+               p = aux;
+            }
+         }
+         q = q->sig;
+      }
+      p = p->sig;
+   }
+   return ptr;
+}
 22------------------------------------------------------------------------------
 -----en el main:
 
 -----en la funcion:
 23------------------------------------------------------------------------------
 -----en el main:
-
+case 6:
+	system("cls");
+	//cout << "Espacio reservado para ejercicio..." << endl;
+	if (ptr != NULL && ptr1 != NULL) {
+		/*unexpected function*/
+		ptr = elimTodasOcu(ptr, ptr1);
+		cout << "Operacion exitosa" << endl;
+	}
+	else {
+		cout << "lista vacia..." << endl;
+	}
+	getch();
+	break;
 -----en la funcion:
+nodoa *elimTodasOcu(nodoa *ptr, nodoa *ptr1) {
+   nodoa *aux;
+   for (nodoa *i = ptr1; i != NULL; i = i->sig) {
+      aux = Buscarllave(ptr, i->info);
+      if (aux != NULL) {
+         ptr = Eliminacion(ptr, i->info);
+      }
+   }
+   /*como en esencia solo modificamos una lista, retornamos el ptr de dicha lista*/
+   return ptr;
+}
 24------------------------------------------------------------------------------
 -----en el main:
 
