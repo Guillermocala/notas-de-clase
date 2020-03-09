@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,6 +7,9 @@
 package datos;
 //import java.util.Scanner;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +18,34 @@ import javax.swing.JOptionPane;
  */
 public class ArbolBinEnteros
 {    
+   LinkedList<Arbin> cola = new LinkedList<>();
+   public void encolar(Arbin x) {
+      cola.addFirst(x);
+   }
+   public Arbin desencolar() {
+      Arbin temp = cola.getLast();
+      cola.removeLast();
+      return temp;
+   }   
+   public void recorridoNiveles(Arbin raiz) {
+      Arbin ward;      
+      if (raiz == null) {
+         System.out.println("arbol vacio!");
+      }
+      else {
+         encolar(raiz);
+         while (!(cola.isEmpty())) {         
+            ward = desencolar();
+            System.out.println(ward.obtener());
+            if (ward.izq() != null) {
+               encolar(ward.izq());
+            }
+            if (ward.der() != null) {
+               encolar(ward.der());
+            }
+         }
+      }
+   }
    Arbin crearArbol()
    {
       Arbin raiz = new ArbinEnl(1);
@@ -23,7 +55,7 @@ public class ArbolBinEnteros
       raiz.enlDer(i2);
       raiz.izq().enlIzq(new ArbinEnl(4)); /*enlazar desde la raiz*/
       raiz.der().enlDer(new ArbinEnl(5));
-      raiz.izq().izq().enlDer(new ArbinEnl(8));
+      raiz.izq().izq().enlDer(new ArbinEnl(6));
       raiz.der().der().enlIzq(new ArbinEnl(7));        
       return raiz;
    }
@@ -119,12 +151,10 @@ public class ArbolBinEnteros
       }
    }
    
-   public static void main(String[] args)
-   { /* se escribe psvm y luego preciono tab*/
-      
-            
-      
-      
+   
+   public static void main(String[] args) { 
+      /* se escribe psvm y luego preciono tab*/
+      ArbolBinEnteros arbol = new ArbolBinEnteros();
       
       
    }
