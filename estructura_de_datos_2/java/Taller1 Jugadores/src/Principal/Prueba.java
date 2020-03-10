@@ -40,6 +40,8 @@ public class Prueba {
       String nombre, aux;
       ArrayList<Jugador> salariosX;
       Jugador temp;
+      JTextArea textArea;
+      JScrollPane scrollPane;
       String menu = "1.Insertar Jugador \n2.Listar jugadores \n3.Buscar por codigo \n4.Eliminar por nombre \n5.Mayor goleador \n6.Jugadores con mas de X salario \n0.Salir";
       do {         
          String opcion = JOptionPane.showInputDialog(menu);
@@ -58,8 +60,8 @@ public class Prueba {
                /*listar jugadores*/
                /*PARA COMPROBAR QUE EL ARBOL TENGA ELEMENTOS, LO HAGO EN TODO MENOS INSERTAR*/
                if (arbol.raiz != null) {
-                  JTextArea textArea = new JTextArea(arbol.listar());
-                  JScrollPane scrollPane = new JScrollPane(textArea);  
+                  textArea = new JTextArea(arbol.listar());
+                  scrollPane = new JScrollPane(textArea);
                   textArea.setLineWrap(true);  
                   textArea.setWrapStyleWord(true); 
                   scrollPane.setPreferredSize(new Dimension(550,250));
@@ -90,7 +92,8 @@ public class Prueba {
                if (arbol.raiz != null) {
                   nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre: ");
                   /*SI LO ELIMINA COLOCA UNA CONFIRMACION, EN CASO CONTRARIO NO PASA NADA*/
-                  arbol.eliminaByNombre(arbol.raiz, nombre);
+                  temp = arbol.buscaByNombre(nombre);                  
+                  arbol.elimina(temp);
                }
                else {
                   JOptionPane.showMessageDialog(null, "Arbol vacio!");
@@ -121,8 +124,13 @@ public class Prueba {
                      /*PARA RECORRER LA COLECCION Y GUARDAR EL EL STRING*/
                      for (Jugador jugador : salariosX) {
                         aux += jugador.toString() + "\n";                     
-                     }
-                     JOptionPane.showMessageDialog(null, aux);
+                     }                     
+                     textArea = new JTextArea(aux);
+                     scrollPane = new JScrollPane(textArea);
+                     textArea.setLineWrap(true);  
+                     textArea.setWrapStyleWord(true); 
+                     scrollPane.setPreferredSize(new Dimension(550,250));
+                     JOptionPane.showMessageDialog(null, scrollPane, "                    JUGADORES CON MAS DE SALARIO $" + salario, JOptionPane.YES_NO_OPTION);
                   }
                }
                else {

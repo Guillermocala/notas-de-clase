@@ -77,14 +77,22 @@ public class Plataforma implements Serializable{
          }
       }
    }
-   public void eliminaByNombre(Arbin<Jugador> r, String nombre) {
+   public Jugador buscaByNombre(String nombre) {
+      temporal = null;
+      if (raiz != null) {         
+         buscaByNombre(raiz, nombre);
+         return temporal;
+      }
+      return temporal;
+   }
+   public void buscaByNombre(Arbin<Jugador> r, String nombre) {
       if (r != null) {
          /*ENCONTRAMOS EL OBJETO CON .COMPARETO()*/
-         if (r.obtener().getNombre().compareTo(nombre) == 0) {            
-            elimina(r.obtener());
+         if (r.obtener().getNombre().compareTo(nombre) == 0) {
+            temporal = r.obtener();
          }
-         eliminaByNombre(r.izq(), nombre);
-         eliminaByNombre(r.der(), nombre);
+         buscaByNombre(r.izq(), nombre);
+         buscaByNombre(r.der(), nombre);
       }         
    }
    public void elimina(Jugador x) {
@@ -95,6 +103,9 @@ public class Plataforma implements Serializable{
          /*DESPUES DE ENTRAR A LA FUNCION IMPRIMIMOS UNA CONFIRMACION*/
          JOptionPane.showMessageDialog(null, "Eliminado con exito!");
       }
+      else {
+         JOptionPane.showMessageDialog(null, "No encontrado!");
+      }
    }
    /*LA MISMA FUNCION Y PROCEDIMIENTOS DE ELIMINAR, PERO EVALUAMOS CON EL OBJETO
    ENTERO EN VEZ DE EL DATO EN ESPECIFICO*/   
@@ -104,21 +115,12 @@ public class Plataforma implements Serializable{
       }
       else {
          if (x.getCodigo() < r.obtener().getCodigo()) {
-            if (r.izq() != null) {
-               return elimina(r.izq(), x);
-            }
-            else {
-               return r;
-            }
+            r.enlIzq(elimina(r.izq(), x));
          }
          else {
-            if (r.der() != null) {
-               return elimina(r.der(), x);
-            }
-            else {
-               return r;
-            }
+            r.enlDer(elimina(r.der(), x));
          }
+         return r;
       }
    }
    public Arbin mayor(Arbin<Jugador> raiz) {
@@ -144,7 +146,7 @@ public class Plataforma implements Serializable{
             else {
                Arbin remp = mayor(raiz.izq());
                raiz.modificar((Jugador) remp.obtener());
-               raiz.enlIzq(elimina(raiz.izq(), (Jugador) remp.obtener()));               
+               raiz.enlIzq(elimina(raiz.izq(), (Jugador) remp.obtener()));
                return raiz;
             }
          }
