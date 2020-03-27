@@ -1,5 +1,8 @@
-1- Dada una pila con elementos repetidos hacer un algoritmo que elimine los elementos repetidos, los cuente e inserte la cantidad de elementos eliminados de primero.
-
+1- Dada una pila con elementos repetidos hacer un algoritmo que elimine los
+elementos repetidos, los cuente e inserte la cantidad de elementos eliminados de primero.
+2- Dada una pila con elementos repetidos y dada una posicion Pos hacer un algoritmo
+que halle el mayor elemn de la pila y lo inserte en la posicion Pos.
+1------------------------------------------------------------------------------
 lista *UnicaOcu(lista *tope)
 {
 	int dato, cont = 0;
@@ -41,9 +44,7 @@ lista *UnicaOcu(lista *tope)
 	}
 	return tope;
 }
-
-2- Dada una pila con elementos repetidos y dada una posicion Pos hacer un algoritmo que halle el mayor elemn de la pila y lo inserte en la posicion Pos.
-
+2------------------------------------------------------------------------------
 lista *quizz(lista* tope, int elem)
 {
 	int mayor, cont = 0;

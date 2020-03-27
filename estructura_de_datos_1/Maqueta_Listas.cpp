@@ -16,25 +16,6 @@ int menu(void);
 * Mostrar
 * Eliminacion
 */
-nodoa *elimOcu(nodoa *ptr, nodoa *ptr1) {
-   int cant;
-   for (nodoa *i = ptr1; i != NULL; i = i->sig) {
-      cant = 0;
-      for (nodoa *j = ptr1; j != NULL; j = j->sig) {
-         if (i->info == j->info) {
-            cant++;
-         }
-      }
-      for (nodoa *j = ptr; j != NULL; j = j->sig) {
-         if (cant > 0 && i->info == j->info) {
-            ptr = Eliminacion(ptr, j->info);
-            j = ptr;
-            cant--;
-         }
-      }
-   }
-   return ptr;
-}
 int main()
 {
    system("cls");

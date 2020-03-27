@@ -85,7 +85,7 @@ public class Plataforma implements Serializable{
       }
       return temporal;
    }
-   public void buscaByNombre(Arbin<Jugador> r, String nombre) {
+   private void buscaByNombre(Arbin<Jugador> r, String nombre) {
       if (r != null) {
          /*ENCONTRAMOS EL OBJETO CON .COMPARETO()*/
          if (r.obtener().getNombre().compareTo(nombre) == 0) {
@@ -151,7 +151,7 @@ public class Plataforma implements Serializable{
             }
          }
       }
-   }   
+   }
    public void goleador(Arbin<Jugador> r) {
       if (r != null) {
          if (r.obtener().getGoles() > mayor) {
@@ -197,5 +197,5 @@ public class Plataforma implements Serializable{
          /*RETORNO EL JUGADOR CON SU PARTE POR LA IZQ Y LA DER(SI LA TIENE)*/
          return r.obtener().toString() + listar(r.izq()) + listar(r.der());
       }
-   }
+   }   
 }

@@ -1,5 +1,4 @@
-EJERCICIOS DE PILAS DEL MODULO DE ESTRUCTURA DE DATOS
-
+EJERCICIOS DE PILAS DEL MODULO DE ESTRUCTURA DE DATOS (COMPLETE)
 1- Dada una pila con elem repetidos hacer un algoritmo que busque un elem en la pila y elimine todas sus ocurrencias.
 2- Dada una pila hacer un algoritmo que halle la sumatoria de sus elem y el promedio sin perder los datos de la pila original.
 3- Dada una pila diga si la pila es palindroma.

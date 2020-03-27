@@ -1,4 +1,4 @@
-+	EJERCICIOS LISTAS SIMPLES
++	EJERCICIOS LISTAS SIMPLES (INCOMPLETE)
 1- Dada una lista, formar la lista resultante de eliminar el nodo que sigue al nodo apuntado por p.
 2- Dada una lista, devuelve el numero de elementos de la lista.
 3- Destruye la lista retornando toda la memoria ocupada.

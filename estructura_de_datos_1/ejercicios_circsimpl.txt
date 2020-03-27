@@ -1,4 +1,4 @@
-EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES
+EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES (COMPLETE)
 1- Dada una lista circular simple hacer un algoritmo que elimine los nodos cuya informacion sea impar.
 2- Dada una lista circular simple ordenada ascendentemente hacer un algoritmo que inserte un nodo con la informacion ELEM y la lista siga quedando ordenada.
 3- Dada dos listas PTR1 y PTR2 hacer un algoritmo que una la lista 2 con la lista 1 teniendo encuenta lo sgte:
@@ -293,92 +293,6 @@ Nodo *Josephus(Nodo *ptr, int elem)
    }
    return ptr;
 }
-7---------------------------------------------------------------------------------
-en el main:
-case 8:
-   int opt, dato2;
-   system("clear");
-   cout << "Se intercambiara el nodo del dato ingresado con el primero nodo" << endl;
-   cout << "Ingrese 1 para continuar u otro numero para ir al menu anterior: ";
-   cin >> opt;
-   if(opt == 1)
-   {
-      cout << "Ingrese el dato a buscar: ";
-      cin >> dato2;
-      ptr = intercambio(ptr, dato2);
-   }
-   else
-   {
-      /*unexpected function*/
-   }
-   break;
-en la funcion:
-Nodo *intercambio(Nodo *ptr, int elem)
-{
-   Nodo *q = Buscar(ptr, elem);
-   if(q == NULL)
-   {
-      cout << "No se encontro el elemento" << endl;
-      cin.ignore();
-      cin.get();
-   }
-   else if(ptr->sig == ptr)
-   {
-      cout << "solo hay un elemento en la lista" << endl;
-      cin.ignore();
-      cin.get();
-   }
-   else if(q == ptr)
-   {
-      cout << "el elemento ya esta en el primer nodo" << endl;
-      cin.ignore();
-      cin.get();
-   }
-   else
-   {
-      Nodo *aux, *aux2;
-      /*para cuando solo hay dos elem en la lista*/
-      if(ptr->sig->sig == ptr && q->sig == ptr)
-      {
-         ptr = ptr->sig;
-      }
-      else if(q->sig == ptr)
-      {
-         aux = ptr;
-         while(aux->sig != q)
-         {
-            aux = aux->sig;
-         }
-         q->sig = ptr->sig;
-         aux->sig = ptr;
-         ptr->sig = q;
-         ptr = q;
-      }
-      else
-      {
-         /*se posicionan dos aux antes de cada parte, luego se crean mini listas SIMPLES
-         y despues se mueven los aux para terminar de conectar la lista como si fuese una sola*/
-         aux = ptr;
-         while(aux->sig != ptr)
-         {
-            aux = aux->sig;
-         }
-         aux2 = ptr;
-         while(aux2->sig != q)
-         {
-            aux2 = aux2->sig;
-         }
-         aux2->sig = ptr;
-         aux->sig = q;
-         aux2 = ptr->sig;
-         aux = q->sig;
-         q->sig = aux2;
-         ptr->sig = aux;
-         ptr = q;
-      }
-   }
-   return ptr;
-}
 6---------------------------------------------------------------------------------
 en el main:
 case 8:
@@ -427,7 +341,7 @@ Nodo *OpListas(Nodo *ptr, Nodo *ptr2)
          break;
    }
 }
-en el procedimiento UNION:
+-en el procedimiento UNION:
 Nodo *Union(Nodo *ptr, Nodo *ptr2)
 {
    /*los elem de ptr1 y ptr2 pasan a ptr3 sin ocurrencias*/
@@ -455,7 +369,7 @@ Nodo *Union(Nodo *ptr, Nodo *ptr2)
       ptr3 = InsertarAsc(ptr3, aux2->info);
    }
 }
-en el procedimiento INTERCEPCION:
+-en el procedimiento INTERCEPCION:
 /*este procedimiento tambien se traduce como INTERSECION de conjuntos y/o listas*/
 Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2)
 {
@@ -510,7 +424,7 @@ Nodo *Intercepcion(Nodo *ptr, Nodo *ptr2)
       }
    }
 }
-en el procedimiento DIFERENCIA:
+-en el procedimiento DIFERENCIA:
 Nodo *Diferencia(Nodo *ptr, Nodo *ptr2)
 {
    /*usamos un contador(cont), aunque tambien se puede usar un switch(sw), aunque
@@ -657,6 +571,92 @@ Nodo *intercambio(Nodo *ptr, int elem)
       q->sig = aux2;
       ptr->sig = aux;
       ptr = q;
+   }
+   return ptr;
+}
+7(another way)---------------------------------------------------------------------------------
+en el main:
+case 8:
+   int opt, dato2;
+   system("clear");
+   cout << "Se intercambiara el nodo del dato ingresado con el primero nodo" << endl;
+   cout << "Ingrese 1 para continuar u otro numero para ir al menu anterior: ";
+   cin >> opt;
+   if(opt == 1)
+   {
+      cout << "Ingrese el dato a buscar: ";
+      cin >> dato2;
+      ptr = intercambio(ptr, dato2);
+   }
+   else
+   {
+      /*unexpected function*/
+   }
+   break;
+en la funcion:
+Nodo *intercambio(Nodo *ptr, int elem)
+{
+   Nodo *q = Buscar(ptr, elem);
+   if(q == NULL)
+   {
+      cout << "No se encontro el elemento" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(ptr->sig == ptr)
+   {
+      cout << "solo hay un elemento en la lista" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else if(q == ptr)
+   {
+      cout << "el elemento ya esta en el primer nodo" << endl;
+      cin.ignore();
+      cin.get();
+   }
+   else
+   {
+      Nodo *aux, *aux2;
+      /*para cuando solo hay dos elem en la lista*/
+      if(ptr->sig->sig == ptr && q->sig == ptr)
+      {
+         ptr = ptr->sig;
+      }
+      else if(q->sig == ptr)
+      {
+         aux = ptr;
+         while(aux->sig != q)
+         {
+            aux = aux->sig;
+         }
+         q->sig = ptr->sig;
+         aux->sig = ptr;
+         ptr->sig = q;
+         ptr = q;
+      }
+      else
+      {
+         /*se posicionan dos aux antes de cada parte, luego se crean mini listas SIMPLES
+         y despues se mueven los aux para terminar de conectar la lista como si fuese una sola*/
+         aux = ptr;
+         while(aux->sig != ptr)
+         {
+            aux = aux->sig;
+         }
+         aux2 = ptr;
+         while(aux2->sig != q)
+         {
+            aux2 = aux2->sig;
+         }
+         aux2->sig = ptr;
+         aux->sig = q;
+         aux2 = ptr->sig;
+         aux = q->sig;
+         q->sig = aux2;
+         ptr->sig = aux;
+         ptr = q;
+      }
    }
    return ptr;
 }

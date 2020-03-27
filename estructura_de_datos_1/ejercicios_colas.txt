@@ -1,4 +1,4 @@
-   EJERCICIOS DE COLAS DEL MODULO
+   EJERCICIOS DE COLAS DEL MODULO (COMPLETE)
 1- Un estacionamiento de avionetas de un aerodromo es una linea con la capacidad de hasta 12 avionetas. Las avionetas llegan cuando llega un piloto a recoger
 una avioneta, si esta no esta justamente en el extremo de salida (derecha). Todas las avionetas a su derecha han de ser returadas, sacar la suya y las retiradas
 colocadas de nuevo en el mismo orden relativo en que estaban. La salida de una avioneta supone que las demas son movidas hacia adelante de tal forma que los

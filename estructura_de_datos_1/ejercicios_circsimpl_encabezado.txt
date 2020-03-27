@@ -1,4 +1,4 @@
-EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES CON ENCABEZADO
+EJERCICIOS DEL MODULO DE GARRIDO DE LISTAS CIRCULARES SIMPLES CON ENCABEZADO (COMPLETE)
 1- Dada una lista circular, realizar un algoritmo que ordene la lista circular.
 2- Realizar un algoritmo que inserte un nodo con informacion ELEM despues de la n-sima ocurrencia
    de un dato dentro de la lista circular llamado xinfo.
@@ -41,22 +41,22 @@ case 6:
          switch(opt)
          {
             case 1:
-            ptr = OrdenarDesc(ptr);
-            break;
+               ptr = OrdenarDesc(ptr);
+               break;
             case 2:
-            ptr = OrdenarAsc(ptr);
-            break;
+               ptr = OrdenarAsc(ptr);
+               break;
             default:
-            cout << "Valor invalido!" << endl;
-            cin.get();
-            break;
+               cout << "Valor invalido!" << endl;
+               cin.get();
+               break;
          }
       }
    }
    cin.ignore();
    break;
 -----en la funcion:
-/*para hacer ordenar ascendente solo cambiamos el < por > en el primer if de
+/*para hacer ordenar ascendente solo cambiamos el "<" por ">" en el primer if de
 *los ciclos anidados*/
 Nodo *OrdenarDesc(Nodo *ptr)
 {
