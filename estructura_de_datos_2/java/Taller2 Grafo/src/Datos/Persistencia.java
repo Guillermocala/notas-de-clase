@@ -17,15 +17,15 @@ import java.io.ObjectOutputStream;
  * @author 57300
  */
 public class Persistencia {
-   public void guardar(Ciudad x) throws FileNotFoundException, IOException {
+   public void guardar(GrafoImp<String> x) throws FileNotFoundException, IOException {
       try (ObjectOutputStream ob = new ObjectOutputStream(new FileOutputStream("archivo.ch"))) {
          ob.writeObject(x);
       }
    }
-   public Ciudad recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
-      Ciudad ar;
+   public GrafoImp<String> recuperar(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
+      GrafoImp<String> ar;
       try (ObjectInputStream ob = new ObjectInputStream(new FileInputStream(nom))) {
-         ar = (Ciudad) ob.readObject();
+         ar = (GrafoImp<String>) ob.readObject();
       }
       return ar;
    }

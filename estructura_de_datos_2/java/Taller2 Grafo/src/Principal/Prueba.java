@@ -6,6 +6,7 @@
 package Principal;
 
 import Datos.Ciudad;
+import Datos.GrafoImp;
 import Datos.Persistencia;
 import java.awt.Dimension;
 import java.io.File;
@@ -21,15 +22,17 @@ import javax.swing.JTextArea;
  * @author 57300
  */
 public class Prueba {
+      
+   
    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
-      Ciudad grafoC;
+      GrafoImp<String> grafo;
       Persistencia archivo = new Persistencia(); /*PARA GUARDAR DATOS*/      
       File obj = new File("archivo.ch"); /*EL CONDICIONAL Y ESTO ES OPERACION DE GUARDAR Y RECUPERAR DATOS*/
       if (obj.exists()) {
-         grafoC = archivo.recuperar("archivo.ch");
+         grafo = archivo.recuperar("archivo.ch");
       }
       else {
-         grafoC = new Ciudad();
+         grafo = new GrafoImp<>();
       }
       int sw = 1, pos, vi, vf, dato;
       String nombre, aux;
@@ -44,38 +47,67 @@ public class Prueba {
             case 1:
                /*insertar vertice*/
                nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre: ");               
-               grafoC.insBarrio(nombre);
-               archivo.guardar(grafoC);
+               grafo.insVertice(nombre);
+               archivo.guardar(grafo);
                break;
             case 2:
                /*insertar arista*/
-               vi = Integer.getInteger(JOptionPane.showInputDialog("Ingrese vertice inicial: "));
-               vf = Integer.getInteger(JOptionPane.showInputDialog("Ingrese vertice final: "));
-               dato = Integer.getInteger(JOptionPane.showInputDialog("Ingrese vertice dato: "));
-               grafoC.insTiempo(vi, vf, dato);
-               archivo.guardar(grafoC);
+               if (grafo.orden() != 0) {                  
+                  vi = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio inicial: "));
+                  vf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio final: "));
+                  vi--;
+                  vf--;
+                  if (vi != vf) {
+                     dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo: "));
+                     grafo.insArista(vi, vf, dato);
+                     archivo.guardar(grafo);
+                  }
+                  else {
+                     JOptionPane.showMessageDialog(null, "No se puede operar entre mismos barrios!");
+                  }
+               }
+               else {
+                  JOptionPane.showMessageDialog(null, "No hay barrios!");
+               }
                break;
             case 3:
                /*mostrar*/
-               /*textArea = new JTextArea(grafoC.mostrar());
-               scrollPane = new JScrollPane(textArea);
-               textArea.setLineWrap(true);  
-               textArea.setWrapStyleWord(true); 
-               scrollPane.setPreferredSize(new Dimension(550,250));
-               JOptionPane.showMessageDialog(null, scrollPane, "                    JUGADORES", JOptionPane.YES_NO_OPTION);*/
-               JOptionPane.showMessageDialog(null, grafoC.mostrar());
+               if (grafo.orden() != 0) {
+                  textArea = new JTextArea(grafo.mostrar());
+                  scrollPane = new JScrollPane(textArea);
+                  textArea.setLineWrap(true);  
+                  textArea.setWrapStyleWord(true); 
+                  scrollPane.setPreferredSize(new Dimension(550,250));
+                  JOptionPane.showMessageDialog(null, scrollPane, "                    JUGADORES", JOptionPane.YES_NO_OPTION);
+               }
+               else {
+                  JOptionPane.showMessageDialog(null, "Sin barrios!");
+               }               
                break;
             case 4:
-               /*eliminar arista*/               
-               vi = Integer.getInteger(JOptionPane.showInputDialog("Ingrese barrio inicial: "));
-               vf = Integer.getInteger(JOptionPane.showInputDialog("Ingrese barrio final: "));
-               grafoC.elimTiempo(vi, vf);
-               archivo.guardar(grafoC);               
+               /*eliminar arista*/
+               if (grafo.orden() != 0) {
+                  vi = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio inicial: "));
+                  vf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio final: "));
+                  vi--;
+                  vf--;
+                  if (vi != vf) {
+                     grafo.elimArista(vi, vf);
+                     archivo.guardar(grafo);
+                  }
+                  else {
+                     JOptionPane.showMessageDialog(null, "No se puede operar entre mismos barrios!");
+                  }                  
+               }
+               else {
+                  JOptionPane.showMessageDialog(null, "Sin barrios!");
+               }               
+               
                break;
             case 5:
                /*sucesores*/               
-               pos = Integer.getInteger(JOptionPane.showInputDialog("Ingrese la posicion: "));
-               temporal = grafoC.sucesores(pos);
+               pos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la posicion: "));
+               temporal = grafo.sucesores(pos);
                if (temporal != null) {
                   aux = "";
                   for (String string : temporal) {

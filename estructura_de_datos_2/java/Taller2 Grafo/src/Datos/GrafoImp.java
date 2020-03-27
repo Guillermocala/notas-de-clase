@@ -7,6 +7,7 @@ package Datos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,17 +42,33 @@ public class GrafoImp<E> implements Grafo<E>, Serializable {
 
    @Override
    public void insArista(int vi, int vf, int dato) {
-      this.aristas[vi][vf] = dato;
+      if ((vi > -1 && vi < this.vertices.size()) && (vf > -1 && vf < this.vertices.size()) && (vi != vf)) {
+         this.aristas[vi][vf] = dato;
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Valor de vertices incorrecto!");
+      }
    }
 
    @Override
    public int obtArista(int vi, int vf) {
-      return this.aristas[vi][vf];
+      if ((vi > -1 && vi < this.vertices.size()) && (vf > -1 && vf < this.vertices.size()) && (vi != vf)) {
+         return this.aristas[vi][vf];
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Valor de vertices incorrecto!");
+         return 0;
+      }
    }
 
    @Override
    public void elimArista(int vi, int vf) {
-      this.aristas[vi][vf] = 999999;
+      if ((vi > -1 && vi < this.vertices.size()) && (vf > -1 && vf < this.vertices.size()) && (vi != vf)) {
+         this.aristas[vi][vf] = 999999;
+      }
+      else {
+         JOptionPane.showMessageDialog(null, "Valor de vertices incorrecto!");
+      }
    }
 
    @Override
