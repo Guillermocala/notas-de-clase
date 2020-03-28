@@ -5,7 +5,6 @@
  */
 package Principal;
 
-import Datos.Ciudad;
 import Datos.GrafoImp;
 import Datos.Persistencia;
 import java.awt.Dimension;
@@ -40,6 +39,7 @@ public class Prueba {
       JTextArea textArea;
       JScrollPane scrollPane;
       String menu = "1.Insertar Barrio \n2.Insertar Tiempo(entre barrios) \n3.Mostrar \n4.Eliminar Tiempo \n5.Sucesores \n0.Salir";
+      /*HAY QUE TENER EN CUENTA QUE TODO EMPIEZA EN LA POSICION 0*/
       do {         
          String opcion = JOptionPane.showInputDialog(menu);
          int op = Integer.parseInt(opcion);
@@ -52,11 +52,10 @@ public class Prueba {
                break;
             case 2:
                /*insertar arista*/
+               /*preguntamos si el grafo esta vacio*/
                if (grafo.orden() != 0) {                  
                   vi = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio inicial: "));
                   vf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio final: "));
-                  vi--;
-                  vf--;
                   if (vi != vf) {
                      dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo: "));
                      grafo.insArista(vi, vf, dato);
@@ -78,7 +77,7 @@ public class Prueba {
                   textArea.setLineWrap(true);  
                   textArea.setWrapStyleWord(true); 
                   scrollPane.setPreferredSize(new Dimension(550,250));
-                  JOptionPane.showMessageDialog(null, scrollPane, "                    JUGADORES", JOptionPane.YES_NO_OPTION);
+                  JOptionPane.showMessageDialog(null, scrollPane, "                    GRAFO BARRIOS", JOptionPane.YES_NO_OPTION);
                }
                else {
                   JOptionPane.showMessageDialog(null, "Sin barrios!");
@@ -89,8 +88,6 @@ public class Prueba {
                if (grafo.orden() != 0) {
                   vi = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio inicial: "));
                   vf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio final: "));
-                  vi--;
-                  vf--;
                   if (vi != vf) {
                      grafo.elimArista(vi, vf);
                      archivo.guardar(grafo);
@@ -106,19 +103,19 @@ public class Prueba {
                break;
             case 5:
                /*sucesores*/               
-               pos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la posicion: "));
+               pos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la posicion: "));               
                temporal = grafo.sucesores(pos);
-               if (temporal != null) {
+               if (temporal.size() != 0) {
                   aux = "";
                   for (String string : temporal) {
-                     aux += string + " ";
+                     aux += string + " - ";
                   }
                   textArea = new JTextArea(aux);
                   scrollPane = new JScrollPane(textArea);
                   textArea.setLineWrap(true);  
                   textArea.setWrapStyleWord(true); 
                   scrollPane.setPreferredSize(new Dimension(550,250));
-                  JOptionPane.showMessageDialog(null, scrollPane, "                    JUGADORES", JOptionPane.YES_NO_OPTION);
+                  JOptionPane.showMessageDialog(null, scrollPane, "                    SUCESORES", JOptionPane.YES_NO_OPTION);
                }
                else {
                   JOptionPane.showMessageDialog(null, "No tiene sucesores!");
@@ -129,7 +126,7 @@ public class Prueba {
                sw = 0;
                break;
             default:
-               JOptionPane.showMessageDialog(null, "Opcion erronea");
+               JOptionPane.showMessageDialog(null, "Opcion erronea!");
                break;
          }            
       }while(sw != 0);
