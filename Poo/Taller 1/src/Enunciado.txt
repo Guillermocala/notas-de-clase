@@ -1,0 +1,11 @@
+Clase persona que contenga los atributos :nombre, apellidos, Nº identificación, edad, genero, ciudad de residencia.  
+Y realizar los siguientes métodos
+ 	Get y Set para todos los atributos, validar edad y genero.
+ 	Método tipo int, que retorne el año de nacimiento según la edad.
+	Método que transforme la primera letra de nombre y apellido en mayúscula y las demás en minúsculas Para cualquier caso.
+ 
+Clase computador que contenga los atributos: tipo (portátil o pc), marca, memoria ram(GB), procesador (velocidad GHZ), almacenamiento(GB).
+Y realizar los métodos:
+	Get y Set para todos los atributos. Validar los que considere necesarios.
+	Método evaluar. Según los datos de procesador (40%), memoria (30%) y DD (30%).
+	Método upgrade, que dado como parámetro  el atributo que quiere modificar (procesador, ram, dd), lo aumente en un 15%.

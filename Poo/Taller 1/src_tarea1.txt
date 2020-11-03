@@ -1,0 +1,3 @@
+C:\Users\Guillermo\Desktop\Tarea1\src\Computador.java
+C:\Users\Guillermo\Desktop\Tarea1\src\Persona.java
+C:\Users\Guillermo\Desktop\Tarea1\src\Tarea1.java

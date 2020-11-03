@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>Taller</label>
+	</settings>
+	<users>
+		<user>
+			<path>Taller.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>Taller.jcp</path>
+		</project>
+	</projects>
+</workspace>
