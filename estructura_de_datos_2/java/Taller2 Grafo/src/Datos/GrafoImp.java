@@ -49,7 +49,7 @@ public class GrafoImp<E> implements Grafo<E>, Serializable {
          JOptionPane.showMessageDialog(null, "Valor de vertices incorrecto!");
       }
    }
-
+   
    @Override
    public int obtArista(int vi, int vf) {
       if ((vi > -1 && vi < this.vertices.size()) && (vf > -1 && vf < this.vertices.size()) && (vi != vf)) {
@@ -80,7 +80,7 @@ public class GrafoImp<E> implements Grafo<E>, Serializable {
    public String mostrar() {
       String res = "";
       for (int i = 0; i < orden(); i++) {
-         res += "Vertice: " + this.vertices.get(i) + " ";
+         res += "Vertice: " + this.vertices.get(i).toString() + " ";
          for (int j = 0; j < orden(); j++) {
             res += this.aristas[i][j] + " ";
          }

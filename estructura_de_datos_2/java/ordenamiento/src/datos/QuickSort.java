@@ -31,27 +31,26 @@ public class QuickSort {
       }
       return lis;
    }
-   public void ordenarVec(int v[], int ini, int fin) {      
-      int pivot = v[ini];
-      int i = ini;
-      int j = fin;
-      int temp;
-      while (i < j) {
-         while (v[i] <= pivot && i<j) i++;
-         while (v[j] > pivot) j--;  
-         if (i < j) {
-            temp = v[i];
+   public void ordenarVec(int v[], int izq, int der) {
+      int piv = (izq + der) / 2;
+      int pivote = v[piv];
+      int i = izq, j = der;
+      while(i <= j) {
+         while(v[i] < pivote) { i++; }
+         while(v[j] > pivote) { j--; }
+         if(i <= j) {
+            int t = v[i];
             v[i] = v[j];
-            v[j] = temp;
+            v[j] = t;
+            i++;
+            j--;
          }
       }
-      v[ini] = v[j];
-      v[j] = pivot;
-      if (ini < (j - 1)) {
-         ordenarVec(v, ini, (j - 1));
+      if (izq < j) {
+         ordenarVec(v, izq, j);
       }
-      else if ((j + 1) < fin) {
-         ordenarVec(v, j + 1, fin);
+      if (i < der) {
+         ordenarVec(v, i, der);
       }
    }
    public LinkedList<Integer> generarList(int n) {
@@ -69,26 +68,25 @@ public class QuickSort {
       return lis;
    }
    public void ordenarList(LinkedList<Integer> lis, int ini, int fin) {
-      int pivot = lis.get(ini);
-      int i = ini;
-      int j = fin;
-      int temp;
-      while (i < j) {
-         while (lis.get(i) <= pivot && i < j) i++;
-         while (lis.get(j) > pivot) j--;  
-         if (i < j) {
-            temp = lis.get(i);
+      int piv = (ini + fin) / 2;
+      int pivote = lis.get(piv);
+      int i = ini, j = fin;
+      while(i <= j) {
+         while(lis.get(i) < pivote) { i++; }
+         while(lis.get(j) > pivote) { j--; }
+         if(i <= j) {
+            int t = lis.get(i);
             lis.set(i, lis.get(j));
-            lis.set(j, temp);
+            lis.set(j, t);
+            i++;
+            j--;
          }
       }
-      lis.set(ini, lis.get(j));
-      lis.set(j, lis.get(j));      
-      if (ini < (j - 1)) {
-         ordenarList(lis, ini, (j - 1));
+      if (ini < j) {
+         ordenarList(lis, ini, j);
       }
-      else if ((j + 1) < fin) {
-         ordenarList(lis, j + 1, fin);
+      if (i < fin) {
+         ordenarList(lis, i, fin);
       }
    }
    public ArrayList<Integer> generarCol(int n) {
@@ -106,26 +104,25 @@ public class QuickSort {
       return lis;
    }
    public void ordenarCol(ArrayList<Integer> lis, int ini, int fin) {
-      int pivot = lis.get(ini);
-      int i = ini;
-      int j = fin;
-      int temp;
-      while (i < j) {
-         while (lis.get(i) <= pivot && i<j) i++;
-         while (lis.get(j) > pivot) j--;  
-         if (i < j) {
-            temp = lis.get(i);
+      int piv = (ini + fin) / 2;
+      int pivote = lis.get(piv);
+      int i = ini, j = fin;
+      while(i <= j) {
+         while(lis.get(i) < pivote) { i++; }
+         while(lis.get(j) > pivote) { j--; }
+         if(i <= j) {
+            int t = lis.get(i);
             lis.set(i, lis.get(j));
-            lis.set(j, temp);            
+            lis.set(j, t);
+            i++;
+            j--;
          }
       }
-      lis.set(ini, lis.get(j));
-      lis.set(j, pivot);
-      if (ini < (j - 1)) {
-         ordenarCol(lis, ini, (j - 1));
+      if (ini < j) {
+         ordenarCol(lis, ini, j);
       }
-      else if ((j + 1) < fin) {
-         ordenarCol(lis, j + 1, fin);
+      if (i < fin) {
+         ordenarCol(lis, i, fin);
       }
    }
    public static void main(String[] args) {

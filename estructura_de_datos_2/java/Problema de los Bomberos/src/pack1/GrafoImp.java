@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Principal;
+package pack1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,13 +12,12 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author 57300
- * @param <E>
  */
-public class GrafoMatr<E> implements Grafo<E>, Serializable{
+public class GrafoImp<E> implements Grafo<E>, Serializable{
    private int[][] aristas = new int[100][100];
    private ArrayList<E> vertices = new ArrayList<>();
    
-   public GrafoMatr() {
+   public GrafoImp() {
       for(int i = 0; i < 100; ++i) {
          for(int j = 0; j < 100; ++j) {
             if (i != j) {
@@ -84,17 +83,7 @@ public class GrafoMatr<E> implements Grafo<E>, Serializable{
       }
       return suces;
    }
-   
-   public ArrayList<E> antecesores(int pos) {
-      ArrayList<E> antec = new ArrayList();
-      for(int i = 0; i < this.orden(); ++i) {
-         if (this.aristas[i][pos] != 999999 && i != pos) {
-            antec.add(this.obtVertice(i));
-         }
-      }
-      return antec;
-   }
-   
+
    @Override
    public String mostrar() {
       String con = "";

@@ -54,8 +54,8 @@ public class Prueba {
                /*insertar arista*/
                /*preguntamos si el grafo esta vacio*/
                if (grafo.orden() != 0) {                  
-                  vi = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio inicial: "));
-                  vf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio final: "));
+                  vi = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio inicial(min 0): "));
+                  vf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese barrio final(" + (grafo.orden() - 1)+ "): "));
                   if (vi != vf) {
                      dato = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tiempo: "));
                      grafo.insArista(vi, vf, dato);
