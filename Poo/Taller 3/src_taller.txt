@@ -1,2 +1,3 @@
-"C:\\Users\\Guillermo\\Documents\\JCreator Pro\\MyProjects\\Taller\\src\\Taller.java"
-"C:\\Users\\Guillermo\\Documents\\JCreator Pro\\MyProjects\\Taller\\src\\Vehiculo.java"
+"C:\\Users\\Guillermo\\Documents\\JCreator Pro\\MyProjects\\Taller 3\\src\\Operaciones.java"
+"C:\\Users\\Guillermo\\Documents\\JCreator Pro\\MyProjects\\Taller 3\\src\\Taller.java"
+"C:\\Users\\Guillermo\\Documents\\JCreator Pro\\MyProjects\\Taller 3\\src\\Vehiculo.java"

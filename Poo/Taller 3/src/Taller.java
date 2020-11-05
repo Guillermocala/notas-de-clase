@@ -8,31 +8,28 @@
  */
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
  
 public class Taller {
-	
-    
    public static void main(String[] args) {
       Set<Vehiculo> lista = new HashSet<>();
-      List<Vehiculo> ordenados = new LinkedList<>();
+      List<Vehiculo> ordenados;
       
-      Vehiculo op = new Vehiculo(0, "nose", "asd", 0);   //solo esta creado para usar las operaciones
+      Operaciones op = new Operaciones();   //solo esta creado para usar las funciones
       String menu = "1-Insertar \n2-Buscar por placa \n3-Eliminar por placa \n4-Generar vehiculos \n5-Mostrar"
               + "\n6-Eliminar vehiculos igual tipo y cc \n7-Organizar por tipo \n0-Salir \nIngrese la opcion: ";
       int sw = 1, opcion, id, cc, aux;
-      String placa, tipo;
+      boolean generados = false;
+      String placa, tipo, anadir;
       Vehiculo temp;
       Scanner entrada = new Scanner(System.in);
       
       do {
          System.out.println(menu);
          opcion = entrada.nextInt();
-         switch(opcion)
-         {
+         switch(opcion) {
             case 1:  //Inserta vehiculo
                System.out.println("Ingrese el ID: ");
                id = entrada.nextInt();
@@ -41,9 +38,21 @@ public class Taller {
                placa = entrada.nextLine();
                System.out.println("Ingrese el tipo(CAMION, CAMIONETA, AUTOMOVIL): ");
                tipo = entrada.nextLine();
+               while (!(op.verificaTipo(tipo))) {
+                  System.out.println("Dato erroneo, verifique!");
+                  System.out.println("Ingrese el tipo(CAMION, CAMIONETA, AUTOMOVIL): ");
+                  tipo = entrada.nextLine();
+               };
                System.out.println("Ingrese el cilindraje(1000 a 4500, siendo multiplo de 100): ");
                cc = entrada.nextInt();
-               op.insertar(new Vehiculo(id, placa, tipo, cc), lista);
+               while ((cc < 1000 || cc > 4500) || (cc % 100 != 0)) {                  
+                  System.out.println("Dato erroneo, verifique!");
+                  System.out.println("Ingrese el cilindraje(1000 a 4500, siendo multiplo de 100): ");
+                  cc = entrada.nextInt();
+               }
+               if (op.insertar(new Vehiculo(id, placa, tipo, cc), lista)) {
+                  System.out.println("El ID o la Placa ya se encuentran registrados. verifique!");
+               }
                break;
             case 2:  //Busca por placa
                if (lista.isEmpty()) {
@@ -70,22 +79,23 @@ public class Taller {
                   placa = entrada.nextLine();
                   op.eliminar(placa, lista);
                }
-               
                break;
             case 4:  //Generar vehiculos
-               if (lista.isEmpty()) {
+               if (!generados) {
                   System.out.println("Ingrese la cantidad a generar: ");
                   aux = entrada.nextInt();
-                  while (lista.size() < aux) {
-                     temp = op.generaVehiculo(lista);
-                     if (op.insertar(temp, lista)) {
-                        temp = op.generaVehiculo(lista);
-                     }
-                  }
-                  System.out.println(aux + " Vehiculos generados exitosamente!");
+                  op.generaVehicuo(aux, lista);
+                  generados = true;
                }
                else{
-                  System.out.println("Ya ha generado vehiculos, reinicie el programa");
+                  System.out.println("Ya ha generado vehiculos, si continua añadirá mas elementos a los actuales(Yes/No): ");
+                  entrada.nextLine();  //limpia buffer
+                  anadir = entrada.nextLine();
+                  if (anadir.compareToIgnoreCase("yes") == 0) {
+                     System.out.println("Ingrese la cantidad a generar: ");
+                     aux = entrada.nextInt();
+                     op.generaVehicuo(aux, lista);
+                  }
                }
                break;
             case 5:  //Mostrar

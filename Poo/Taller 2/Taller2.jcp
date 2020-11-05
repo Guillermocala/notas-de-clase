@@ -2,11 +2,11 @@
 
 <project>
 	<settings>
-		<label>Taller</label>
+		<label>Taller2</label>
 		<root_path>\</root_path>
 		<output_path>classes\</output_path>
 		<source_path>src\</source_path>
-		<jdkprofile_ref/>
+		<jdkprofile_ref>JDK version 1.8.0_111</jdkprofile_ref>
 		<compiler_ref/>
 		<ant_ref/>
 	</settings>
@@ -19,7 +19,7 @@
 			<applet_ref/>
 			<debugger_ref/>
 			<param/>
-			<run>Taller</run>
+			<run>Taller2</run>
 			<verify>true</verify>
 		</runtime>
 	</runtimes>
@@ -30,18 +30,33 @@
 				<path>src</path>
 			</folderitem>
 			<fileitem>
-				<path>src\Operaciones.java</path>
+				<path>src\Electrodomestico.java</path>
 				<folder>src</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Taller.java</path>
+				<path>src\Lavadora.java</path>
 				<folder>src</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Vehiculo.java</path>
+				<path>src\Nevera.java</path>
+				<folder>src</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Taller2.java</path>
+				<folder>src</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Television.java</path>
 				<folder>src</folder>
 			</fileitem>
 		</include>
 	</files>
-	<tasks/>
+	<tasks>
+		<todotaskitem>
+			<description>todo a lo que teniamos en precio inicial</description>
+			<filepath>src\Electrodomestico.java</filepath>
+			<line>109</line>
+			<timestamp>1602120455</timestamp>
+		</todotaskitem>
+	</tasks>
 </project>

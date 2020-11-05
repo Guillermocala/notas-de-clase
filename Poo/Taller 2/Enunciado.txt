@@ -1,0 +1,24 @@
+Crearemos una supeclase llamada Electrodomestico con las siguientes características:
+
+Sus atributos son precio base, color, consumo energético (letras entre A y F) y peso. Indica que se podrán heredar.
+Por defecto, el color será blanco, el consumo energético sera F, el precioBase es de 1000 $ y el peso de 5 kg. Usa constantes para ello.
+Los colores disponibles son blanco, negro, rojo, azul y gris.
+
+Los constructores que se implementaran serán:
+▪ Un constructor por defecto.
+▪ Un constructor con el precio y peso. El resto por defecto.
+▪ Un constructor con todos los atributos.
+
+Los métodos que implementara serán:
+▪ Métodos get de todos los atributos.
+▪ comprobarConsumoEnergetico(char letra): comprueba que la letra es correcta, sino es correcta usara la letra por defecto. Se invocara al crear el objeto y no sera visible.
+▪ comprobarColor(String color): comprueba que el color es correcto, sino lo es usa el color po efectoto. Se invocara al crear el objeto y no sera visible.
+▪ precioFinal(): según el consumo energético, aumentara su precio, y según su tamaño, también. (consumo energético * tamaño )+15%
+
+Ahora crea una clase ejecutable que realice lo siguiente:
+	-Crear unas clases heredadas (lavadora, tv y nevera) las cuales el precio final cambiara según su consumo (lavadora 25%, tv 35% y nevera 20%)
+	-Crea un array de Electrodomesticos de 10 posiciones.
+	-Asigna a cada posición un objeto de las clases anteriores con los valores que desees.
+	-Ahora, recorre este array y ejecuta el método precioFinal().
+	-Deberás mostrar el precio de cada clase, es decir, el precio de todas las televisiones por un lado, el de las lavadoras por otro y la suma de 
+	 los Electrodomesticos (puedes crear objetos Electrodomestico, pero recuerda que Television y Lavadora también son

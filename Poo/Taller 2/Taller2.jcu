@@ -2,11 +2,11 @@
 
 <workspace_user>
 	<active_project>
-		<label>Taller</label>
+		<label>Taller2</label>
 	</active_project>
 	<projects>
 		<project>
-			<label>Taller</label>
+			<label>Taller2</label>
 			<showfiles>false</showfiles>
 			<folderitem>
 				<path>src</path>
@@ -15,22 +15,34 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Vehiculo.java</path>
+			<path>src\Taller2.java</path>
 			<source>true</source>
 			<index>0</index>
-			<active>false</active>
+			<active>true</active>
 		</docitem>
 		<docitem>
-			<path>src\Taller.java</path>
+			<path>src\Electrodomestico.java</path>
 			<source>true</source>
 			<index>1</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Operaciones.java</path>
+			<path>src\Television.java</path>
 			<source>true</source>
 			<index>2</index>
-			<active>true</active>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\Lavadora.java</path>
+			<source>true</source>
+			<index>3</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\Nevera.java</path>
+			<source>true</source>
+			<index>4</index>
+			<active>false</active>
 		</docitem>
 	</open_files>
 </workspace_user>

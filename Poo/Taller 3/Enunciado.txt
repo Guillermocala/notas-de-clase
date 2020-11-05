@@ -1,0 +1,19 @@
+Taller 3
+Colecciones
+
+Realizar un programa con una clase vehículo que tenga los siguientes elementos:
+
+-Opcionalmente se puede añadir un ID que servirá como clave para el hashcode
+-Idvehiculo que es la placa del vehiculo (3 letras 3 numeros)
+-Tipo {automóvil, camión, camioneta}
+-Cilindraje desde 1000 cc hasta 4500 cc siendo estos múltiplos de 100
+
+Hacer un menú usando SET para vehículos
+
+1. Realizar una función insertar, eliminar y buscar.
+2. Realizar una función que genere 500 vehículos aleatorios con estas características.
+3. El programa debe mostrar cuantos vehículos hay y de forma de lista la información de los
+vehículos.
+4. Realizar una función que elimine los elementos que tengan iguales características (tipo y
+cilindraje).
+5. Realizar una función que agrupe los vehículos por tipo y los retorne o los envie a un linkedlist.
