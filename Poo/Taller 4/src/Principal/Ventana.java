@@ -109,14 +109,9 @@ public class Ventana extends JFrame{
          else{
             haveNumber = false;
          }
-         System.out.println("esta pulsando erase");
       }
       else if (Arrays.asList(opera).contains(data)) {
-         System.out.println("es una operacion");
          if (data.equals("Intro")) {
-            System.out.println("intro aqui");
-            System.out.println(aux.length() + " " + (posOperador + 1));
-            System.out.println(haveNumber);
             if ((haveNumber) && (aux.length() > posOperador + 1)) {
                System.out.println(aux);
                panelText.setText(opera(aux, opera));
@@ -142,16 +137,13 @@ public class Ventana extends JFrame{
          }
       }
       else{
-         System.out.println("es un numero");
          haveNumber = true;
          haveOperation = false;
          panelText.setText(aux + e.getActionCommand());
       }
-      
    }
    
    public String opera(String expresion, String operaciones[]){
-      System.out.println("hizo la operacion");
       String arrayExp[] = expresion.split("");
       int aux = -1;
       for (String ope : operaciones) {
@@ -189,7 +181,7 @@ public class Ventana extends JFrame{
       haveOperation = false;
       return temp;
    }
-   public static void main(String[] args) {
+   public static void main(String[] args) {     //mostramos y ggwp
       Ventana app = new Ventana();
    }
 }
