@@ -10,7 +10,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -19,9 +18,15 @@ import javax.swing.*;
  * @author Guillermo
  */
 public class Ventana extends JFrame{
-   JPanel panelNum;
-   JPanel operaciones;
-   JTextField panelText;
+   private JPanel panelNum;
+   private JPanel operaciones;
+   private JTextField panelText;
+   private boolean haveNumber = false;
+   private boolean haveOperation = false;
+   private long num1, num2;
+   private double num3, num4;
+   private int posOperador = 0, cantOpera = 0;
+   private String temp;
    
    public Ventana(){
       super("Calculadora");                  
@@ -34,7 +39,7 @@ public class Ventana extends JFrame{
       //a continuacion irá la fuente, en negrita y con tamanio de 30
       panelText.setFont(new Font("SansSerif", 1, 30));
       panelText.setHorizontalAlignment(JTextField.RIGHT);
-      //panelText.setEnabled(false);  //para que solo entren datos por los botones
+      panelText.setEditable(false);  //para que solo entren datos por los botones
       constrains.gridx = 0;   //empieza columna
       constrains.gridy = 0;   //empieza fila
       constrains.gridwidth = 3;  //ocupa columna
@@ -51,15 +56,14 @@ public class Ventana extends JFrame{
       for (int i = 4; i < 7; i++) newNumButton(String.valueOf(i));
       for (int i = 1; i < 4; i++) newNumButton(String.valueOf(i));
       newNumButton("0");
-      newNumButton(".");
+      newNumButton(",");
       constrains.gridx = 0; 
       constrains.gridy = 1;
       constrains.gridwidth = 2;
       constrains.gridheight = 2;
       constrains.fill = GridBagConstraints.BOTH;
       getContentPane().add(panelNum, constrains);
-      
-      
+            
       //montaje del panel de operaciones
       operaciones = new JPanel();
       operaciones.setLayout(new GridLayout(0, 1));
@@ -94,9 +98,9 @@ public class Ventana extends JFrame{
       operaciones.add(button);
    }
    private void verifica(ActionEvent e){
-      String opera[] = {".", "/", "*", "-", "+", "Intro"};
+      String opera[] = {",", "/", "*", "-", "+", "Intro"};
       String data = e.getActionCommand();
-      String aux = panelText.getText(), temp;
+      String aux = panelText.getText();
       if(data.equals("Erase")){
          if (aux.length() > 0) {
             temp =  aux.substring(0, aux.length() - 1);
@@ -106,13 +110,62 @@ public class Ventana extends JFrame{
       }
       else if (Arrays.asList(opera).contains(data)) {
          System.out.println("es una operacion");
-         panelText.setText(aux + e.getActionCommand());
+         if (data.equals("Intro")) {
+            opera(aux, opera);
+         }
+         else{
+            if (haveNumber && !haveOperation) {
+               haveOperation = true;
+               cantOpera++;
+               if (cantOpera == 2) {
+                  opera(aux + e.getActionCommand(), opera);
+               }
+               else{
+                  panelText.setText(aux + e.getActionCommand());
+               }
+            }
+         }
       }
       else{
          System.out.println("es un numero");
+         haveNumber = true;
+         haveOperation = false;
          panelText.setText(aux + e.getActionCommand());
       }
       
+   }
+   
+   public void opera(String expresion, String operaciones[]){
+      System.out.println("hizo la operacion");
+      String arrayExp[] = expresion.split("");
+      int aux = -1;
+      for (String ope : operaciones) {
+         aux = Arrays.asList(arrayExp).indexOf(ope);
+         if (aux != -1) {  //si encuentra algo entonces deja de buscar
+            break;
+         }
+      }
+      switch(Arrays.asList(arrayExp).get(aux)){
+         case "/":
+            System.out.println("es una division");
+            break;
+         case "*":
+            System.out.println("es una multiplicacion");
+            break;
+         case "-":
+            System.out.println("es una resta");
+            break;
+         case "+":
+            System.out.println("es una suma");
+            break;
+         default:
+            break;
+      }
+      temp = expresion.substring(expresion.length() - 1, expresion.length());
+      panelText.setText(temp);
+      cantOpera = 0;
+      haveNumber = false;
+      haveOperation = false;
    }
    public static void main(String[] args) {
       Ventana app = new Ventana();
