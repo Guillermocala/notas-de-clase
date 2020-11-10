@@ -23,8 +23,8 @@ public class Ventana extends JFrame{
    private JTextField panelText;
    private boolean haveNumber = false;
    private boolean haveOperation = false;
-   private long num1, num2;
-   private double num3, num4;
+   private int num1, num2;
+   private float num3, num4;
    private int posOperador = 0, cantOpera = 0;
    private String temp;
    
@@ -102,23 +102,38 @@ public class Ventana extends JFrame{
       String data = e.getActionCommand();
       String aux = panelText.getText();
       if(data.equals("Erase")){
-         if (aux.length() > 0) {
+         if (aux.length() != 0) {
             temp =  aux.substring(0, aux.length() - 1);
             panelText.setText(temp);
+         }
+         else{
+            haveNumber = false;
          }
          System.out.println("esta pulsando erase");
       }
       else if (Arrays.asList(opera).contains(data)) {
          System.out.println("es una operacion");
          if (data.equals("Intro")) {
-            opera(aux, opera);
+            System.out.println("intro aqui");
+            System.out.println(aux.length() + " " + (posOperador + 1));
+            System.out.println(haveNumber);
+            if ((haveNumber) && (aux.length() > posOperador + 1)) {
+               System.out.println(aux);
+               panelText.setText(opera(aux, opera));
+               haveNumber = true;
+            }
          }
          else{
             if (haveNumber && !haveOperation) {
                haveOperation = true;
                cantOpera++;
+               posOperador = aux.length();
                if (cantOpera == 2) {
-                  opera(aux + e.getActionCommand(), opera);
+                  temp = opera(aux, opera);
+                  panelText.setText(temp + data);
+                  posOperador = temp.length();
+                  System.out.println(posOperador);
+                  cantOpera = 1;
                }
                else{
                   panelText.setText(aux + e.getActionCommand());
@@ -135,7 +150,7 @@ public class Ventana extends JFrame{
       
    }
    
-   public void opera(String expresion, String operaciones[]){
+   public String opera(String expresion, String operaciones[]){
       System.out.println("hizo la operacion");
       String arrayExp[] = expresion.split("");
       int aux = -1;
@@ -147,25 +162,32 @@ public class Ventana extends JFrame{
       }
       switch(Arrays.asList(arrayExp).get(aux)){
          case "/":
-            System.out.println("es una division");
+            num1 = Integer.parseInt(expresion.substring(0, aux));
+            num2 = Integer.parseInt(expresion.substring(aux + 1, expresion.length()));
+            temp = String.valueOf(num1 / num2);
             break;
          case "*":
-            System.out.println("es una multiplicacion");
+            num1 = Integer.parseInt(expresion.substring(0, aux));
+            num2 = Integer.parseInt(expresion.substring(aux + 1, expresion.length()));
+            temp = String.valueOf(num1 * num2);
             break;
          case "-":
-            System.out.println("es una resta");
+            num1 = Integer.parseInt(expresion.substring(0, aux));
+            num2 = Integer.parseInt(expresion.substring(aux + 1, expresion.length()));
+            temp = String.valueOf(num1 - num2);
             break;
          case "+":
-            System.out.println("es una suma");
+            num1 = Integer.parseInt(expresion.substring(0, aux));
+            num2 = Integer.parseInt(expresion.substring(aux + 1, expresion.length()));
+            temp = String.valueOf(num1 + num2);
             break;
-         default:
+         default:    //nunca llega aqui
             break;
       }
-      temp = expresion.substring(expresion.length() - 1, expresion.length());
-      panelText.setText(temp);
       cantOpera = 0;
       haveNumber = false;
       haveOperation = false;
+      return temp;
    }
    public static void main(String[] args) {
       Ventana app = new Ventana();
