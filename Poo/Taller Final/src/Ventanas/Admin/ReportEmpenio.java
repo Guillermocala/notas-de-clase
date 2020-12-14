@@ -22,13 +22,7 @@ public class ReportEmpenio extends javax.swing.JFrame {
    public ReportEmpenio(Central data) {
       initComponents();
       this.datos = data;
-      DefaultTableModel modelo = (DefaultTableModel) jTableEmpeno.getModel();
-      for (int i = 0; i < datos.getEmpeniados().size(); i++) {
-         System.out.println(datos.getEmpeniados().get(i));
-         modelo.addRow(new Object[]{(i + 1), datos.getEmpeniados().get(i).getNombre(), datos.getEmpeniados().get(i).getValor()
-                 , datos.getEmpeniados().get(i).getFechaIngreso(), datos.getEmpeniados().get(i).getFechaSalida(), 
-                 datos.getEmpeniados().get(i).getCantidad()});
-      }
+      llenaTabla();
    }
 
    /**
@@ -42,8 +36,8 @@ public class ReportEmpenio extends javax.swing.JFrame {
 
       jPanel1 = new javax.swing.JPanel();
       jButtonAtras = new javax.swing.JButton();
-      jScrollPane2 = new javax.swing.JScrollPane();
-      jTableEmpeno = new javax.swing.JTable();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      jTableEmpenados = new javax.swing.JTable();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Reporte de Articulos Empeñados");
@@ -60,12 +54,12 @@ public class ReportEmpenio extends javax.swing.JFrame {
          }
       });
 
-      jTableEmpeno.setModel(new javax.swing.table.DefaultTableModel(
+      jTableEmpenados.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][] {
 
          },
          new String [] {
-            "N°", "Nombre", "Monto", "FechaIngreso", "FechaRetiro", "Cantidad"
+            "N°", "Nombre", "Precio", "Fecha Ingreso", "Fecha Retiro", "Cantidad"
          }
       ) {
          Class[] types = new Class [] {
@@ -83,17 +77,20 @@ public class ReportEmpenio extends javax.swing.JFrame {
             return canEdit [columnIndex];
          }
       });
-      jTableEmpeno.setPreferredSize(new java.awt.Dimension(550, 0));
-      jScrollPane2.setViewportView(jTableEmpeno);
-      if (jTableEmpeno.getColumnModel().getColumnCount() > 0) {
-         jTableEmpeno.getColumnModel().getColumn(0).setResizable(false);
-         jTableEmpeno.getColumnModel().getColumn(0).setPreferredWidth(7);
-         jTableEmpeno.getColumnModel().getColumn(1).setResizable(false);
-         jTableEmpeno.getColumnModel().getColumn(1).setPreferredWidth(250);
-         jTableEmpeno.getColumnModel().getColumn(2).setResizable(false);
-         jTableEmpeno.getColumnModel().getColumn(3).setResizable(false);
-         jTableEmpeno.getColumnModel().getColumn(4).setResizable(false);
-         jTableEmpeno.getColumnModel().getColumn(5).setResizable(false);
+      jScrollPane1.setViewportView(jTableEmpenados);
+      if (jTableEmpenados.getColumnModel().getColumnCount() > 0) {
+         jTableEmpenados.getColumnModel().getColumn(0).setResizable(false);
+         jTableEmpenados.getColumnModel().getColumn(0).setPreferredWidth(7);
+         jTableEmpenados.getColumnModel().getColumn(1).setResizable(false);
+         jTableEmpenados.getColumnModel().getColumn(1).setPreferredWidth(250);
+         jTableEmpenados.getColumnModel().getColumn(2).setResizable(false);
+         jTableEmpenados.getColumnModel().getColumn(2).setPreferredWidth(50);
+         jTableEmpenados.getColumnModel().getColumn(3).setResizable(false);
+         jTableEmpenados.getColumnModel().getColumn(3).setPreferredWidth(100);
+         jTableEmpenados.getColumnModel().getColumn(4).setResizable(false);
+         jTableEmpenados.getColumnModel().getColumn(4).setPreferredWidth(100);
+         jTableEmpenados.getColumnModel().getColumn(5).setResizable(false);
+         jTableEmpenados.getColumnModel().getColumn(5).setPreferredWidth(50);
       }
 
       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -103,18 +100,18 @@ public class ReportEmpenio extends javax.swing.JFrame {
          .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                .addGroup(jPanel1Layout.createSequentialGroup()
                   .addComponent(jButtonAtras)
-                  .addGap(0, 0, Short.MAX_VALUE)))
+                  .addGap(0, 0, Short.MAX_VALUE))
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))
             .addContainerGap())
       );
       jPanel1Layout.setVerticalGroup(
          jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+            .addGap(18, 18, 18)
             .addComponent(jButtonAtras)
             .addContainerGap())
       );
@@ -127,7 +124,7 @@ public class ReportEmpenio extends javax.swing.JFrame {
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
       );
 
       pack();
@@ -138,7 +135,15 @@ public class ReportEmpenio extends javax.swing.JFrame {
       princi.setVisible(true);
       dispose();
    }//GEN-LAST:event_jButtonAtrasActionPerformed
-
+   private void llenaTabla(){
+      DefaultTableModel modelo = (DefaultTableModel) jTableEmpenados.getModel();
+      for (int i = 0; i < datos.getEmpeniados().size(); i++) {
+         System.out.println(datos.getEmpeniados().get(i));
+         modelo.addRow(new Object[]{(i + 1), datos.getEmpeniados().get(i).getNombre(), datos.getEmpeniados().get(i).getValor()
+                 , datos.getEmpeniados().get(i).getFechaIngreso(), datos.getEmpeniados().get(i).getFechaSalida(), 
+                 datos.getEmpeniados().get(i).getCantidad()});
+      }
+   }
    /**
     * @param args the command line arguments
     */
@@ -177,7 +182,7 @@ public class ReportEmpenio extends javax.swing.JFrame {
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton jButtonAtras;
    private javax.swing.JPanel jPanel1;
-   private javax.swing.JScrollPane jScrollPane2;
-   private javax.swing.JTable jTableEmpeno;
+   private javax.swing.JScrollPane jScrollPane1;
+   private javax.swing.JTable jTableEmpenados;
    // End of variables declaration//GEN-END:variables
 }

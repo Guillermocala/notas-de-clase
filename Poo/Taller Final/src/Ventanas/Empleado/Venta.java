@@ -212,8 +212,6 @@ public class Venta extends javax.swing.JFrame {
          Articulo mover = datos.getInventario().get(indice);
          int cantObj = mover.getCantidad();
          int cantIngresada = Integer.parseInt(jFormattedTextFieldCantidad.getText());
-         System.out.println("cant campo:" + cantObj);
-         System.out.println("cant input: " +cantIngresada);
          if (cantIngresada == 0) {
             JOptionPane.showMessageDialog(null, "La cantidad es invalida!");
          }
@@ -222,20 +220,17 @@ public class Venta extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(null, "Verifique la cantidad ingresada!");
             }
             else{
+               mover.setFechaSalida(datos.generaFecha());
                if (cantObj == cantIngresada) {
                   datos.getInventario().remove(mover);
-                  mover.setFechaSalida(datos.generaFecha());
                   datos.getVendidos().add(mover);
                }
                else{
                   int cantidad = cantObj - cantIngresada;
-                  System.out.println( "valor renovado: " + cantidad);
-                  System.out.println("antes de: " + datos.getInventario().get(indice));
                   datos.getInventario().get(indice).setCantidad(cantidad);
-                  System.out.println("despues de: " + datos.getInventario().get(indice).toString());
-                  mover.setCantidad(cantIngresada);
-                  mover.setFechaSalida(datos.generaFecha());
-                  datos.getVendidos().add(mover);
+                  //si no creo un artículo nuevo entonces al modificar la cantidad se modifica tanto para lista inventario como para vendidos
+                  Articulo vendido = new Articulo(mover.getNombre(), mover.getValor(), mover.getFechaIngreso(), mover.getFechaSalida(), cantIngresada);
+                  datos.getVendidos().add(vendido);
                }
                JOptionPane.showMessageDialog(null, "Articulo Vendido!");
                limpiaFormulario();
@@ -244,7 +239,6 @@ public class Venta extends javax.swing.JFrame {
          }
       }
    }//GEN-LAST:event_jButtonVenderActionPerformed
-
    private void limpiaFormulario(){
       jFormattedTextFieldCantidad.setValue(null);
    }

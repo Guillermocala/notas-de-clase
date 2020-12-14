@@ -5,11 +5,13 @@
  */
 package Datos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Guillermo
  */
-public class Articulo {
+public class Articulo implements Serializable{
    private String nombre;
    private int valor;
    private String fechaIngreso;

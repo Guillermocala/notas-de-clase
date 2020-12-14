@@ -226,6 +226,7 @@ public class Empenio extends javax.swing.JFrame {
       else{
          if (datos.verificaEmpenio(jTextFieldNombre.getText(), Integer.parseInt(jFormattedTextFieldMonto.getText()), jFormattedTextFieldFechaIngreso.getText()
                  , jFormattedTextFieldFechaRetiro.getText(), Integer.parseInt(jFormattedTextFieldCantidad.getText()))) {
+            JOptionPane.showMessageDialog(null, "Articulo Empeñado!");
             limpiarFormulario();
          }
       }

@@ -6,9 +6,13 @@
 package Ventanas.Empleado;
 
 import Datos.Central;
+import Datos.Persistencia;
 import Ventanas.Principal;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class Compra extends javax.swing.JFrame {
    private static Central datos;
+   private Persistencia archivo = new Persistencia();
    /**
     * Creates new form Compra
     * @param data
@@ -231,6 +236,12 @@ public class Compra extends javax.swing.JFrame {
                  jFormattedTextFieldFecha.getText(), Integer.parseInt(jFormattedTextFieldCantidad.getText()))) {
             limpiarFormulario();
             JOptionPane.showMessageDialog(null, "Articulo Comprado!");
+            try {
+               archivo.guardar(datos);
+            } catch (IOException ex) {
+               Logger.getLogger(Compra.class.getName()).log(Level.SEVERE, null, ex);
+               System.out.println("no guardó");
+            }
          }
       }
    }//GEN-LAST:event_jButtonCompraActionPerformed

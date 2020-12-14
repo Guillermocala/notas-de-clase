@@ -6,6 +6,7 @@
 package Ventanas;
 
 import Datos.Central;
+import Datos.Persistencia;
 import Ventanas.Admin.EmpeniadosVencidos;
 import Ventanas.Admin.Inventario;
 import Ventanas.Admin.ModificaFecha;
@@ -14,6 +15,9 @@ import Ventanas.Admin.ReportVentas;
 import Ventanas.Empleado.Compra;
 import Ventanas.Empleado.Empenio;
 import Ventanas.Empleado.Venta;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +25,7 @@ import javax.swing.JOptionPane;
  * @author Guillermo
  */
 public class Principal extends javax.swing.JFrame {
-   private static Central datos = new Central();
+   private static Central datos;
    
    /**
     * Creates new form Principal
@@ -30,7 +34,6 @@ public class Principal extends javax.swing.JFrame {
    public Principal(Central data) {
       initComponents();
       this.datos = data;
-      System.out.println(datos.isDateChanged());
    }
 
    /**
@@ -317,7 +320,17 @@ public class Principal extends javax.swing.JFrame {
    /**
     * @param args the command line arguments
     */
-   public static void main(String args[]) {
+   public static void main(String args[]) throws IOException, FileNotFoundException, ClassNotFoundException {
+      Persistencia archivo = new Persistencia();
+      File angel = new File("informacion.ch");
+      if (angel.exists()) {
+         datos = archivo.recuperar("informacion.ch");
+         System.out.println("informacion cargada");
+      }
+      else{
+         datos = new Datos.Central();
+         System.out.println("creando archivo");
+      }
       java.awt.EventQueue.invokeLater(new Runnable() {
          public void run() {
             new Principal(datos).setVisible(true);

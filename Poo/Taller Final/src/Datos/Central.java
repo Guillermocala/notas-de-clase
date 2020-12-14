@@ -5,6 +5,7 @@
  */
 package Datos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,19 +15,19 @@ import javax.swing.JOptionPane;
  *
  * @author Guillermo
  */
-public class Central {
+public class Central implements Serializable{
    private ArrayList<Articulo> inventario = new ArrayList<>();
    private ArrayList<Articulo> vendidos = new ArrayList<>();
    private ArrayList<Articulo> empeniados = new ArrayList<>();
    private ArrayList<Articulo> empeniadosVencidos = new ArrayList<>();
-   private DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-   private LocalDateTime actual = LocalDateTime.now();  //aca sacamos la fecha de nuestra pc
-   private String fechaInicial = formato.format(actual);
-   private String fechaMod = formato.format(actual);
+   private String fechaInicial = "";
+   private String fechaMod = "";
    /**
     * @return the inventario
     */
+   
    public String generaFecha(){
+      DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
       LocalDateTime actual = LocalDateTime.now();  //aca sacamos la fecha de nuestra pc
       String fecha = formato.format(actual);
       return fecha;
@@ -207,21 +208,30 @@ public class Central {
       return fine;
    }
    public boolean verificaFechas(String fechaIngreso, String fechaRetiro){
-      boolean fine = true;   
+      boolean fine = true;
       String diaIngre = fechaIngreso.substring(0, 2);
       String mesIngre = fechaIngreso.substring(3, 5);
       String anioIngre = fechaIngreso.substring(6, 10);
       String diaReti = fechaRetiro.substring(0, 2);
       String mesReti = fechaRetiro.substring(3, 5);
       String anioReti = fechaRetiro.substring(6, 10);
-      if (Integer.parseInt(anioReti) < Integer.parseInt(anioIngre)) {
+      if ((Integer.parseInt(anioReti) < Integer.parseInt(anioIngre)) || (Integer.parseInt(mesReti) < Integer.parseInt(mesIngre)) || (Integer.parseInt(diaReti) < Integer.parseInt(diaIngre))) {
          fine = false;
       }
-      if (Integer.parseInt(mesReti) < Integer.parseInt(mesIngre)) {
-         fine = false;
+      if (Integer.parseInt(diaReti) == Integer.parseInt(diaIngre) && Integer.parseInt(mesReti) == Integer.parseInt(mesIngre)) {
+         if (Integer.parseInt(anioReti) <= Integer.parseInt(anioIngre) ) {
+            fine = false;
+         }
       }
-      if (Integer.parseInt(diaReti) < Integer.parseInt(diaIngre)) {
-         fine = false;
+      if (Integer.parseInt(mesIngre) == Integer.parseInt(mesReti) && Integer.parseInt(anioIngre) == Integer.parseInt(anioReti)) {
+         if (Integer.parseInt(diaReti) <= Integer.parseInt(diaIngre) ) {
+            fine = false;
+         }
+      }
+      if (Integer.parseInt(diaReti) == Integer.parseInt(diaIngre) && Integer.parseInt(anioIngre) == Integer.parseInt(anioReti)) {
+         if (Integer.parseInt(mesReti) <= Integer.parseInt(mesIngre) ) {
+            fine = false;
+         }
       }
       return fine;
    }
