@@ -6,9 +6,14 @@
 package Ventanas.Empleado;
 
 import Datos.Central;
+import Datos.Persistencia;
 import Ventanas.Principal;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class Empenio extends javax.swing.JFrame {
    private static Central datos;
+   private Persistencia archivo = new Persistencia();
    /**
     * Creates new form Empenio
     * @param data
@@ -24,6 +30,7 @@ public class Empenio extends javax.swing.JFrame {
    public Empenio(Central data) {
       initComponents();
       this.datos = data;
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -52,7 +59,7 @@ public class Empenio extends javax.swing.JFrame {
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Empeñar Articulo");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -224,10 +231,19 @@ public class Empenio extends javax.swing.JFrame {
          JOptionPane.showMessageDialog(null, "El campo de cantidad está vacio");
       }
       else{
-         if (datos.verificaEmpenio(jTextFieldNombre.getText(), Integer.parseInt(jFormattedTextFieldMonto.getText()), jFormattedTextFieldFechaIngreso.getText()
-                 , jFormattedTextFieldFechaRetiro.getText(), Integer.parseInt(jFormattedTextFieldCantidad.getText()))) {
-            JOptionPane.showMessageDialog(null, "Articulo Empeñado!");
-            limpiarFormulario();
+         try {
+            if (datos.verificaEmpenio(jTextFieldNombre.getText(), Integer.parseInt(jFormattedTextFieldMonto.getText()), jFormattedTextFieldFechaIngreso.getText()
+                    , jFormattedTextFieldFechaRetiro.getText(), Integer.parseInt(jFormattedTextFieldCantidad.getText()))) {
+               JOptionPane.showMessageDialog(null, "Articulo Empeñado!");
+               limpiarFormulario();
+               try {
+                  archivo.guardar(datos);
+               } catch (IOException ex) {
+                  Logger.getLogger(Empenio.class.getName()).log(Level.SEVERE, null, ex);
+               }
+            }
+         } catch (ParseException ex) {
+            Logger.getLogger(Empenio.class.getName()).log(Level.SEVERE, null, ex);
          }
       }
    }//GEN-LAST:event_jButtonEmpenarActionPerformed

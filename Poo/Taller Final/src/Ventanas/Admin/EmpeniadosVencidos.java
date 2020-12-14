@@ -22,7 +22,8 @@ public class EmpeniadosVencidos extends javax.swing.JFrame {
    public EmpeniadosVencidos(Central data) {
       initComponents();
       this.datos = data;
-     
+      actualizaTabla();
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -35,23 +36,30 @@ public class EmpeniadosVencidos extends javax.swing.JFrame {
    private void initComponents() {
 
       jPanel3 = new javax.swing.JPanel();
-      jScrollPane2 = new javax.swing.JScrollPane();
-      jTableEmpeVencidos = new javax.swing.JTable();
       Atras = new javax.swing.JButton();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      jTableEmpeVencidos = new javax.swing.JTable();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Articulos Empeñados Vencidos");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+      Atras.setText("Atras");
+      Atras.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            AtrasActionPerformed(evt);
+         }
+      });
 
       jTableEmpeVencidos.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][] {
 
          },
          new String [] {
-            "N°", "Nombre", "Monto", "FechaIngreso", "FechaRetiro", "Cantidad"
+            "N°", "Nombre", "Precio", "Fecha Ingreso", "Fecha Retiro", "Cantidad"
          }
       ) {
          Class[] types = new Class [] {
@@ -69,25 +77,21 @@ public class EmpeniadosVencidos extends javax.swing.JFrame {
             return canEdit [columnIndex];
          }
       });
-      jTableEmpeVencidos.setPreferredSize(new java.awt.Dimension(550, 0));
-      jScrollPane2.setViewportView(jTableEmpeVencidos);
+      jScrollPane1.setViewportView(jTableEmpeVencidos);
       if (jTableEmpeVencidos.getColumnModel().getColumnCount() > 0) {
          jTableEmpeVencidos.getColumnModel().getColumn(0).setResizable(false);
          jTableEmpeVencidos.getColumnModel().getColumn(0).setPreferredWidth(7);
          jTableEmpeVencidos.getColumnModel().getColumn(1).setResizable(false);
          jTableEmpeVencidos.getColumnModel().getColumn(1).setPreferredWidth(250);
          jTableEmpeVencidos.getColumnModel().getColumn(2).setResizable(false);
+         jTableEmpeVencidos.getColumnModel().getColumn(2).setPreferredWidth(50);
          jTableEmpeVencidos.getColumnModel().getColumn(3).setResizable(false);
+         jTableEmpeVencidos.getColumnModel().getColumn(3).setPreferredWidth(100);
          jTableEmpeVencidos.getColumnModel().getColumn(4).setResizable(false);
+         jTableEmpeVencidos.getColumnModel().getColumn(4).setPreferredWidth(100);
          jTableEmpeVencidos.getColumnModel().getColumn(5).setResizable(false);
+         jTableEmpeVencidos.getColumnModel().getColumn(5).setPreferredWidth(50);
       }
-
-      Atras.setText("Atras");
-      Atras.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            AtrasActionPerformed(evt);
-         }
-      });
 
       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
       jPanel3.setLayout(jPanel3Layout);
@@ -96,18 +100,18 @@ public class EmpeniadosVencidos extends javax.swing.JFrame {
          .addGroup(jPanel3Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                .addGroup(jPanel3Layout.createSequentialGroup()
                   .addComponent(Atras)
-                  .addGap(0, 0, Short.MAX_VALUE)))
+                  .addGap(0, 0, Short.MAX_VALUE))
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE))
             .addContainerGap())
       );
       jPanel3Layout.setVerticalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(jPanel3Layout.createSequentialGroup()
+         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
             .addComponent(Atras)
             .addContainerGap())
       );
@@ -133,11 +137,10 @@ public class EmpeniadosVencidos extends javax.swing.JFrame {
    }//GEN-LAST:event_AtrasActionPerformed
    public void actualizaTabla(){
       DefaultTableModel modelo = (DefaultTableModel) jTableEmpeVencidos.getModel();
-      for (int i = 0; i < 10; i++) {
-         modelo.addRow(new Object[]{i, "nombre", i, "fechaingreso", "fecharetiro", i});
-//         modelo.addRow(new Object[]{(i + 1), datos.getEmpeniadosVencidos().get(i).getNombre(), datos.getEmpeniadosVencidos().get(i).getValor()
-//                 , datos.getEmpeniadosVencidos().get(i).getFechaIngreso(), datos.getEmpeniadosVencidos().get(i).getFechaSalida(), 
-//                 datos.getEmpeniadosVencidos().get(i).getCantidad()});
+      for (int i = 0; i < datos.getEmpeniadosVencidos().size() ; i++) {
+         modelo.addRow(new Object[]{(i + 1), datos.getEmpeniadosVencidos().get(i).getNombre(), datos.getEmpeniadosVencidos().get(i).getValor()
+                 , datos.getEmpeniadosVencidos().get(i).getFechaIngreso(), datos.getEmpeniadosVencidos().get(i).getFechaSalida(), 
+                 datos.getEmpeniadosVencidos().get(i).getCantidad()});
       }
    }
    /**
@@ -179,7 +182,7 @@ public class EmpeniadosVencidos extends javax.swing.JFrame {
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton Atras;
    private javax.swing.JPanel jPanel3;
-   private javax.swing.JScrollPane jScrollPane2;
+   private javax.swing.JScrollPane jScrollPane1;
    private javax.swing.JTable jTableEmpeVencidos;
    // End of variables declaration//GEN-END:variables
 }

@@ -23,6 +23,7 @@ public class ReportEmpenio extends javax.swing.JFrame {
       initComponents();
       this.datos = data;
       llenaTabla();
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -41,7 +42,7 @@ public class ReportEmpenio extends javax.swing.JFrame {
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Reporte de Articulos Empeñados");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -120,7 +121,7 @@ public class ReportEmpenio extends javax.swing.JFrame {
       getContentPane().setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +139,6 @@ public class ReportEmpenio extends javax.swing.JFrame {
    private void llenaTabla(){
       DefaultTableModel modelo = (DefaultTableModel) jTableEmpenados.getModel();
       for (int i = 0; i < datos.getEmpeniados().size(); i++) {
-         System.out.println(datos.getEmpeniados().get(i));
          modelo.addRow(new Object[]{(i + 1), datos.getEmpeniados().get(i).getNombre(), datos.getEmpeniados().get(i).getValor()
                  , datos.getEmpeniados().get(i).getFechaIngreso(), datos.getEmpeniados().get(i).getFechaSalida(), 
                  datos.getEmpeniados().get(i).getCantidad()});

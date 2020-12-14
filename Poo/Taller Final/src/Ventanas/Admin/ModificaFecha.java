@@ -7,6 +7,9 @@ package Ventanas.Admin;
 
 import Datos.Central;
 import Ventanas.Principal;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,9 +22,11 @@ public class ModificaFecha extends javax.swing.JFrame {
     * Creates new form ModificaFecha
     * @param data
     */
-   public ModificaFecha(Central data) {
+   public ModificaFecha(Central data) throws ParseException {
       initComponents();
       this.datos = data;
+      jTextFieldFechaActual.setText(datos.fechaActual());
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -40,13 +45,15 @@ public class ModificaFecha extends javax.swing.JFrame {
       jButtonAtras = new javax.swing.JButton();
       jScrollPane1 = new javax.swing.JScrollPane();
       jTextAreaNota = new javax.swing.JTextArea();
+      jTextFieldFechaActual = new javax.swing.JTextField();
+      jLabelFechaActual = new javax.swing.JLabel();
+      jLabelEditarFecha = new javax.swing.JLabel();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
       setTitle("Modificar Fecha");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-      jPanel1.setMinimumSize(null);
 
       jButtonActualizar.setBackground(new java.awt.Color(102, 255, 102));
       jButtonActualizar.setText("Actualizar");
@@ -89,6 +96,17 @@ public class ModificaFecha extends javax.swing.JFrame {
       jTextAreaNota.setText("Nota: La fecha es tomada de su PC, pero puede ser modificada  en esta opcion para facilitar el proceso de vencimiento de los \nobjetos empeñados.");
       jScrollPane1.setViewportView(jTextAreaNota);
 
+      jTextFieldFechaActual.setEditable(false);
+      jTextFieldFechaActual.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jTextFieldFechaActualActionPerformed(evt);
+         }
+      });
+
+      jLabelFechaActual.setText("Fecha Actual:");
+
+      jLabelEditarFecha.setText("Editar Fecha:");
+
       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
       jPanel1.setLayout(jPanel1Layout);
       jPanel1Layout.setHorizontalGroup(
@@ -96,35 +114,49 @@ public class ModificaFecha extends javax.swing.JFrame {
          .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                  .addGap(0, 68, Short.MAX_VALUE)
+                  .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonLimpia)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonActualizar))
+                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                           .addComponent(jLabelEditarFecha)
+                           .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                           .addComponent(jFormattedTextFieldFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                           .addComponent(jLabelFechaActual)
+                           .addGap(18, 18, 18)
+                           .addComponent(jTextFieldFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                  .addGap(38, 38, 38))
                .addGroup(jPanel1Layout.createSequentialGroup()
                   .addComponent(jButtonAtras)
                   .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
-         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-               .addComponent(jFormattedTextFieldFecha)
-               .addGroup(jPanel1Layout.createSequentialGroup()
-                  .addComponent(jButtonLimpia)
-                  .addGap(18, 18, 18)
-                  .addComponent(jButtonActualizar)))
-            .addGap(22, 22, 22))
       );
       jPanel1Layout.setVerticalGroup(
          jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+               .addComponent(jLabelFechaActual)
+               .addComponent(jTextFieldFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
-            .addComponent(jFormattedTextFieldFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+               .addComponent(jFormattedTextFieldFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabelEditarFecha))
             .addGap(18, 18, 18)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(jButtonActualizar)
                .addComponent(jButtonLimpia))
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
             .addComponent(jButtonAtras)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap())
       );
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,13 +178,18 @@ public class ModificaFecha extends javax.swing.JFrame {
    }//GEN-LAST:event_jFormattedTextFieldFechaActionPerformed
 
    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-      if (jFormattedTextFieldFecha.getText().replaceAll("[ ,/]", "").length() != 8) {
+      if (jFormattedTextFieldFecha.getText().replaceAll("[ ,/,:]", "").length() != 14) {
          JOptionPane.showMessageDialog(null, "El campo de fecha está incompleto");
       }
       else{
-         if (datos.verificaFecha(jFormattedTextFieldFecha.getText())) {
-            datos.setFechaMod(jFormattedTextFieldFecha.getText());
+         if (datos.verificaModFecha(jFormattedTextFieldFecha.getText())) {
+            datos.setFechaModificada(jFormattedTextFieldFecha.getText());
             limpiaFormulario();
+            try {
+               jTextFieldFechaActual.setText(datos.fechaActual());
+            } catch (ParseException ex) {
+               Logger.getLogger(ModificaFecha.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(null, "Fecha actualizada!");
          }
       }
@@ -168,15 +205,14 @@ public class ModificaFecha extends javax.swing.JFrame {
       limpiaFormulario();
    }//GEN-LAST:event_jButtonLimpiaActionPerformed
 
+   private void jTextFieldFechaActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFechaActualActionPerformed
+      
+   }//GEN-LAST:event_jTextFieldFechaActualActionPerformed
+
    public void limpiaFormulario(){
       jFormattedTextFieldFecha.setValue(null);
    }
    
-   public void horaActual(){
-      String horaInicio = datos.getFechaInicial();
-      String horaActual = datos.generaFecha();
-      
-   }
    /**
     * @param args the command line arguments
     */
@@ -207,7 +243,11 @@ public class ModificaFecha extends javax.swing.JFrame {
       /* Create and display the form */
       java.awt.EventQueue.invokeLater(new Runnable() {
          public void run() {
-            new ModificaFecha(datos).setVisible(true);
+            try {
+               new ModificaFecha(datos).setVisible(true);
+            } catch (ParseException ex) {
+               Logger.getLogger(ModificaFecha.class.getName()).log(Level.SEVERE, null, ex);
+            }
          }
       });
    }
@@ -217,8 +257,11 @@ public class ModificaFecha extends javax.swing.JFrame {
    private javax.swing.JButton jButtonAtras;
    private javax.swing.JButton jButtonLimpia;
    private javax.swing.JFormattedTextField jFormattedTextFieldFecha;
+   private javax.swing.JLabel jLabelEditarFecha;
+   private javax.swing.JLabel jLabelFechaActual;
    private javax.swing.JPanel jPanel1;
    private javax.swing.JScrollPane jScrollPane1;
    private javax.swing.JTextArea jTextAreaNota;
+   private javax.swing.JTextField jTextFieldFechaActual;
    // End of variables declaration//GEN-END:variables
 }

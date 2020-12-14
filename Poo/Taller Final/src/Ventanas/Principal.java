@@ -5,6 +5,7 @@
  */
 package Ventanas;
 
+import Datos.Articulo;
 import Datos.Central;
 import Datos.Persistencia;
 import Ventanas.Admin.EmpeniadosVencidos;
@@ -18,6 +19,12 @@ import Ventanas.Empleado.Venta;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +33,7 @@ import javax.swing.JOptionPane;
  */
 public class Principal extends javax.swing.JFrame {
    private static Central datos;
-   
+   private Persistencia archivo = new Persistencia();
    /**
     * Creates new form Principal
     * @param data
@@ -34,6 +41,7 @@ public class Principal extends javax.swing.JFrame {
    public Principal(Central data) {
       initComponents();
       this.datos = data;
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -64,7 +72,7 @@ public class Principal extends javax.swing.JFrame {
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("COMPRA Y VENTA");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -109,19 +117,19 @@ public class Principal extends javax.swing.JFrame {
       jPanel3Layout.setHorizontalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(66, 66, 66)
+            .addGap(70, 70, 70)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                .addComponent(jButtonInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addComponent(jButtonEmpenadoVencidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addComponent(jButtonVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jButtonEmpenados)
-               .addComponent(jButtonModFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(192, 192, 192))
+               .addComponent(jButtonEmpenados, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jButtonModFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(78, 78, 78))
       );
       jPanel3Layout.setVerticalGroup(
          jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel3Layout.createSequentialGroup()
-            .addGap(38, 38, 38)
+            .addGap(48, 48, 48)
             .addComponent(jButtonInventario)
             .addGap(18, 18, 18)
             .addComponent(jButtonEmpenadoVencidos)
@@ -131,20 +139,18 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jButtonEmpenados)
             .addGap(18, 18, 18)
             .addComponent(jButtonModFecha)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(48, Short.MAX_VALUE))
       );
 
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(jPanel2Layout.createSequentialGroup()
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
+         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
       );
 
       jTabbedPane1.addTab("Administrador", jPanel2);
@@ -175,23 +181,23 @@ public class Principal extends javax.swing.JFrame {
       jPanel5Layout.setHorizontalGroup(
          jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel5Layout.createSequentialGroup()
-            .addGap(95, 95, 95)
+            .addGap(107, 107, 107)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                .addComponent(jButtonVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addComponent(jButtonCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jButtonEmpeno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+               .addComponent(jButtonEmpeno, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap(110, Short.MAX_VALUE))
       );
       jPanel5Layout.setVerticalGroup(
          jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel5Layout.createSequentialGroup()
-            .addGap(60, 60, 60)
+            .addGap(78, 78, 78)
             .addComponent(jButtonCompra)
             .addGap(18, 18, 18)
             .addComponent(jButtonVenta)
             .addGap(18, 18, 18)
             .addComponent(jButtonEmpeno)
-            .addContainerGap(104, Short.MAX_VALUE))
+            .addContainerGap(118, Short.MAX_VALUE))
       );
 
       javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -214,19 +220,19 @@ public class Principal extends javax.swing.JFrame {
       jPanel1.setLayout(jPanel1Layout);
       jPanel1Layout.setHorizontalGroup(
          jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
          .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(87, 87, 87)
             .addComponent(jLabel1)
-            .addContainerGap())
+            .addGap(114, 114, 114))
+         .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
       );
       jPanel1Layout.setVerticalGroup(
          jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addGap(17, 17, 17)
+            .addContainerGap(17, Short.MAX_VALUE)
             .addComponent(jLabel1)
-            .addGap(18, 18, 18)
-            .addComponent(jTabbedPane1))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
       );
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -242,51 +248,6 @@ public class Principal extends javax.swing.JFrame {
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
-
-   private void jButtonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentasActionPerformed
-      if (datos.getVendidos().isEmpty()) {
-         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
-      }
-      else{
-         ReportVentas ventanaRepoVen = new ReportVentas(datos);
-         ventanaRepoVen.setVisible(true);
-         dispose();
-      }
-   }//GEN-LAST:event_jButtonVentasActionPerformed
-
-   private void jButtonEmpenadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpenadosActionPerformed
-      if (datos.getEmpeniados().isEmpty()) {
-         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
-      }
-      else{
-         ReportEmpenio ventanaRepoEmpe = new ReportEmpenio(datos);
-         ventanaRepoEmpe.setVisible(true);
-         dispose();
-      }
-     
-   }//GEN-LAST:event_jButtonEmpenadosActionPerformed
-
-   private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
-      if (datos.getInventario().isEmpty()) {
-         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
-      }
-      else{
-         Inventario ventanaInven = new Inventario(datos);
-         ventanaInven.setVisible(true);
-         dispose();
-      }
-   }//GEN-LAST:event_jButtonInventarioActionPerformed
-
-   private void jButtonEmpenadoVencidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpenadoVencidosActionPerformed
-      if (datos.getEmpeniadosVencidos().isEmpty()) {
-         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
-      }
-      else{
-         EmpeniadosVencidos ventanaEmpe = new EmpeniadosVencidos(datos);
-         ventanaEmpe.setVisible(true);
-         dispose();
-      }
-   }//GEN-LAST:event_jButtonEmpenadoVencidosActionPerformed
 
    private void jButtonCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompraActionPerformed
       Compra ventanaCompra = new Compra(datos);
@@ -312,10 +273,86 @@ public class Principal extends javax.swing.JFrame {
    }//GEN-LAST:event_jButtonEmpenoActionPerformed
 
    private void jButtonModFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModFechaActionPerformed
-      ModificaFecha ventanaMod = new ModificaFecha(datos);
-      ventanaMod.setVisible(true);
-      dispose();
+      ModificaFecha ventanaMod;
+      try {
+         ventanaMod = new ModificaFecha(datos);
+         ventanaMod.setVisible(true);
+         dispose();
+      } catch (ParseException ex) {
+         Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
    }//GEN-LAST:event_jButtonModFechaActionPerformed
+
+   private void jButtonEmpenadoVencidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpenadoVencidosActionPerformed
+      if (datos.getEmpeniadosVencidos().isEmpty()) {
+         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
+      }
+      else{
+         ArrayList<Articulo> paraBorrar = new ArrayList<>();
+         for (Articulo empe : datos.getEmpeniados()) {
+            Date fechaActual = null;
+            try {
+               fechaActual = new Date(datos.fechaActual());
+            } catch (ParseException ex) {
+               Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Date fechaVence = new Date(empe.getFechaSalida());
+            System.out.println(fechaActual);
+            System.out.println(fechaVence);
+            if (fechaActual.after(fechaVence)) {
+               paraBorrar.add(empe);
+               datos.getEmpeniadosVencidos().add(new Articulo(empe.getNombre(), empe.getValor(), empe.getFechaIngreso(), empe.getFechaSalida(), empe.getCantidad()));
+            }
+         }
+         for (Articulo articulo : paraBorrar) {
+            if (datos.getEmpeniados().contains(articulo)) {
+               datos.getEmpeniados().remove(articulo);
+            }
+         }
+         try {
+            archivo.guardar(datos);
+         } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         EmpeniadosVencidos ventanaEmpe = new EmpeniadosVencidos(datos);
+         ventanaEmpe.setVisible(true);
+         dispose();
+      }
+   }//GEN-LAST:event_jButtonEmpenadoVencidosActionPerformed
+
+   private void jButtonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInventarioActionPerformed
+      if (datos.getInventario().isEmpty()) {
+         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
+      }
+      else{
+         Inventario ventanaInven = new Inventario(datos);
+         ventanaInven.setVisible(true);
+         dispose();
+      }
+   }//GEN-LAST:event_jButtonInventarioActionPerformed
+
+   private void jButtonEmpenadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpenadosActionPerformed
+      if (datos.getEmpeniados().isEmpty()) {
+         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
+      }
+      else{
+         ReportEmpenio ventanaRepoEmpe = new ReportEmpenio(datos);
+         ventanaRepoEmpe.setVisible(true);
+         dispose();
+      }
+   }//GEN-LAST:event_jButtonEmpenadosActionPerformed
+
+   private void jButtonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentasActionPerformed
+      if (datos.getVendidos().isEmpty()) {
+         JOptionPane.showMessageDialog(null, "No hay datos para mostrar");
+      }
+      else{
+         ReportVentas ventanaRepoVen = new ReportVentas(datos);
+         ventanaRepoVen.setVisible(true);
+         dispose();
+      }
+   }//GEN-LAST:event_jButtonVentasActionPerformed
  
    /**
     * @param args the command line arguments
@@ -325,12 +362,14 @@ public class Principal extends javax.swing.JFrame {
       File angel = new File("informacion.ch");
       if (angel.exists()) {
          datos = archivo.recuperar("informacion.ch");
-         System.out.println("informacion cargada");
+         JOptionPane.showMessageDialog(null, "Datos cargados!");
       }
       else{
          datos = new Datos.Central();
-         System.out.println("creando archivo");
+         JOptionPane.showMessageDialog(null, "Archivo creado!");
       }
+      datos.setFechaModificada(datos.generaFecha());
+      datos.setFechaComputador(datos.generaFecha());
       java.awt.EventQueue.invokeLater(new Runnable() {
          public void run() {
             new Principal(datos).setVisible(true);

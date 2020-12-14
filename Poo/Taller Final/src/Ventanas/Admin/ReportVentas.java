@@ -23,6 +23,7 @@ public class ReportVentas extends javax.swing.JFrame {
       initComponents();
       this.datos = data;
       llenaTabla();
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -42,7 +43,7 @@ public class ReportVentas extends javax.swing.JFrame {
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Reporte de Ventas");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -125,7 +126,7 @@ public class ReportVentas extends javax.swing.JFrame {
       getContentPane().setLayout(layout);
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,8 +144,7 @@ public class ReportVentas extends javax.swing.JFrame {
    public void llenaTabla(){
       DefaultTableModel modelo = (DefaultTableModel) jTableVendidos.getModel();
       modelo.setRowCount(0);
-      for (int i = 0; i < datos.getVendidos().size(); i++) {        
-         System.out.println(datos.getVendidos().get(i).toString());
+      for (int i = 0; i < datos.getVendidos().size(); i++) {
          modelo.addRow(new Object[]{(i + 1), datos.getVendidos().get(i).getNombre(), datos.getVendidos().get(i).getValor()
                  , datos.getVendidos().get(i).getFechaIngreso(), datos.getVendidos().get(i).getFechaSalida(), 
                  datos.getVendidos().get(i).getCantidad()});

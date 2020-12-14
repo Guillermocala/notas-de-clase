@@ -29,6 +29,7 @@ public class Compra extends javax.swing.JFrame {
    public Compra(Central data) {
       initComponents();
       this.datos = data;
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -55,7 +56,7 @@ public class Compra extends javax.swing.JFrame {
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Compra de Articulo");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -240,7 +241,6 @@ public class Compra extends javax.swing.JFrame {
                archivo.guardar(datos);
             } catch (IOException ex) {
                Logger.getLogger(Compra.class.getName()).log(Level.SEVERE, null, ex);
-               System.out.println("no guardó");
             }
          }
       }

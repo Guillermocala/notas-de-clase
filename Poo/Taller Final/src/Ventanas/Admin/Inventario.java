@@ -23,12 +23,8 @@ public class Inventario extends javax.swing.JFrame {
    public Inventario(Central data) {
       initComponents();
       this.datos = data;
-      DefaultTableModel modelo = (DefaultTableModel) jTableInventario.getModel();
-      for (int i = 0; i < datos.getInventario().size(); i++) {
-         System.out.println(datos.getInventario().get(i));
-         modelo.addRow(new Object[]{(i + 1), datos.getInventario().get(i).getNombre(), datos.getInventario().get(i).getValor()
-                 , datos.getInventario().get(i).getCantidad()});
-      }
+      llenaTabla();
+      this.setLocationRelativeTo(null);
    }
 
    /**
@@ -47,7 +43,7 @@ public class Inventario extends javax.swing.JFrame {
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Inventario");
-      setLocation(new java.awt.Point(300, 200));
+      setLocation(new java.awt.Point(0, 0));
       setResizable(false);
 
       jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -135,12 +131,17 @@ public class Inventario extends javax.swing.JFrame {
       princi.setVisible(true);
       dispose();
    }//GEN-LAST:event_jButtonAtrasActionPerformed
-
+   private void llenaTabla(){
+      DefaultTableModel modelo = (DefaultTableModel) jTableInventario.getModel();
+      for (int i = 0; i < datos.getInventario().size(); i++) {
+         modelo.addRow(new Object[]{(i + 1), datos.getInventario().get(i).getNombre(), datos.getInventario().get(i).getValor()
+                 , datos.getInventario().get(i).getCantidad()});
+      }
+   }
    /**
     * @param args the command line arguments
     */
    public static void main(String args[]) {
-      System.out.println("estas en inventario");
       try {
          for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
