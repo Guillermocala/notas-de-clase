@@ -13,7 +13,7 @@
 
 2. A cada grupo de trabajo se la asignará un tablero inicial, a partir del cual deberá encontrar la solución. **Sin embargo, las implementaciones deben permitir el ingreso de la configuración inicial de un tablero a partir de un archivo de texto con el mismo formato que el respectivo archivo asignado a cada grupo**. Las implementaciones deben respetar el siguiente orden de acciones: **blanco arriba, derecha, abajo, izquierda.**
 
-3. Las implementaciones deben mostrar al final el **tiempo computacional**, el **uso de memoria** (máximo tamaño de la cola o pila alcanzado, y número de nodos expandidos para encontrar la solución), el **camino solución** encontrado y el **número de pasos que conforman este camino solución. 
+3. Las implementaciones deben mostrar al final el **tiempo computacional**, el **uso de memoria** (máximo tamaño de la cola o pila alcanzado, y número de nodos expandidos para encontrar la solución), el **camino solución** encontrado y el **número de pasos** que conforman este camino solución. 
 
 4. Elabore un informe en el que debe incluir una descripción del esquema de representación utilizado en las **implementaciones**, las **funciones objetivo** tanto del primero el mejor, como el A-asterisco, y una **comparación** de los 4 métodos en términos de tiempo y uso de memoria, y optimalidad. 
 

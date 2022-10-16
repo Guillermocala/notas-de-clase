@@ -1,19 +1,6 @@
 # Taken from: https://eddmann.com/posts/depth-first-search-and-breadth-first-search-in-python/
 # a sample graph
 
-graph = {'A': ['B', 'C', 'D'],
-         'B': ['A', 'E', 'F'],
-         'C': ['A', 'G', 'H'],
-         'D': ['A', 'G', 'H'],
-         'E': ['B', 'I'],
-         'F': ['B', 'I', 'K'],
-         'G': ['C', 'D', 'K'],
-         'H': ['C', 'D', 'L'],
-         'I': ['E','F', 'J', 'L'],
-         'J': ['I', 'K', 'L'],
-         'K': ['F', 'G', 'J', 'L'],
-         'L': ['H', 'I', 'K']}
-
 config = [[2,4,3],
           [7,1,6],
           [0,5,8]]
@@ -21,6 +8,48 @@ config = [[2,4,3],
 goal = [[1,2,3],
         [4,5,6],
         [7,8,0]]
+
+def calculatePosition(actual):
+    for x in range(len(actual)):
+        for y in range(len(actual)):
+            if actual[x][y] == 0:
+                position = [x, y]
+                return position
+                
+
+def moveUp(actual_config):
+    print("moving up...")
+    actual_position = calculatePosition(actual_config)
+    x = actual_position[0]
+    y = actual_position[1]
+    if x == 0:
+        print("cant move")
+    else:
+        #data = actual_config[x - 1][0]
+        #actual_config[x - 1][0] = 0
+        #actual_config[x][y] = data
+        actual_config[x][y], actual_config[x - 1][0] = actual_config[x - 1][0], 0
+
+def moveRight():
+    print("moving right...")
+    actual_position = calculatePosition(actual_config)
+    x = actual_position[0]
+    y = actual_position[1]
+    if x == len(actual_config):
+        print("cant move")
+    else:
+        data = actual_config[x - 1][0]
+        actual_config[x - 1][0] = 0
+        actual_config[x][y] = data
+        #actual_config[x][y], actual_config[x - 1][0] = actual_config[x - 1][0], 0
+
+
+def moveDown():
+    pass
+
+def moveLeft():
+    pass
+
 
 def dfs_paths(graph, start, goal):
     stack = [(start, [start])]
@@ -35,5 +64,16 @@ def dfs_paths(graph, start, goal):
                 stack.append((next, path + [next]))
 
 
-print (next(dfs_paths(graph, 'A', 'L')))
+#print (next(dfs_paths(graph, 'A', 'L')))
+
+print("calculating position...")
+print(calculatePosition(config))
+
+for i in config:
+    print(i)
+
+moveUp(config)
+
+for i in config:
+    print(i)
 
