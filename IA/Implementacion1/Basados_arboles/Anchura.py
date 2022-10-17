@@ -107,30 +107,45 @@ def expandCurrentState(actual_config):
     
 def bfs_paths(start, goal):
     visitados = []
-    queue = [start]
+    queue = [(start, [start])]
     while queue:
         print("el tamaño de visitados es: ", len(visitados))
+        print("len queue", len(queue))
         path = queue.pop(0)
+        print("len path", len(path))
+        print("path 0", path[0])
+        print("path 1", path[1])
         #print("el path antes de expandir es...")
-        print()
-        for i in path:
-            print(i)
+        #print("path", path)
+        """for i in path:
+            print(i)"""
 
-        if path not in visitados:
-            sucesores = expandCurrentState(path)
-            visitados.append(path)
+        if path[0] not in visitados:
+            sucesores = expandCurrentState(path[0])
+            visitados.append(path[0])
             for i in sucesores:
                 if i == goal:
                     print("\t\tGOAL REACHED")
-                    for item in i:
-                        print(item)
-                    return 0
+                    return path
                 else:
-                    queue.append(i)
+                    #print("path + tuple", path + tuple(i))
+                    queue.append((i, path + tuple(i)))
+                    #queue.append(i, path + i)
+
 
 def main():
     initial_config = openFile("./configs/config.txt")
-    bfs_paths(initial_config, goal_config)
+    camino = bfs_paths(initial_config, goal_config)
+    print("len camino", len(camino))
+    print("len camino 0", len(camino[0]))
+    print("len camino 1", len(camino[1]))
+
+    for item in camino[0]:
+        print(item)
+    """print("el camino tiene: ", len(camino[1]))
+    for item in camino[1]:
+        print(item)"""
+    #print("resultado", camino)
 
 if __name__ == '__main__':
     main()
