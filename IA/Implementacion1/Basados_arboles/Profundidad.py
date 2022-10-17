@@ -99,17 +99,19 @@ def expandCurrentState(actual_config):
     return sucesores
     
 def dfs_paths(start, goal):
-    visitados = set()
+    visitados = []
     stack = [start]
     while stack:
+        #print("el tamaño de visitados es: ", len(visitados))
         path = stack.pop()
-        print("el path antes de expandir es...")
+        #print("el path antes de expandir es...")
+        print()
         for i in path:
             print(i)
 
-        if calculatePosition(path) not in visitados:
+        if path not in visitados:
             sucesores = expandCurrentState(path)
-            visitados.add(calculatePosition(path))
+            visitados.append(path)
             for i in sucesores:
                 if i == goal:
                     print("\t\tGOAL REACHED")
