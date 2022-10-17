@@ -2,13 +2,19 @@
 # a sample graph
 import copy
 
-initial_config = [[1,2,3],
-                  [5,0,6],
-                  [4,7,8]]
-          
 goal_config = [[1,2,3],
                [4,5,6],
                [7,8,0]]
+
+def openFile(ruta):
+    res = [[],[],[]]
+    with open(ruta) as f:
+        index = 0
+        for line in f.readlines():
+            for i in line.split(","):
+                res[index].append(int(i))
+            index += 1
+    return res
 
 def calculatePosition(actual):
     for x in range(len(actual)):
@@ -102,12 +108,11 @@ def dfs_paths(start, goal):
     visitados = []
     stack = [start]
     while stack:
-        #print("el tamaño de visitados es: ", len(visitados))
+        print("el tamaño de visitados es: ", len(visitados))
         path = stack.pop()
-        #print("el path antes de expandir es...")
-        print()
+        """print()
         for i in path:
-            print(i)
+            print(i)"""
 
         if path not in visitados:
             sucesores = expandCurrentState(path)
@@ -121,4 +126,9 @@ def dfs_paths(start, goal):
                 else:
                     stack.append(i)
 
-dfs_paths(initial_config, goal_config)
+def main():
+    initial_config = openFile("./configs/config.txt")
+    dfs_paths(initial_config, goal_config)
+
+if __name__ == '__main__':
+    main()
