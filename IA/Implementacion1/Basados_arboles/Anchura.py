@@ -1,3 +1,4 @@
+from isSolvable import isSolvable
 goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 def openFile(ruta):
@@ -96,7 +97,10 @@ def showLikeMatrix(data):
 
 def bfs_paths(start, goal):
     queue = [(start, [start])]
+    iteracion = 0
     while queue:
+        iteracion += 1
+        print("iteracion: ", iteracion)
         (vertex, path) = queue.pop(0)
         l = list(set(expandCurrentState(vertex)) - set(path))
         for next in sorted(l):
@@ -108,9 +112,21 @@ def bfs_paths(start, goal):
 
 def main():
     initial_config = openFile("./configs/config.txt")
-    respuesta = bfs_paths(initial_config, goal_config)
-    for item in respuesta:
-        print(showLikeMatrix(item))
+    # verificamos si se puede solucionar
+    if isSolvable(tupleToMatrix(initial_config)):
+        respuesta = bfs_paths(initial_config, goal_config)
+        for item in respuesta:
+            print(showLikeMatrix(item))
+    else:
+        print("""
+            Segun el verificador esta solucion no se puede resolver
+            Presione 1 para continuar o cualquier otra tecla para salir: 
+        """)
+        opcion = input()
+        if opcion == '1':
+            respuesta = bfs_paths(initial_config, goal_config)
+            for item in respuesta:
+                print(showLikeMatrix(item))
 
 if __name__ == '__main__':
     main()
