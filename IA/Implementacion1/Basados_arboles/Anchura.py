@@ -94,51 +94,22 @@ def showLikeMatrix(data):
             res += "\n"
     return res
 
-def extractRoute(mapa, start, goal):
-    print("extrayendo ruta...")
-    ruta = set()
-    ruta.add(goal)
-    actual = goal
-    activador = True
-    cont = 0
-    while activador:
-        for key, value in mapa.items():
-            if actual == start:
-                activador = False
-            if actual in value:
-                if key in ruta:
-                    break
-                else:
-                    actual = key
-                    ruta.add(key)
-    return ruta
-
 def bfs_paths(start, goal):
-    visitados = [start]
-    queue = [start]
-    mapa_expandidos = {}
-    tam = 0
+    queue = [(start, [start])]
     while queue:
-        path = queue.pop(0)  
-        sucesores = expandCurrentState(path)
-        mapa_expandidos[path] = sucesores
-        for vecino in sucesores:
-            if vecino not in visitados:
-                if vecino == goal:
-                    print("\t\tGOAL REACHED")
-                    print("El tamaño max de cola fue: ", tam)
-                    return mapa_expandidos
-                else:
-                    visitados.append(vecino)
-                    queue.append(vecino)
-                    if len(queue) > tam:
-                        tam = len(queue)
+        (vertex, path) = queue.pop(0)
+        l = list(set(expandCurrentState(vertex)) - set(path))
+        for next in sorted(l):
+            if next == goal:
+                print("\t\tGoal Reached!")
+                return path + [next]
+            else:
+                queue.append((next, path + [next]))
 
 def main():
     initial_config = openFile("./configs/config.txt")
-    mapa = bfs_paths(initial_config, goal_config)
-    ruta_objetivo = extractRoute(mapa, initial_config, goal_config)
-    for item in ruta_objetivo:
+    respuesta = bfs_paths(initial_config, goal_config)
+    for item in respuesta:
         print(showLikeMatrix(item))
 
 if __name__ == '__main__':
