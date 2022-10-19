@@ -1,19 +1,13 @@
-# Taken from: https://eddmann.com/posts/depth-first-search-and-breadth-first-search-in-python/
-# a sample graph
-import copy
-
-goal_config = [[1,2,3],
-               [4,5,6],
-               [7,8,0]]
+from isSolvable import isSolvable
+goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 def openFile(ruta):
-    res = [[],[],[]]
+    temp = list()
     with open(ruta) as f:
-        index = 0
         for line in f.readlines():
             for i in line.split(","):
-                res[index].append(int(i))
-            index += 1
+                temp.append(int(i))
+    res = tuple(temp)
     return res
 
 def calculatePosition(actual):
@@ -23,112 +17,117 @@ def calculatePosition(actual):
                 position = (x, y)
                 return position
 
-def moveUp(actual_config):
-    # se usa deepcopy para que no altere la lista original
-    res_config = copy.deepcopy(actual_config)
-    actual_position = calculatePosition(res_config)
+def tupleToMatrix(data):
+    res = [[data[0], data[1], data[2]],
+           [data[3], data[4], data[5]],
+           [data[6], data[7], data[8]]]
+    return res
+
+def matrixToTuple(data):
+    a = list()
+    for item in data:
+        for i in item:
+            a.append(i)
+    b = tuple(a)
+    return b
+
+def movements(actual_config, type_movement):
+    respuesta_matrix = []
+    actual_matrix = tupleToMatrix(actual_config)
+    actual_position = calculatePosition(actual_matrix)
     x = actual_position[0]
     y = actual_position[1]
-    if x == 0:
-        return -1
-    else:
-        #data = res_config[x - 1][y]
-        #res_config[x - 1][y] = 0
-        #res_config[x][y] = data
-        res_config[x][y], res_config[x - 1][y] = res_config[x - 1][y], 0
-        return res_config
-
-def moveRight(actual_config):
-    # se usa deepcopy para que no altere la lista original
-    res_config = copy.deepcopy(actual_config)
-    actual_position = calculatePosition(res_config)
-    x = actual_position[0]
-    y = actual_position[1]
-    if y == (len(res_config) - 1):
-        return -1
-    else:
-        #data = res_config[x][y + 1]
-        #res_config[x][y + 1] = 0
-        #res_config[x][y] = data
-        res_config[x][y], res_config[x][y + 1] = res_config[x][y + 1], 0
-        return res_config
-
-
-def moveDown(actual_config):
-    # se usa deepcopy para que no altere la lista original
-    res_config = copy.deepcopy(actual_config)
-    actual_position = calculatePosition(res_config)
-    x = actual_position[0]
-    y = actual_position[1]
-    if x == (len(res_config) - 1):
-        return -1
-    else:
-        #data = res_config[x + 1][y]
-        #res_config[x + 1][y] = 0
-        #res_config[x][y] = data
-        res_config[x][y], res_config[x + 1][y] = res_config[x + 1][y], 0
-        return res_config
-
-def moveLeft(actual_config):
-    # se usa deepcopy para que no altere la lista original
-    res_config = copy.deepcopy(actual_config)
-    actual_position = calculatePosition(res_config)
-    x = actual_position[0]
-    y = actual_position[1]
-    if y == 0:
-        return -1
-    else:
-        #data = res_config[x][y - 1]
-        #res_config[x][y - 1] = 0
-        #res_config[x][y] = data
-        res_config[x][y], res_config[x][y - 1] = res_config[x][y - 1], 0
-        return res_config
+    #moveDown
+    if type_movement == 1:
+        if x == 0:
+            return -1
+        else:
+            actual_matrix[x][y], actual_matrix[x - 1][y] = actual_matrix[x - 1][y], 0
+            respuesta_tuple = matrixToTuple(actual_matrix)
+            return respuesta_tuple
+    #moveLeft
+    if type_movement == 2:
+        if y == (len(actual_matrix) - 1):
+            return -1
+        else:
+            actual_matrix[x][y], actual_matrix[x][y + 1] = actual_matrix[x][y + 1], 0
+            respuesta_tuple = matrixToTuple(actual_matrix)
+            return respuesta_tuple
+    #moveUp
+    if type_movement == 3:
+        if x == (len(actual_matrix) - 1):
+            return -1
+        else:
+            actual_matrix[x][y], actual_matrix[x + 1][y] = actual_matrix[x + 1][y], 0
+            respuesta_tuple = matrixToTuple(actual_matrix)
+            return respuesta_tuple
+    #moveRight
+    if type_movement == 4:
+        if y == 0:
+            return -1
+        else:
+            actual_matrix[x][y], actual_matrix[x][y - 1] = actual_matrix[x][y - 1], 0
+            respuesta_tuple = matrixToTuple(actual_matrix)
+            return respuesta_tuple
+    #convertimos y retornamos
 
 def expandCurrentState(actual_config):
     sucesores = []
-    res = moveUp(actual_config)
+    res = movements(actual_config, 3)
     if res != -1:
         sucesores.append(res)
-
-    res = moveRight(actual_config)
+    res = movements(actual_config, 4)
     if res != -1:
         sucesores.append(res)
-
-    res = moveDown(actual_config)
+    res = movements(actual_config, 1)
     if res != -1:
         sucesores.append(res)
-
-    res = moveLeft(actual_config)
+    res = movements(actual_config, 2)
     if res != -1:
         sucesores.append(res)
-
     return sucesores
-    
-def dfs_paths(start, goal):
-    visitados = []
-    stack = [start]
-    while stack:
-        print("el tamaño de visitados es: ", len(visitados))
-        path = stack.pop()
-        """print()
-        for i in path:
-            print(i)"""
 
-        if path not in visitados:
-            sucesores = expandCurrentState(path)
-            visitados.append(path)
-            for i in sucesores:
-                if i == goal:
-                    print("\t\tGOAL REACHED")
-                    for item in i:
-                        print(item)
-                    return 0
-                else:
-                    stack.append(i)
+def showLikeMatrix(data):
+    res = ""
+    for i in range(len(data)):
+        res += str(data[i])
+        if i == 2 or i == 5 or i == 8:
+            res += "\n"
+    return res
+
+def dfs_paths(start, goal):
+    stack = [(start, [start])]
+    iteracion = 0
+    while stack:
+        iteracion += 1
+        print("iteracion: ", iteracion)
+        (vertex, path) = stack.pop()
+        l = list(set(expandCurrentState(vertex)) - set(path))
+        for next in sorted(l, reverse=True):
+            if next == goal:
+                print("\t\tGoal Reached!")
+                return path + [next]
+            else:
+                stack.append((next, path + [next]))
 
 def main():
     initial_config = openFile("./configs/config.txt")
-    dfs_paths(initial_config, goal_config)
+    # verificamos si se puede solucionar
+    if isSolvable(tupleToMatrix(initial_config)):
+        respuesta = dfs_paths(initial_config, goal_config)
+        print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+        for item in respuesta:
+            print(showLikeMatrix(item))
+    else:
+        print("""
+            Segun el verificador esta solucion no se puede resolver
+            Presione 1 para continuar o cualquier otra tecla para salir: 
+        """)
+        opcion = input()
+        if opcion == '1':
+            respuesta = bfs_paths(initial_config, goal_config)
+            for item in respuesta:
+                print(showLikeMatrix(item))
 
 if __name__ == '__main__':
     main()

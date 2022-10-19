@@ -115,6 +115,7 @@ def main():
     # verificamos si se puede solucionar
     if isSolvable(tupleToMatrix(initial_config)):
         respuesta = bfs_paths(initial_config, goal_config)
+        print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
         for item in respuesta:
             print(showLikeMatrix(item))
     else:
