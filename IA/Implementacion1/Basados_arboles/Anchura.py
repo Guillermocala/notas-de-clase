@@ -1,4 +1,6 @@
+import timeit
 from isSolvable import isSolvable
+
 goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 def openFile(ruta):
@@ -97,8 +99,13 @@ def showLikeMatrix(data):
 
 def bfs_paths(start, goal):
     queue = [(start, [start])]
+    global iteracion
     iteracion = 0
+    global max_queue
+    max_queue = 0
     while queue:
+        if max_queue < len(queue):
+            max_queue = len(queue)
         iteracion += 1
         print("iteracion: ", iteracion)
         (vertex, path) = queue.pop(0)
@@ -114,10 +121,18 @@ def main():
     initial_config = openFile("./configs/config.txt")
     # verificamos si se puede solucionar
     if isSolvable(tupleToMatrix(initial_config)):
+        init_time = timeit.default_timer()
         respuesta = bfs_paths(initial_config, goal_config)
+        end_time = timeit.default_timer()
+        execution_time = end_time - init_time
         for item in respuesta:
             print(showLikeMatrix(item))
+        print("\t\tEstadisticas")
+        print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
         print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+        print("\t\tMemory info...")
+        print("\tTamaño maximo de pila: ", max_queue)
+        print("\tNum nodos expandidos: ", iteracion)
     else:
         print("""
             Segun el verificador esta solucion no se puede resolver
@@ -128,7 +143,12 @@ def main():
             respuesta = bfs_paths(initial_config, goal_config)
             for item in respuesta:
                 print(showLikeMatrix(item))
-            print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+        print("\t\tEstadisticas")
+        print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
+        print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+        print("\t\tMemory info...")
+        print("\tTamaño maximo de pila: ", max_queue)
+        print("\tNum nodos expandidos: ", iteracion)
 
 if __name__ == '__main__':
     main()

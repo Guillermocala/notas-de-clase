@@ -1,4 +1,6 @@
+import timeit
 from isSolvable import isSolvable
+
 goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 def openFile(ruta):
@@ -97,8 +99,13 @@ def showLikeMatrix(data):
 
 def dfs_paths(start, goal):
     stack = [(start, [start])]
+    global iteracion
     iteracion = 0
+    global max_stack
+    max_stack = 0
     while stack:
+        if max_stack < len(stack):
+            max_stack = len(stack)
         iteracion += 1
         print("iteracion: ", iteracion)
         (vertex, path) = stack.pop()
@@ -114,10 +121,18 @@ def main():
     initial_config = openFile("./configs/config.txt")
     # verificamos si se puede solucionar
     if isSolvable(tupleToMatrix(initial_config)):
+        init_time = timeit.default_timer()
         respuesta = dfs_paths(initial_config, goal_config) 
+        end_time = timeit.default_timer()
+        execution_time = end_time - init_time
         for item in respuesta:
             print(showLikeMatrix(item))
+        print("\t\tEstadisticas")
+        print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
         print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+        print("\t\tMemory info...")
+        print("\tTamaño maximo de pila: ", max_stack)
+        print("\tNum nodos expandidos: ", iteracion)
     else:
         print("""
             Segun el verificador esta solucion no se puede resolver
@@ -128,7 +143,12 @@ def main():
             respuesta = bfs_paths(initial_config, goal_config)
             for item in respuesta:
                 print(showLikeMatrix(item))
+            print("\t\tEstadisticas")
+            print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
             print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+            print("\t\tMemory info...")
+            print("\tTamaño maximo de pila: ", max_stack)
+            print("\tNum nodos expandidos: ", iteracion)
 
 if __name__ == '__main__':
     main()

@@ -6,9 +6,9 @@
 
 1. Implementar los siguientes métodos de búsqueda para resolver el problema del **8-puzzle**:
 ![8 puzzle description](8_puzzle.png)
-- Primero en anchura(BFS)
-- Primero en profundidad(DFS)
-- Primero el mejor
+- Primero en anchura(BFS: Breadth Frist Search)
+- Primero en profundidad(DFS: Depth First Search)
+- Primero el mejor(BF: Best First)
 - A-asterisco(A*)
 
 2. A cada grupo de trabajo se la asignará un tablero inicial, a partir del cual deberá encontrar la solución. **Sin embargo, las implementaciones deben permitir el ingreso de la configuración inicial de un tablero a partir de un archivo de texto con el mismo formato que el respectivo archivo asignado a cada grupo**. Las implementaciones deben respetar el siguiente orden de acciones: **blanco arriba, derecha, abajo, izquierda.**
@@ -21,9 +21,9 @@
 
 1.  Implemente los siguientes métodos de búsqueda bioinspirados para resolver el problema de las **N reinas**: 
 ![N Reinas description](n_reinas.png)
-- Enfriamiento simulado(SA)
-- Algoritmos genéticos(GA)
-- Colonias de hormigas(ACO)
+- Enfriamiento simulado(SA: Simulated Annealing)
+- Algoritmos genéticos(GA: Genetic Algorithm)
+- Colonias de hormigas(ACO: Ant Colony Optimization)
 
 2. A cada grupo se le asignarán dos tableros con N reinas y sus ocupaciones iniciales para `N= 8, 12`. Utilice sus implementaciones para resolver las configuraciones de tableros dadas. Las implementaciones **deberán recibir como entrada la representación de un tablero con una configuración inicial de reinas contenidos en un archivo de texto**, tal como se puede observar con el formato del archivo asignado. 
 
