@@ -1,6 +1,12 @@
 import timeit
 from isSolvable import isSolvable
 
+""" El tablero final tiene la sgte forma
+1,2,3
+4,5,6
+7,8,0
+"""
+
 goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
 def openFile(ruta):
