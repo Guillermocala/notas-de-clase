@@ -114,12 +114,15 @@ class BestFirst(object):
         return sucesores
 
     def display_path(self):
+        camino = []
         board = self.goal
         print("display board", board.board)
         print("display parent", board.parent)
         while board.parent != self.start:
             board = board.parent
-            print('path: board: %d,%d' % (board.board))
+            camino.append(board.board)
+            #print('path: board: %d,%d' % (board.board))
+        return camino
 
     def compare(self, board1, board2):
         """
@@ -145,7 +148,7 @@ class BestFirst(object):
         adj.g = board.g + 5
         adj.h = self.get_heuristic(adj.board)
         adj.parent = board
-        adj.f = adj.h 
+        adj.f = adj.g
 
     def __lt__(self, other):
         return self.intAttribute < other.intAttribute
@@ -153,11 +156,15 @@ class BestFirst(object):
     def process(self):
         # add starting board to open heap queue
         count = 0
-        max_len = 0
-        heapq.heappush(self.opened, (self.start.f, count, self.start))
-        
+        global iteracion
         iteracion = 0
+        global max_queue
+        max_queue = 0
+        heapq.heappush(self.opened, (self.start.f, count, self.start))
+
         while len(self.opened):
+            if max_queue < len(self.opened):
+                max_queue = len(self.opened)
             iteracion += 1
             print("iteracion: ", iteracion)
             # pop board from heap queue 
@@ -167,32 +174,31 @@ class BestFirst(object):
             # if ending board, display found path
 
             print("path: ", board.board)
-            if board.parent != None:
-                print("path parent", board.parent.board)
+            #if board.parent != None:
+                #print("path parent", board.parent.board)
             if board.board == self.goal.board:
                 print("\t\tGOAL REACHED")
-                self.display_path()
-                break
+                return self.display_path()
             # get adjacent boards for board
             adj_boards = self.expandCurrentState(board.board)
             
             for adj_board in adj_boards:
                 if adj_board not in self.expanded:
+                    #print("adj board: ", adj_board.board)
                     if (adj_board.f, adj_board) in self.opened:
                         # if adj board in open list, check if current path is
                         # better than the one previously found
                         # for this adj board.
                         
                         if adj_board.g > board.g + 5:
+                            #print("update board 1: ", adj_board.board)
                             self.update_board(adj_board, board)
                     else:
+                        #print("update board 1: ", adj_board.board)
                         self.update_board(adj_board, board)
                         # add adj board to open list
                         count = count + 1
                         heapq.heappush(self.opened, (adj_board.f, count, adj_board))
-            
-            if max_len < len(self.opened):
-                max_len = len(self.opened)
                        
 def openFile(ruta):
     temp = list()
@@ -206,7 +212,17 @@ def openFile(ruta):
 def main():
     initial_config = openFile("./configs/config.txt")
     a = BestFirst(initial_config, goal_config)
+    init_time = timeit.default_timer()
     a.process()
+    end_time = timeit.default_timer()
+    execution_time = end_time - init_time
+    print("\t\tEstadisticas")
+    print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
+    #print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+    print("\t\tMemory info...")
+    print("\tTamaño maximo de cola: ", max_queue)
+    print("\tNum nodos expandidos: ", iteracion)
+    
 
 if __name__ == '__main__':
     main()
