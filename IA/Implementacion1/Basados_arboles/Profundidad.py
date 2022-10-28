@@ -131,9 +131,9 @@ def main():
         respuesta = dfs_paths(initial_config, goal_config) 
         end_time = timeit.default_timer()
         execution_time = end_time - init_time
-        for item in respuesta:
-            print(showLikeMatrix(item))
-        print("\t\tEstadisticas")
+        #for item in respuesta:
+            #print(showLikeMatrix(item))
+        print("\t\tEstadisticas --- Profundidad")
         print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
         print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
         print("\t\tMemory info...")
@@ -149,7 +149,7 @@ def main():
             respuesta = bfs_paths(initial_config, goal_config)
             for item in respuesta:
                 print(showLikeMatrix(item))
-            print("\t\tEstadisticas")
+            print("\t\tEstadisticas --- Profundidad")
             print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
             print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
             print("\t\tMemory info...")

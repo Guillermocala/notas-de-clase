@@ -2,6 +2,7 @@ import heapq
 import sys
 import time
 import timeit
+import numpy as np
 
 goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
@@ -56,7 +57,7 @@ class BestFirst(object):
         goal_matrix = self.tupleToMatrix(self.goal.board)
         for i in range(len(board_matrix)):
             for j in range(len(board_matrix)):
-                if (board_matrix[i][j] != 0) and (board_matrix[i][j] != goal_matrix[i][j]):
+                if (board_matrix[i][j] != goal_matrix[i][j]) and (board_matrix[i][j] != 0):
                     value += 1
         return value
 
@@ -82,6 +83,23 @@ class BestFirst(object):
                     manhattan = abs(x1 - x2) + abs(y1 - y2)
                     value += manhattan
         return value
+    
+    def get_heuristicEuclidean(self, board):
+        value = 0
+        board_matrix = self.tupleToMatrix(board.board)
+        for i in range(len(board_matrix)):
+            for j in range(len(board_matrix)):
+                current_tile = board_matrix[i][j]
+                if board_matrix[i][j] != 0:
+                    x1 = i
+                    y1 = j
+                    x2, y2 = self.getGoalPosition(current_tile)
+                    res = (pow((x1 - x2), 2) - pow((y1 - y2), 2))
+                    print("res: ", res)
+                    euclidean = np.linalg.norm((x1 - y1) - (x2 - y2))
+                    value += euclidean
+        return value
+
 
     def movements(self, actual_config, type_movement):
         respuesta_matrix = []
@@ -153,7 +171,7 @@ class BestFirst(object):
         @param adj adjacent board to current board
         @param board current board being processed
         """
-        adj.g = board.g + 5
+        adj.g = board.g + 1
         adj.h = self.get_heuristicManhattan(adj)
         adj.parent = board
         adj.f = adj.h
@@ -191,7 +209,7 @@ class BestFirst(object):
                         # if adj board in open list, check if current path is
                         # better than the one previously found
                         # for this adj board.
-                        if adj_board.g > board.g + 5:
+                        if adj_board.g > board.g + 1:
                             #print("update board 1: ", adj_board.board)
                             self.update_board(adj_board, board)
                     else:
