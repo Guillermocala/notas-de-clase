@@ -25,14 +25,13 @@ class BestFirst(object):
         self.opened = []
         heapq.heapify(self.opened)
         self.expanded = set()
-        self.boards = []
         self.start = Board(start)
         self.goal = Board(goal)
 
     def get_heuristic(self, board):
         value = 0
         for i in range(len(self.goal.board)):
-            if board[i] != self.goal.board[i]:
+            if board.board[i] != self.goal.board[i]:
                 value += 1
         return value
 
@@ -113,40 +112,22 @@ class BestFirst(object):
             sucesores.append(res)
         return sucesores
 
-    def display_path(self):
-        camino = []
+    def returnPath(self):
+        camino = [self.start]
         board = self.goal
-        print("display board", board.board)
-        print("display parent", board.parent)
         while board.parent != self.start:
             board = board.parent
-            camino.append(board.board)
-            #print('path: board: %d,%d' % (board.board))
+            camino.insert(1, board)
         return camino
-
-    def compare(self, board1, board2):
-        """
-        Compare 2 boards F values
-
-        @param board1 1st board
-        @param board2 2nd board
-        @returns -1, 0 or 1 if lower, equal or greater
-        """
-        if board1.f < board2.f:
-            return -1
-        elif board1.f > board2.f:
-            return 1
-        return 0
     
     def update_board(self, adj, board):
         """
         Update adjacent board
-
         @param adj adjacent board to current board
         @param board current board being processed
         """
         adj.g = board.g + 5
-        adj.h = self.get_heuristic(adj.board)
+        adj.h = self.get_heuristic(adj)
         adj.parent = board
         adj.f = adj.g
 
@@ -169,19 +150,16 @@ class BestFirst(object):
             print("iteracion: ", iteracion)
             # pop board from heap queue 
             f, c, board = heapq.heappop(self.opened)
+            
+            # if ending board, display found path
+            if board.board == self.goal.board:
+                self.goal.parent = board
+                print("\t\tGOAL REACHED")
+                return self.returnPath()
+            # get adjacent boards for board
             # add board to expanded list so we don't process it twice
             self.expanded.add(board)
-            # if ending board, display found path
-
-            print("path: ", board.board)
-            #if board.parent != None:
-                #print("path parent", board.parent.board)
-            if board.board == self.goal.board:
-                print("\t\tGOAL REACHED")
-                return self.display_path()
-            # get adjacent boards for board
             adj_boards = self.expandCurrentState(board.board)
-            
             for adj_board in adj_boards:
                 if adj_board not in self.expanded:
                     #print("adj board: ", adj_board.board)
@@ -189,7 +167,6 @@ class BestFirst(object):
                         # if adj board in open list, check if current path is
                         # better than the one previously found
                         # for this adj board.
-                        
                         if adj_board.g > board.g + 5:
                             #print("update board 1: ", adj_board.board)
                             self.update_board(adj_board, board)
@@ -199,7 +176,15 @@ class BestFirst(object):
                         # add adj board to open list
                         count = count + 1
                         heapq.heappush(self.opened, (adj_board.f, count, adj_board))
-                       
+
+def showLikeMatrix(data):
+    res = ""
+    for i in range(len(data)):
+        res += str(data[i])
+        if i == 2 or i == 5 or i == 8:
+            res += "\n"
+    return res
+
 def openFile(ruta):
     temp = list()
     with open(ruta) as f:
@@ -213,16 +198,17 @@ def main():
     initial_config = openFile("./configs/config.txt")
     a = BestFirst(initial_config, goal_config)
     init_time = timeit.default_timer()
-    a.process()
+    respuesta = a.process()
     end_time = timeit.default_timer()
     execution_time = end_time - init_time
-    print("\t\tEstadisticas")
+    for item in respuesta:
+        print(showLikeMatrix(item.board))
+    print("\t\tEstadisticas --- Primero al mejor")
     print("\tTiempo de ejecucción fue de: ", format(execution_time, '.8f'))
-    #print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
+    print("\tEl camino solucion consta de ", len(respuesta), " pasos.\n")
     print("\t\tMemory info...")
     print("\tTamaño maximo de cola: ", max_queue)
     print("\tNum nodos expandidos: ", iteracion)
-    
 
 if __name__ == '__main__':
     main()
