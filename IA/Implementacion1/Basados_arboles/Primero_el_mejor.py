@@ -28,20 +28,6 @@ class BestFirst(object):
         self.start = Board(start)
         self.goal = Board(goal)
 
-    def get_heuristic(self, board):
-        value = 0
-        for i in range(len(self.goal.board)):
-            if board.board[i] != self.goal.board[i]:
-                value += 1
-        return value
-
-    def calculatePosition(self, actual):
-        for x in range(len(actual)):
-            for y in range(len(actual)):
-                if actual[x][y] == 0:
-                    position = (x, y)
-                    return position
-
     def tupleToMatrix(self, data):
         res = [[data[0], data[1], data[2]],
                [data[3], data[4], data[5]],
@@ -55,6 +41,47 @@ class BestFirst(object):
                 a.append(i)
         b = tuple(a)
         return b
+
+    def calculatePosition(self, actual):
+        for x in range(len(actual)):
+            for y in range(len(actual)):
+                if actual[x][y] == 0:
+                    position = (x, y)
+                    return position
+
+    #heuristica fichas descolocadas
+    def get_heuristicMisplaced(self, board):
+        value = 0
+        board_matrix = self.tupleToMatrix(board.board)
+        goal_matrix = self.tupleToMatrix(self.goal.board)
+        for i in range(len(board_matrix)):
+            for j in range(len(board_matrix)):
+                if (board_matrix[i][j] != 0) and (board_matrix[i][j] != goal_matrix[i][j]):
+                    value += 1
+        return value
+
+    #ayuda a calcular distancia manhattan
+    def getGoalPosition(self, board_tile):
+        goal_matrix = self.tupleToMatrix(self.goal.board)
+        for i in range(len(goal_matrix)):
+            for j in range(len(goal_matrix)):
+                if goal_matrix[i][j] == board_tile:
+                    return i, j
+
+    #heuristica distancia manhattan
+    def get_heuristicManhattan(self, board):
+        value = 0
+        board_matrix = self.tupleToMatrix(board.board)
+        for i in range(len(board_matrix)):
+            for j in range(len(board_matrix)):
+                current_tile = board_matrix[i][j]
+                if board_matrix[i][j] != 0:
+                    x1 = i
+                    y1 = j
+                    x2, y2 = self.getGoalPosition(current_tile)
+                    manhattan = abs(x1 - x2) + abs(y1 - y2)
+                    value += manhattan
+        return value
 
     def movements(self, actual_config, type_movement):
         respuesta_matrix = []
@@ -127,12 +154,9 @@ class BestFirst(object):
         @param board current board being processed
         """
         adj.g = board.g + 5
-        adj.h = self.get_heuristic(adj)
+        adj.h = self.get_heuristicManhattan(adj)
         adj.parent = board
-        adj.f = adj.g
-
-    def __lt__(self, other):
-        return self.intAttribute < other.intAttribute
+        adj.f = adj.h
 
     def process(self):
         # add starting board to open heap queue
@@ -150,7 +174,7 @@ class BestFirst(object):
             print("iteracion: ", iteracion)
             # pop board from heap queue 
             f, c, board = heapq.heappop(self.opened)
-            
+
             # if ending board, display found path
             if board.board == self.goal.board:
                 self.goal.parent = board
