@@ -1,0 +1,29 @@
+		Meta Data
+1- ID: Represents a unique identification for each row
+2- Customer_ID: Represents a unique identification of a human
+3- Month: Represents the month of the year
+4- Name: Represents the name of a human
+5- Age: Represents the age of the human
+6- SSN: Represents the social security number of a human
+7- Occupation: Represents the occupation of the human
+8- Annual_Income: Represents the annual income of the human
+9- Monthly_Inhand_Salary: Represents the monthly base salary of a human
+10- Num_Bank_Accounts: Represents the number of bank accounts a human holds
+11- Num_Credit_Card: Represents the number of other credit cards held by a human
+12- Interest_Rate: Represents the interest rate on credit card
+13- Num_of_Loan: Represents the number of loans taken from the bank
+14- Type_of_Loan: Represents the types of loan taken by a human
+15- Delay_from_due_date: Represents the average number of days delayed from the payment date
+16- Num_of_Delayed_Payment: Represents the average number of payments delayed by a human
+17- Changed_Credit_Limit: Represents the percentage change in credit card limit
+18- Num_Credit_Inquiries: Represents the number of credit card inquiries
+19- Credit_Mix: Represents the classification of the mix of credits
+20- Outstanding_Debt: Represents the remaining debt to be paid (in USD)
+21- Credit_Utilization_Ratio: Represents the utilization ratio of credit card
+22- Credit_History_Age: Represents the age of credit history of the human
+23- Payment_of_Min_Amount: Represents whether only the minimum amount was paid by the human
+24- Total_EMI_per_month: Represents the monthly EMI payments (in USD)
+25- Amount_invested_monthly: Represents the monthly amount invested by the customer (in USD)
+26- Payment_Behaviour: Represents the payment behavior of the customer
+27- Monthly_Balance: Represents the monthly balance amount of the customer (in USD)
+28- Credit_Score: Represents the bracket of credit score (Poor, Standard, Good)

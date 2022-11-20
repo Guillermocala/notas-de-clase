@@ -3,6 +3,7 @@ import sys
 import time
 import timeit
 import numpy as np
+import math
 
 goal_config = (1, 2, 3, 4, 5, 6, 7, 8, 0)
 
@@ -94,8 +95,7 @@ class BestFirst(object):
                     x1 = i
                     y1 = j
                     x2, y2 = self.getGoalPosition(current_tile)
-                    res = (pow((x1 - x2), 2) - pow((y1 - y2), 2))
-                    print("res: ", res)
+                    #euclidean = math.sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2))
                     euclidean = np.linalg.norm((x1 - y1) - (x2 - y2))
                     value += euclidean
         return value
@@ -172,7 +172,7 @@ class BestFirst(object):
         @param board current board being processed
         """
         adj.g = board.g + 1
-        adj.h = self.get_heuristicManhattan(adj)
+        adj.h = self.get_heuristicEuclidean(adj)
         adj.parent = board
         adj.f = adj.h
 
