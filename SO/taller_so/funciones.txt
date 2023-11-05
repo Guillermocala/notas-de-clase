@@ -1,0 +1,65 @@
+funciones:
+1- valores impares
+2- valores pares
+3- promedio
+4- num que más se repite(hash table)
+
+lectura------------------------------
+//      SECCION DE LECTURA
+FILE *file;
+file = fopen(argv[1], "r");
+if(file == NULL) {
+    printf("Error al abrir el archivo\n");
+    exit(1);
+}
+
+printf("El archivo abierto es: %s\n", argv[1]);
+
+int size;
+
+fscanf(file, "%d",&size);
+1------------------------------------
+int cant_impares = 0;
+    bool es_impar;
+    for (int i = 0; i < 5; i++) {
+        printf("valor: %i\n", array[i]);
+        es_impar = array[i] % 2 != 0;
+        if (es_par) { cant_impares += 1;}
+    }
+    printf("cantidad impares: %i\n", cant_impares);
+
+2------------------------------------
+int cant_pares = 0;
+    bool es_par;
+    for (int i = 0; i < 5; i++) {
+        printf("valor: %i\n", array[i]);
+        es_par = array[i] % 2 == 0;
+        if (es_par) { cant_pares += 1;}
+    }
+    printf("cantidad pares: %i\n", cant_pares);
+3------------------------------------
+formula: 1/n(sum(i=1, N, xi))
+int suma = 0;
+float promedio = 0;
+for (int i = 0; i < size; i++) {
+    suma += array[i];
+}
+promedio = (1 / size) * suma;
+
+
+4------------------------------------
+int hash_table[HASH_SIZE] = {0};
+int mas_repetido = -1;          // Valor mas frecuente
+int ocurrencias = 0;            // cantidad de veces del mas frecuente
+
+for (int i = 0; i < size; i++) {
+    int actual = array[i];
+    hash_table[actual]++;
+
+    if (hash_table[actual] > ocurrencias) {
+        mas_repetido = actual;
+        ocurrencias = hash_table[actual];
+    }
+}
+
+printf("El valor mas frecuente es: %d y se repite %d veces\n", mas_repetido, ocurrencias);
