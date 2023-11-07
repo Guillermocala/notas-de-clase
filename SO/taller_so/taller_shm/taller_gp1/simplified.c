@@ -1,5 +1,4 @@
-/*este es el codigo base el primero en funcionar y del cual va a salir
-las otras versiones*/
+/*el mismo codigo pero la version mas simplificada posible*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -9,10 +8,12 @@ las otras versiones*/
 
 // tamaño del hash table para hallar los repetidos
 #define HASH_SIZE 1000
+// tamaño estatico del array
+#define N 100
 
 struct Data {
 	//datos con los que va a trabajar
-	int datos[100];
+	int datos[N];
 	int size;
 	//campos en los que va a escribir
 	float sumatoria;
@@ -51,40 +52,17 @@ int main(int argc, char *argv[]){
 	int shmid = shmget(IPC_PRIVATE, sizeof(struct Data) * cant_hijos, IPC_CREAT|0600);
 	shared_array = (struct Data*) shmat(shmid, 0, 0);
 
-	//con esto sacamos el total de lineas en el documento leido
-	fseek(file, 0, SEEK_END);
-	int cantidad = ftell(file);
-	int longitud = (cantidad/sizeof(int)) + 1;
-	fseek(file, 1, SEEK_SET);
-
-	//aca se guarda la info del archivo en el array
-	int array[longitud];
-	for(int i = 0; i < longitud; i++) {
-		fscanf(file, "%d", &array[i]);
-	}
-
-    /*aqui se asigna cada particion a una posicion de la memoria compartida
-    que es secuencial a los hijos, shm[0] para el hijo 0 y así sucesivamente*/
-	int temp = 0;
-	int index = 0;
-	int array_temp[100];
-	int partition = array[0];
-	for(int i = 1; i <= longitud; i++) {
-		if(temp == partition) {
-			struct Data temp_data;
-			temp_data.size = partition;
-			for(int j = 0; j < partition; j++){
-				temp_data.datos[j] = array_temp[j];
-			}
-			shared_array[index] = temp_data;
-			index++;
-			temp = 0;
-			partition = array[i];
+    /*aca se guarda en cada estructura correspondiente al hijo*/
+    for(int i = 0; i < cant_hijos; i++) {
+		struct Data temp_data;
+        //se extrae el dato correspondiente a la dimension del array
+		fscanf(file, "%d", &temp_data.size);
+		for (int j = 0; j < temp_data.size; j++) {
+            //se inserta uno por uno
+            fscanf(file, "%d", &temp_data.datos[j]);
 		}
-		else{
-			array_temp[temp] = array[i];
-			temp++;
-		}
+        //se guarda en la memoria compartida
+		shared_array[i] = temp_data;
 	}
 
     // creacion de hijos

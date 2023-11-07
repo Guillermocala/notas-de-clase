@@ -1,5 +1,7 @@
 /*este codigo esta hecho para una matriz de NxM, solo la estructura
-basica haciendo una sumatoria de los elementos
+basica haciendo una sumatoria de los elementos.
+este fichero tiene una forma simplificada para hacer el tratamiento
+de los datos del archivo
 Usar el archivo: test2.in el cual tiene el formato indicado
 */
 #include <stdio.h>
@@ -46,49 +48,22 @@ int main(int argc, char *argv[]){
 	int shmid = shmget(IPC_PRIVATE, sizeof(struct Data) * cant_hijos, IPC_CREAT|0600);
 	shared_array = (struct Data*) shmat(shmid, 0, 0);
 
-	//con esto sacamos el total de lineas en el documento leido
-	fseek(file, 0, SEEK_END);
-	int cantidad = ftell(file);
-	int longitud = (cantidad/sizeof(int)) + 1;
-	fseek(file, 1, SEEK_SET);
-
-	//aca se guarda la info del archivo en el array
-	int array[longitud];
-	for(int i = 0; i <= longitud; i++) {
-		fscanf(file, "%d", &array[i]);
-	}
-
-    /*aqui se asigna cada particion a una posicion de la memoria compartida
-    que es secuencial a los hijos, shm[0] para el hijo 0 y así sucesivamente*/
-	int temp = 0;
-	int index = 0;
-	int array_temp[100];
-	int filas = array[0];
-    int columnas = array[1];
-	for(int i = 2; i <= longitud; i++) {
-		if(temp == (filas * columnas)) {
-			struct Data temp_data;
-			temp_data.filas = filas;
-            temp_data.columnas = columnas;
-			// pasa los datos del array a la matriz
-			for (int j = 0; j < filas; j++) {
-				for (int k = 0; k < columnas; k++) {
-                    /*el indice de una matriz de NxM se calcula de la sgte manera:
-                    indice = fila * columnas + columna*/
-					temp_data.datos[j][k] = array_temp[(j * columnas) + k];
-				}
+	// con esto leemos el archivo y almacenamos segun cada particion(hijo)
+	for(int i = 0; i < cant_hijos; i++) {
+		struct Data temp_data;
+		int filas, columnas;
+		fscanf(file, "%d", &filas);
+		fscanf(file, "%d", &columnas);
+		temp_data.filas = filas;
+		temp_data.columnas = columnas;
+		for (int j = 0; j < filas; j++) {
+			for (int k = 0; k < columnas; k++) {
+				int dato;
+				fscanf(file, "%d", &dato);
+				temp_data.datos[j][k] = dato;
 			}
-			shared_array[index] = temp_data;
-			index++;
-			temp = 0;
-			filas = array[i];
-            columnas = array[i + 1];
-            i++;
 		}
-		else{
-			array_temp[temp] = array[i];
-			temp++;
-		}
+		shared_array[i] = temp_data;
 	}
 
     // creacion de hijos
@@ -107,8 +82,7 @@ int main(int argc, char *argv[]){
         // se recupera los datos de la memoria compartida de cada hijo y se imprime
 		for(int i = 0; i < cant_hijos; i++) {
 			printf("\t\tHijo %d\n", i);
-			struct Data temporal = *shared_array;
-			shared_array++;
+			struct Data temporal = shared_array[i];
 			imprimir_datos(temporal);
     	}
 	}

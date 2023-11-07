@@ -1,5 +1,5 @@
-/*este es el codigo base el primero en funcionar y del cual va a salir
-las otras versiones*/
+/*este es derivado del base pero en vez de acceder a la memoria dinamica como array
+lo haremos con punteros y aritmetica de punteros*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -66,7 +66,6 @@ int main(int argc, char *argv[]){
     /*aqui se asigna cada particion a una posicion de la memoria compartida
     que es secuencial a los hijos, shm[0] para el hijo 0 y así sucesivamente*/
 	int temp = 0;
-	int index = 0;
 	int array_temp[100];
 	int partition = array[0];
 	for(int i = 1; i <= longitud; i++) {
@@ -76,8 +75,9 @@ int main(int argc, char *argv[]){
 			for(int j = 0; j < partition; j++){
 				temp_data.datos[j] = array_temp[j];
 			}
-			shared_array[index] = temp_data;
-			index++;
+            // guardamos y movemos el apuntador una posicion
+			*shared_array = temp_data;
+            shared_array++;
 			temp = 0;
 			partition = array[i];
 		}
@@ -86,6 +86,9 @@ int main(int argc, char *argv[]){
 			temp++;
 		}
 	}
+
+    //colocamos el apuntador en la posicion inicial
+    shared_array -= cant_hijos;
 
     // creacion de hijos
 	for(int i = 0; i < cant_hijos; i++) {
@@ -103,7 +106,8 @@ int main(int argc, char *argv[]){
         // se recupera los datos de la memoria compartida de cada hijo y se imprime
 		for(int i = 0; i < cant_hijos; i++) {
 			printf("\t\tHijo %d\n", i);
-			struct Data temporal = shared_array[i];
+			struct Data temporal = *shared_array;
+			shared_array++;
 			imprimirDatos(temporal);
     	}
 	}
@@ -113,7 +117,7 @@ int main(int argc, char *argv[]){
 			if(!hijos[i]) {
                 /*se crea una estructura temporal para almacenar lo que esta en la memoria
                 compartida y luego se hacen las operaciones*/
-				struct Data temporal = shared_array[i];
+				struct Data temporal = *shared_array;
 				temporal.sumatoria = calcularSumatoria(temporal.datos, temporal.size);
 				temporal.promedio = calcularPromedio(temporal.datos, temporal.size);
 				int valor = 0, cantidad = 0;
@@ -122,8 +126,10 @@ int main(int argc, char *argv[]){
 				temporal.cant_repetido = cantidad;
                 /*como temporal solo recibe y no crea enlace con la memoria compartida, entonces
                 tenemos que guardar lo que hicimos sobreescribiendo dicha posicion de memoria compartida*/
-				shared_array[i] = temporal;
+				*shared_array = temporal;
 			}
+            // con esto posicionamos el apuntador en el hijo correspondiente
+            shared_array++;
 		}
 	}
 
